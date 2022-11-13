@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using Waves.NET.Addresses.ReturnTypes;
 using Waves.NET.Transactions;
+using Waves.NET.Transactions.Crypto;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Addresses
 {
@@ -11,33 +13,33 @@ namespace Waves.NET.Addresses
         private const string EffectiveBalanceUrl = "effectiveBalance";
         private const string ScriptInfoUrl = "scriptInfo";
 
-        public AddressesSection(HttpClient httpClient, byte chainId) : base(httpClient, "addresses", chainId) { }
+        public AddressesSection(HttpClient httpClient) : base(httpClient, "addresses") { }
 
         /// <summary>
         /// Get a list of account addresses in the <see href="https://docs.waves.tech/en/waves-node/how-to-work-with-node-wallet">node wallet</see>
         /// </summary>
         /// <returns></returns>
-        public ICollection<string> GetAddresses()
+        public ICollection<Address> GetAddresses()
         {
-            return PublicRequest<ICollection<string>>(HttpMethod.Get);
+            return PublicRequest<ICollection<Address>>(HttpMethod.Get);
         }
 
         /// <summary>
         /// Get a list addresses in the <see href="https://docs.waves.tech/en/waves-node/how-to-work-with-node-wallet">node wallet</see> by a given range of indices. Max range {from}-{to} is 100 addresses
         /// </summary>
         /// <returns></returns>
-        public ICollection<string> GetAddresses(int from, int to)
+        public ICollection<Address> GetAddresses(int from, int to)
         {
-            return PublicRequest<ICollection<string>>(HttpMethod.Get, $"seq/{from}/{to}");
+            return PublicRequest<ICollection<Address>>(HttpMethod.Get, $"seq/{from}/{to}");
         }
 
         /// <summary>
         /// Get regular balances for multiple addresses. Max number of addresses is set by <c>waves.rest-api.transactions-by-address-limit</c>, 1000 by default
         /// </summary>
         /// <returns></returns>
-        public ICollection<AddressBalance> GetBalances(ICollection<string> addresses, int height, string asset)
+        public ICollection<AddressBalance> GetBalances(ICollection<Address> addresses, int height, string asset)
         {
-            return PublicRequest<ICollection<AddressBalance>>(HttpMethod.Post, BalanceUrl, SerializeObject(new { addresses, height, asset }));
+            return PublicRequest<ICollection<AddressBalance>>(HttpMethod.Post, BalanceUrl, JsonUtils.Serialize(new { addresses, height, asset }));
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Waves.NET.Addresses
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public long GetBalance(string address)
+        public long GetBalance(Address address)
         {
             var result = PublicRequest<AddressBalance>(HttpMethod.Get, BalanceUrl + "/" + address);
             return result.Balance;
@@ -58,7 +60,7 @@ namespace Waves.NET.Addresses
         /// <param name="address">Address base58 encoded</param>
         /// <param name="confirmations">Number of blocks</param>
         /// <returns></returns>
-        public long GetBalance(string address, int confirmations)
+        public long GetBalance(Address address, int confirmations)
         {
             var result = PublicRequest<AddressBalance>(HttpMethod.Get, $"{BalanceUrl}/{address}/{confirmations}");
             return result.Balance;
@@ -70,7 +72,7 @@ namespace Waves.NET.Addresses
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public BalanceDetails GetBalanceDetails(string address)
+        public BalanceDetails GetBalanceDetails(Address address)
         {
             return PublicRequest<BalanceDetails>(HttpMethod.Get, $"{BalanceUrl}/details/{address}");
         }
@@ -82,7 +84,7 @@ namespace Waves.NET.Addresses
         /// <param name="matches">URL encoded (percent-encoded) <see href="https://www.tutorialspoint.com/scala/scala_regular_expressions.htm">regular expression</see> to filter keys</param>
         /// <param name="key">Exact keys to query</param>
         /// <returns></returns>
-        public ICollection<EntryData> GetData(string address, Regex regex)
+        public ICollection<EntryData> GetData(Address address, Regex regex)
         {
             return PublicRequest<ICollection<EntryData>>(HttpMethod.Get, $"{DataUrl}/{address}?matches={regex}");
         }
@@ -93,9 +95,9 @@ namespace Waves.NET.Addresses
         /// <param name="address">Address base58 encoded</param>
         /// <param name="key">Exact keys to query</param>
         /// <returns></returns>
-        public ICollection<EntryData> GetData(string address, ICollection<string> keys)
+        public ICollection<EntryData> GetData(Address address, ICollection<string> keys)
         {
-            return PublicRequest<ICollection<EntryData>>(HttpMethod.Post, $"{DataUrl}/{address}", SerializeObject(new { keys }));
+            return PublicRequest<ICollection<EntryData>>(HttpMethod.Post, $"{DataUrl}/{address}", JsonUtils.Serialize(new { keys }));
         }
 
         /// <summary>
@@ -104,7 +106,7 @@ namespace Waves.NET.Addresses
         /// <param name="address">Address base58 encoded</param>
         /// <param name="key">Data key</param>
         /// <returns></returns>
-        public EntryData GetData(string address, string key)
+        public EntryData GetData(Address address, string key)
         {
             return PublicRequest<EntryData>(HttpMethod.Get, $"{DataUrl}/{address}/{key}");
         }
@@ -115,7 +117,7 @@ namespace Waves.NET.Addresses
         /// <param name="address">Address base58 encoded</param>
         /// <param name="key">Data key</param>
         /// <returns></returns>
-        public ICollection<EntryData> GetData(string address)
+        public ICollection<EntryData> GetData(Address address)
         {
             return PublicRequest<ICollection<EntryData>>(HttpMethod.Get, $"{DataUrl}/{address}");
         }
@@ -125,7 +127,7 @@ namespace Waves.NET.Addresses
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public long GetEffectiveBalance(string address)
+        public long GetEffectiveBalance(Address address)
         {
             return PublicRequest<AddressBalance>(HttpMethod.Get, $"{EffectiveBalanceUrl}/{address}").Balance;
         }
@@ -137,7 +139,7 @@ namespace Waves.NET.Addresses
         /// <param name="address">Address base58 encoded</param>
         /// <param name="confirmations">Number of blocks</param>
         /// <returns></returns>
-        public long GetEffectiveBalance(string address, int confirmations)
+        public long GetEffectiveBalance(Address address, int confirmations)
         {
             return PublicRequest<AddressBalance>(HttpMethod.Get, $"{EffectiveBalanceUrl}/{address}/{confirmations}").Balance;
         }
@@ -147,7 +149,7 @@ namespace Waves.NET.Addresses
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public ScriptInfo GetScriptInfo(string address)
+        public ScriptInfo GetScriptInfo(Address address)
         {
             return PublicRequest<ScriptInfo>(HttpMethod.Get, $"{ScriptInfoUrl}/{address}");
         }
@@ -157,7 +159,7 @@ namespace Waves.NET.Addresses
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public ScriptMeta GetScriptMeta(string address)
+        public ScriptMeta GetScriptMeta(Address address)
         {
             return PublicRequest<ScriptMeta>(HttpMethod.Get, $"{ScriptInfoUrl}/{address}/meta");
         }

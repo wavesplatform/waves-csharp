@@ -3,7 +3,7 @@ using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Transactions.Crypto
 {
-    public class PrivateKey : Base58String
+    public class PrivateKey : Base58
     {
         public static int Length = 32;
 
@@ -31,6 +31,11 @@ namespace Waves.NET.Transactions.Crypto
             }
 
             PublicKey = PublicKey.From(this);
+        }
+
+        public byte[] Sign(byte[] message)
+        {
+            return Crypto.Sign(this, message);
         }
     }
 }

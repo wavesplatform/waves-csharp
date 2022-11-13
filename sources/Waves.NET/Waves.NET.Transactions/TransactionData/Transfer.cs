@@ -1,8 +1,10 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions.Crypto;
+
+namespace Waves.NET.Transactions
 {
     public record Transfer
     {
-        public string Recipient { get; init; } = null!;
+        public IRecipient Recipient { get; init; } = null!;
         public long Amount { get; init; }
     }
 }

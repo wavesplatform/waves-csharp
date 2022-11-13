@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions.Builders
+﻿using Google.Protobuf;
+
+namespace Waves.NET.Transactions.Builders
 {
     public class SetAssetScriptTransactionBuilder : TransactionBuilder<SetAssetScriptTransactionBuilder, SetAssetScriptTransaction>
     {
@@ -13,6 +15,14 @@
         public static SetAssetScriptTransactionBuilder Data(string assetId, string script)
         {
             return new SetAssetScriptTransactionBuilder(assetId, script);
+        }
+
+        protected override void ToProtobuf(TransactionProto proto)
+        {
+            var tx = (ISetAssetScriptTransaction)Transaction;
+            proto.SetAssetScript = new SetAssetScriptTransactionData();
+            proto.SetAssetScript.AssetId = ByteString.CopyFromUtf8(tx.AssetId);
+            proto.SetAssetScript.Script = ByteString.CopyFromUtf8(tx.Script);
         }
     }
 }

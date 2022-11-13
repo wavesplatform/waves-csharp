@@ -13,6 +13,5 @@ namespace Waves.NET.Utils
         string GetScriptDecompiledCode(string code);
         ScriptEstimateResult GetScriptEstimate(string code);
         string GetSecureHash(string message);
-        string SerializeObject(object obj);
     }
 }

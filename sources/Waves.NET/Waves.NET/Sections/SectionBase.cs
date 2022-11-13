@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using System.Text;
 using Waves.NET.Exceptions;
 
@@ -8,28 +6,14 @@ namespace Waves.NET
 {
     public abstract class SectionBase
     {
-        private JsonSerializerSettings _jsonSerializerSettings;
-
         protected string Route { get; init; }
-        protected byte ChainId { get; init; }
 
         protected HttpClient HttpClient { get; init; }
 
-        internal SectionBase(HttpClient httpClient, string subRoute, byte chainId)
+        internal SectionBase(HttpClient httpClient, string subRoute)
         {
             HttpClient = httpClient;
             Route = subRoute;
-            ChainId = chainId;
-
-            _jsonSerializerSettings = new JsonSerializerSettings {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } }
-            };
-        }
-
-        public string SerializeObject(object obj)
-        {
-            return JsonConvert.SerializeObject(obj, _jsonSerializerSettings);
         }
 
         protected TResult PublicRequest<TResult>(HttpMethod method, string? url = null, string? jsonBody = null)

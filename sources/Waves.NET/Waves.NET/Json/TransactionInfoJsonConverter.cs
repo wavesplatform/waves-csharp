@@ -42,7 +42,7 @@ namespace Waves.NET.Json
             return tInfo;
         }
 
-        private T ReadTransaction<T>(JObject jO, JsonSerializer serializer) where T : Transaction, new()
+        private T ReadTransaction<T>(JObject jO, JsonSerializer serializer) where T : Waves.NET.Transactions.Transaction, new()
         {
             T transaction = new();
             serializer.Populate(jO.CreateReader(), transaction);
@@ -58,7 +58,7 @@ namespace Waves.NET.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsAssignableTo(typeof(Transaction));
+            return objectType.IsAssignableTo(typeof(TransactionProto));
         }
     }
 }

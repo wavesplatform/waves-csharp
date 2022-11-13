@@ -8,4 +8,10 @@
         public string Recipient { get; set; } = null!;
         public long Amount { get; set; }
     }
+
+    public interface IGenesisTransaction : ITransaction
+    {
+        string Recipient { get; set; }
+        long Amount { get; set; }
+    }
 }

@@ -2,7 +2,7 @@
 {
     public record CallArgs
     {
-        public string Type { get; init; } = null!;
-        public string Value { get; init; } = null!;
+        public CallArgType Type { get; init; }
+        public object Value { get; init; } = null!;
     }
 }

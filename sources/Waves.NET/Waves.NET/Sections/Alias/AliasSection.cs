@@ -2,7 +2,7 @@
 {
     public class AliasSection : SectionBase, IAliasSection
     {
-        public AliasSection(HttpClient httpClient, byte chainId) : base(httpClient, "alias", chainId) { }
+        public AliasSection(HttpClient httpClient) : base(httpClient, "alias") { }
 
         /// <summary>
         /// Get a list of aliases associated with a given address

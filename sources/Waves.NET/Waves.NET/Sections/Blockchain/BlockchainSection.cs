@@ -4,7 +4,7 @@ namespace Waves.NET.Blockchain
 {
     public class BlockchainSection : SectionBase, IBlockchainSection
     {
-        public BlockchainSection(HttpClient httpClient, byte chainId) : base(httpClient, "blockchain", chainId) { }
+        public BlockchainSection(HttpClient httpClient) : base(httpClient, "blockchain") { }
 
         /// <summary>
         /// Get current status of block reward

@@ -14,5 +14,12 @@
         {
             return new CreateAliasTransactionBuilder(alias);
         }
+
+        protected override void ToProtobuf(TransactionProto proto)
+        {
+            var tx = (ICreateAliasTransaction)Transaction;
+            proto.CreateAlias = new CreateAliasTransactionData();
+            proto.CreateAlias.Alias = tx.Alias;
+        }
     }
 }

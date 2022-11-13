@@ -8,6 +8,7 @@
         public const int NftMinFee = 100000;
 
         public string AssetId { get; set; } = "";
+        public long Amount { get; set; }
         public string Name { get; set; } = "";
         public long Quantity { get; set; }
         public bool Reissuable { get; set; }
@@ -20,6 +21,7 @@
     {
         string AssetId { get; set; }
         string Name { get; set; }
+        long Amount { get; set; }
         long Quantity { get; set; }
         bool Reissuable { get; set; }
         int Decimals { get; set; }

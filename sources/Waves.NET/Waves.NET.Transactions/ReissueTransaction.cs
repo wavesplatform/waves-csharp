@@ -7,6 +7,7 @@
         public const int MinFee = 100000;
 
         public string AssetId { get; set; } = null!;
+        public long Amount { get; set; }
         public long Quantity { get; set; }
         public bool Reissuable { get; set; }
     }
@@ -14,6 +15,7 @@
     public interface IReissueTransaction : INonGenesisTransaction
     {
         string AssetId { get; set; }
+        long Amount { get; set; }
         long Quantity { get; set; }
         bool Reissuable { get; set; }
     }

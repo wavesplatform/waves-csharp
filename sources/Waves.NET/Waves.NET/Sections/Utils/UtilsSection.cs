@@ -1,10 +1,11 @@
-﻿using Waves.NET.Utils.ReturnTypes;
+﻿using Waves.NET.Transactions.Utils;
+using Waves.NET.Utils.ReturnTypes;
 
 namespace Waves.NET.Utils
 {
     public class UtilsSection : SectionBase, IUtilsSection
     {
-        public UtilsSection(HttpClient httpClient, byte chainId) : base(httpClient, "utils", chainId) { }
+        public UtilsSection(HttpClient httpClient) : base(httpClient, "utils") { }
 
         /// <summary>
         /// Generate random seed. The returned value is base58 encoded
@@ -113,7 +114,7 @@ namespace Waves.NET.Utils
         /// <returns>Evaluation result</returns>
         public ScriptEvaluationResult EvaluateScript(string address, ScriptEvaluationExpression evaluationExpression)
         {
-            var jsonBody = SerializeObject(evaluationExpression);
+            var jsonBody = JsonUtils.Serialize(evaluationExpression);
             return PublicRequest<ScriptEvaluationResult>(HttpMethod.Post, $"script/evaluate/{address}", jsonBody);
         }
     }

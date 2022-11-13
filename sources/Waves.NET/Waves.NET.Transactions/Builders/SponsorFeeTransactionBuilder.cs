@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions.Builders
+﻿using Google.Protobuf;
+
+namespace Waves.NET.Transactions.Builders
 {
     public class SponsorFeeTransactionBuilder : TransactionBuilder<SponsorFeeTransactionBuilder, SponsorFeeTransaction>
     {
@@ -13,6 +15,17 @@
         public static SponsorFeeTransactionBuilder Data(string assetId, long minSponsoredAssetFee)
         {
             return new SponsorFeeTransactionBuilder(assetId, minSponsoredAssetFee);
+        }
+
+        protected override void ToProtobuf(TransactionProto proto)
+        {
+            var tx = (ISponsorFeeTransaction)Transaction;
+            proto.SponsorFee = new SponsorFeeTransactionData();
+            proto.SponsorFee.MinFee = new AmountProto
+            {
+                Amount_ = tx.MinSponsoredAssetFee,
+                AssetId = ByteString.CopyFromUtf8(tx.AssetId)
+            };
         }
     }
 }

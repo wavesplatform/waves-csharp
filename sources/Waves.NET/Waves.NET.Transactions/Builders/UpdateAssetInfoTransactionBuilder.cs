@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions.Builders
+﻿using Google.Protobuf;
+
+namespace Waves.NET.Transactions.Builders
 {
     public class UpdateAssetInfoTransactionBuilder : TransactionBuilder<UpdateAssetInfoTransactionBuilder, UpdateAssetInfoTransaction>
     {
@@ -14,6 +16,15 @@
         public static UpdateAssetInfoTransactionBuilder Data(string assetId, string name, string description)
         {
             return new UpdateAssetInfoTransactionBuilder(assetId, name, description);
+        }
+
+        protected override void ToProtobuf(TransactionProto proto)
+        {
+            var tx = (IUpdateAssetInfoTransaction)Transaction;
+            proto.UpdateAssetInfo = new UpdateAssetInfoTransactionData();
+            proto.UpdateAssetInfo.AssetId = ByteString.CopyFromUtf8(tx.AssetId);
+            proto.UpdateAssetInfo.Name = tx.Name;
+            proto.UpdateAssetInfo.Description = tx.Description;
         }
     }
 }

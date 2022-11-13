@@ -1,10 +1,11 @@
 ﻿using Waves.NET.Assets.ReturnTypes;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Assets
 {
     public class AssetsSection : SectionBase, IAssetsSection
     {
-        public AssetsSection(HttpClient httpClient, byte chainId) : base(httpClient, "assets", chainId) { }
+        public AssetsSection(HttpClient httpClient) : base(httpClient, "assets") { }
 
         /// <summary>
         /// Get asset balance distribution by addresses at a given height. Max number of addresses is set by <c>waves.rest-api.distribution-address-limit</c>, 1000 by default.<br/>
@@ -35,7 +36,7 @@ namespace Waves.NET.Assets
         /// <returns></returns>
         public AssetBalance GetAssetsBalance(string address, ICollection<string>? ids = null)
         {
-            var jsonBody = ids is null ? "{{\"ids\":[]}}" : SerializeObject(new { ids });
+            var jsonBody = ids is null ? "{{\"ids\":[]}}" : JsonUtils.Serialize(new { ids });
             return PublicRequest<AssetBalance>(HttpMethod.Post, $"balance/{address}", jsonBody);
         }
 
@@ -69,7 +70,7 @@ namespace Waves.NET.Assets
         /// <returns></returns>
         public ICollection<AssetDetails> GetAssetDetails(ICollection<string> assetIds, bool full = false)
         {
-            var jsonBody = SerializeObject(new { ids = assetIds });
+            var jsonBody = JsonUtils.Serialize(new { ids = assetIds });
             return PublicRequest<ICollection<AssetDetails>>(HttpMethod.Post, $"details?full={full}", jsonBody);
         }
 

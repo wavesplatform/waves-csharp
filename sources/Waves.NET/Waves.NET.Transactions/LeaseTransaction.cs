@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions.Crypto;
+
+namespace Waves.NET.Transactions
 {
     public class LeaseTransaction : Transaction, INonGenesisTransaction
     {
@@ -14,7 +16,7 @@
 
     public interface ILeaseTransaction : INonGenesisTransaction
     {
-        string Recipient { get; set; }
+        IRecipient Recipient { get; set; }
         long Amount { get; set; }
     }
 }

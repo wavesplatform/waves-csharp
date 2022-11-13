@@ -1,8 +1,10 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Transactions
 {
     public record BinaryEntry : DataEntry
     {
-        public string Value { get; init; } = null!;
+        public Base64 Value { get; init; } = null!;
 
         public BinaryEntry()
         {

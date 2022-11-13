@@ -1,10 +1,11 @@
 ﻿using Waves.NET.Transactions.Info;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Transactions
 {
     public class TransactionsSection : SectionBase, ITransactionsSection
     {
-        public TransactionsSection(HttpClient httpClient, byte chainId) : base(httpClient, "transactions", chainId) { }
+        public TransactionsSection(HttpClient httpClient) : base(httpClient, "transactions") { }
 
         /// <summary>
         /// Get the minimum fee for a given transaction.<br/>
@@ -15,7 +16,7 @@ namespace Waves.NET.Transactions
         /// <returns>Calculated transaction fee</returns>
         public TransactionFeeAmount CalculateTransactionFee<T>(T transaction) where T : Transaction
         {
-            var jsonBody = SerializeObject(transaction);
+            var jsonBody = JsonUtils.Serialize(transaction);
             return PublicRequest<TransactionFeeAmount>(HttpMethod.Post, "calculateFee", jsonBody);
         }
 
@@ -48,7 +49,7 @@ namespace Waves.NET.Transactions
         public T Broadcast<T>(T transaction, bool trace = false) where T : Transaction
         {
             var url = $"broadcast" + (trace ? "?trace=true" : "");
-            var jsonBody = SerializeObject(transaction);
+            var jsonBody = JsonUtils.Serialize(transaction);
             return PublicRequest<T>(HttpMethod.Post, url, jsonBody);
         }
 
@@ -59,7 +60,7 @@ namespace Waves.NET.Transactions
         /// <returns>Transactions info</returns>
         public ICollection<TransactionInfo> GetTransactionInfo(ICollection<string> ids)
         {
-            var jsonBody = SerializeObject(new { ids });
+            var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Post, "info", jsonBody);
         }
 
@@ -79,7 +80,7 @@ namespace Waves.NET.Transactions
         /// <returns>Merkle proofs</returns>
         public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids)
         {
-            var jsonBody = SerializeObject(new { ids });
+            var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionMerkleProofs>>(HttpMethod.Post, "merkleProof", jsonBody);
         }
 
@@ -97,7 +98,7 @@ namespace Waves.NET.Transactions
         /// <returns>Transaction statuses</returns>
         public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<string> ids)
         {
-            var jsonBody = SerializeObject(new { ids });
+            var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionStatus>>(HttpMethod.Post, "status", jsonBody);
         }
 

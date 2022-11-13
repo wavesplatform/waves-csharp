@@ -4,7 +4,7 @@ namespace Waves.NET.Node
 {
     public class NodeSection : SectionBase, INodeSection
     {
-        public NodeSection(HttpClient httpClient, byte chainId) : base(httpClient, "node", chainId) { }
+        public NodeSection(HttpClient httpClient) : base(httpClient, "node") { }
 
         /// <summary>
         /// Get Waves node version

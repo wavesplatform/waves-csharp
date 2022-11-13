@@ -4,7 +4,7 @@ namespace Waves.NET.Blocks
 {
     public class BlocksSection : SectionBase, IBlocksSection
     {
-        public BlocksSection(HttpClient httpClient, byte chainId) : base(httpClient, "blocks", chainId) { }
+        public BlocksSection(HttpClient httpClient) : base(httpClient, "blocks") { }
 
         /// <summary>
         /// Get a block by its ID

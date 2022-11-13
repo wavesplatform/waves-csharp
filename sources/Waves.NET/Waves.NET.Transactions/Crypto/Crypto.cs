@@ -1,5 +1,6 @@
 ﻿using Chaos.NaCl;
 using Nethereum.Util;
+using org.whispersystems.curve25519;
 using System.Security.Cryptography;
 using System.Text;
 using Waves.NET.Transactions.Common;
@@ -43,9 +44,9 @@ namespace Waves.NET.Transactions.Crypto
         }
 
         public static byte[] CreatePublicKeyFromPrivateKey(byte[] privateKey) => MontgomeryCurve25519.GetPublicKey(privateKey);
-        public static byte[] CreatePublicKeyFromPrivateKey(string privateKey) => CreatePublicKeyFromPrivateKey(new Base58String(privateKey).Bytes);
+        public static byte[] CreatePublicKeyFromPrivateKey(string privateKey) => CreatePublicKeyFromPrivateKey(new Base58(privateKey).Bytes);
 
-        public static byte[] CreateAddressFromPublicKey(byte[] publicKey, byte chainId)
+        public static byte[] CreateAddressFromPublicKey(byte chainId, byte[] publicKey)
         {
             const int HashSize = 20;
 
@@ -83,6 +84,11 @@ namespace Waves.NET.Transactions.Crypto
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static byte[] Sign(PrivateKey privateKey, byte[] message)
+        {
+            return Curve25519.getInstance(Curve25519.BEST).calculateSignature(privateKey, message);
         }
     }
 }
