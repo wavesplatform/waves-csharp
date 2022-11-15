@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Transactions.Crypto
 {
@@ -38,5 +39,8 @@ namespace Waves.NET.Transactions.Crypto
 
         public static bool IsAlias(string str) =>
             str.StartsWith(Prefix, StringComparison.OrdinalIgnoreCase) && IsValid(str);
+
+        public static implicit operator string(Alias x) => x.ToString();
+        public static explicit operator Alias(string x) => new(x);
     }
 }

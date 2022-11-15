@@ -2,7 +2,7 @@
 
 namespace Waves.NET.Transactions.Crypto
 {
-    public class Address : Base58, IRecipient
+    public class Address : Base58s, IRecipient
     {
         public const byte TYPE = 1;
 
@@ -17,6 +17,9 @@ namespace Waves.NET.Transactions.Crypto
 
         public static new Address As(string encoded) => new Address(encoded);
         public static new Address As(byte[] bytes) => new Address(bytes);
+
+        public static implicit operator string(Address x) => x.encoded;
+        public static explicit operator Address(string x) => new(x);
 
         public byte[] PublicKeyHash => Bytes[2..22];
 

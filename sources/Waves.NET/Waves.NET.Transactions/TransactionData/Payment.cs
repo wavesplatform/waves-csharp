@@ -1,8 +1,10 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Transactions
 {
     public record Payment
     {
-        public string AssetId { get; init; } = null!;
+        public Base58s AssetId { get; init; } = null!;
         public long Amount { get; init; }
     }
 }

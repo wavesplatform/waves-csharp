@@ -13,11 +13,11 @@ namespace Waves.NET.Tests
         public void PrivateAndPublicKeysGenearationTest()
         {
             var privateKey = Crypto.CreatePrivateKeyFromSeed(SeedPhrase, 0);
-            var publicKey = Crypto.CreatePublicKeyFromPrivateKey(new Base58(privateKey).ToString());
+            var publicKey = Crypto.CreatePublicKeyFromPrivateKey(new Base58s(privateKey).ToString());
             Assert.AreEqual(32, privateKey.Length);
             Assert.AreEqual(32, publicKey.Length);
-            Assert.AreEqual("3kMEhU5z3v8bmer1ERFUUhW58Dtuhyo9hE5vrhjqAWYT", new Base58(privateKey).ToString());
-            Assert.AreEqual("HBqhfdFASRQ5eBBpu2y6c6KKi1az6bMx8v1JxX4iW1Q8", new Base58(publicKey).ToString());
+            Assert.AreEqual("3kMEhU5z3v8bmer1ERFUUhW58Dtuhyo9hE5vrhjqAWYT", new Base58s(privateKey).ToString());
+            Assert.AreEqual("HBqhfdFASRQ5eBBpu2y6c6KKi1az6bMx8v1JxX4iW1Q8", new Base58s(publicKey).ToString());
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace Waves.NET.Tests
             var publicKey = Crypto.CreatePublicKeyFromPrivateKey(privateKey);
             var address = Crypto.CreateAddressFromPublicKey(ChainIds.MainNet, publicKey);
             Assert.AreEqual(26, address.Length);
-            Assert.AreEqual("3PPbMwqLtwBGcJrTA5whqJfY95GqnNnFMDX", new Base58(address).ToString());
+            Assert.AreEqual("3PPbMwqLtwBGcJrTA5whqJfY95GqnNnFMDX", new Base58s(address).ToString());
         }
 
         [TestMethod]

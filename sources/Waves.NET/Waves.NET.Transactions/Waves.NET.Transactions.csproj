@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="JsonConverters\StringJsonConverter.cs~RF12bc516c.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="curve25519-dotnet" Version="0.5.0" />
     <PackageReference Include="Google.Protobuf" Version="3.21.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

@@ -1,4 +1,5 @@
 ﻿using Waves.NET.Transactions.Crypto;
+using Waves.NET.Transactions;
 
 namespace Waves.NET.Transactions
 {

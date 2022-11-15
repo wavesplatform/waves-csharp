@@ -4,7 +4,7 @@ namespace Waves.NET.Transactions
 {
     public record BinaryEntry : DataEntry
     {
-        public Base64 Value { get; init; } = null!;
+        public Base64s Value { get; init; } = null!;
 
         public BinaryEntry()
         {

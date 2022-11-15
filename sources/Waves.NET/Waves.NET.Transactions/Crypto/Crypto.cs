@@ -44,7 +44,7 @@ namespace Waves.NET.Transactions.Crypto
         }
 
         public static byte[] CreatePublicKeyFromPrivateKey(byte[] privateKey) => MontgomeryCurve25519.GetPublicKey(privateKey);
-        public static byte[] CreatePublicKeyFromPrivateKey(string privateKey) => CreatePublicKeyFromPrivateKey(new Base58(privateKey).Bytes);
+        public static byte[] CreatePublicKeyFromPrivateKey(string privateKey) => CreatePublicKeyFromPrivateKey(new Base58s(privateKey).Bytes);
 
         public static byte[] CreateAddressFromPublicKey(byte chainId, byte[] publicKey)
         {

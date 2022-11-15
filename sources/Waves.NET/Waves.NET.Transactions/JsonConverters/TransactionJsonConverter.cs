@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Waves.NET.Transactions.TransactionData;
 
 namespace Waves.NET.Transactions.JsonConverters
 {
@@ -14,24 +15,24 @@ namespace Waves.NET.Transactions.JsonConverters
                 var jO = JObject.Load(reader);
                 var type = jO.Value<int>("type");
 
-                switch (type)
+                switch ((TransactionType)type)
                 {
-                    case 1: transaction = new GenesisTransaction(); break;
-                    case 3: transaction = new IssueTransaction(); break;
-                    case 4: transaction = new TransferTransaction(); break;
-                    case 5: transaction = new ReissueTransaction(); break;
-                    case 6: transaction = new BurnTransaction(); break;
-                    case 7: transaction = new ExchangeTransaction(); break;
-                    case 8: transaction = new LeaseTransaction(); break;
-                    case 9: transaction = new LeaseCancelTransaction(); break;
-                    case 10: transaction = new CreateAliasTransaction(); break;
-                    case 11: transaction = new MassTransferTransaction(); break;
-                    case 12: transaction = new DataTransaction(); break;
-                    case 13: transaction = new SetScriptTransaction(); break;
-                    case 14: transaction = new SponsorFeeTransaction(); break;
-                    case 15: transaction = new SetAssetScriptTransaction(); break;
-                    case 16: transaction = new InvokeScriptTransaction(); break;
-                    case 17: transaction = new UpdateAssetInfoTransaction(); break;
+                    case TransactionType.Genesis: transaction = new GenesisTransaction(); break;
+                    case TransactionType.Issue: transaction = new IssueTransaction(); break;
+                    case TransactionType.Transfer: transaction = new TransferTransaction(); break;
+                    case TransactionType.Reissue: transaction = new ReissueTransaction(); break;
+                    case TransactionType.Burn: transaction = new BurnTransaction(); break;
+                    case TransactionType.Exchange: transaction = new ExchangeTransaction(); break;
+                    case TransactionType.Lease: transaction = new LeaseTransaction(); break;
+                    case TransactionType.LeaseCancel: transaction = new LeaseCancelTransaction(); break;
+                    case TransactionType.CreateAlias: transaction = new CreateAliasTransaction(); break;
+                    case TransactionType.MassTransfer: transaction = new MassTransferTransaction(); break;
+                    case TransactionType.Data: transaction = new DataTransaction(); break;
+                    case TransactionType.SetScript: transaction = new SetScriptTransaction(); break;
+                    case TransactionType.SponsorFee: transaction = new SponsorFeeTransaction(); break;
+                    case TransactionType.SetAssetScript: transaction = new SetAssetScriptTransaction(); break;
+                    case TransactionType.InvokeScript: transaction = new InvokeScriptTransaction(); break;
+                    case TransactionType.UpdateAssetInfo: transaction = new UpdateAssetInfoTransaction(); break;
                 }
 
                 if(transaction is not null)

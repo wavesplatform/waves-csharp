@@ -3,7 +3,7 @@ using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Transactions.Crypto
 {
-    public class PrivateKey : Base58
+    public class PrivateKey : Base58s
     {
         public static int Length = 32;
 

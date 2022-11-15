@@ -1,6 +1,6 @@
 ﻿namespace Waves.NET.Transactions.Common
 {
-    public abstract class ByteString
+    public abstract class ByteStr
     {
         protected byte[] bytes = null!;
         protected string encoded = null!;

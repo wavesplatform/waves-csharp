@@ -24,7 +24,7 @@ namespace Waves.NET.Transactions.JsonConverters
                     case "string": return new StringEntry { Key = key!, Type = type, Value = jt.Value<string>("value")! };
                     case "boolean": return new BooleanEntry { Key = key!, Type = type, Value = jt.Value<bool>("value")! };
                     case "integer": return new IntegerEntry { Key = key!, Type = type, Value = jt.Value<long>("value")! };
-                    case "binary": return new BinaryEntry { Key = key!, Type = type, Value = Base64.As(jt.Value<string>("value")!) };
+                    case "binary": return new BinaryEntry { Key = key!, Type = type, Value = Base64s.As(jt.Value<string>("value")!) };
                 }
             }
 
