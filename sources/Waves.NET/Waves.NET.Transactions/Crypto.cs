@@ -1,13 +1,16 @@
 ﻿using Chaos.NaCl;
 using Nethereum.Util;
 using org.whispersystems.curve25519;
+using Org.BouncyCastle.Crypto;
+using System;
 using System.Security.Cryptography;
 using System.Text;
+using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
 using HashAlgorithm = NSec.Cryptography.HashAlgorithm;
 
-namespace Waves.NET.Transactions.Crypto
+namespace Waves.NET
 {
     public static class Crypto
     {
@@ -64,12 +67,13 @@ namespace Waves.NET.Transactions.Crypto
 
             using var ms = new MemoryStream(26);
             using var bw = new BinaryWriter(ms);
-            bw.Write((byte)1);
+            bw.WriteByte(1);
             bw.Write(chainId);
             bw.Write(hash, 0, HashSize);
 
             var checksum = CalculateBlake2bKeccackHash(ms.ToArray());
             bw.Write(checksum, 0, 4);
+
             return ms.ToArray();
         }
 
@@ -89,6 +93,11 @@ namespace Waves.NET.Transactions.Crypto
         public static byte[] Sign(PrivateKey privateKey, byte[] message)
         {
             return Curve25519.getInstance(Curve25519.BEST).calculateSignature(privateKey, message);
+        }
+
+        public static bool IsProofValid(byte[] publicKey, byte[] message, byte[] signature)
+        {
+            return Curve25519.getInstance(Curve25519.BEST).verifySignature(publicKey, message, signature);
         }
     }
 }

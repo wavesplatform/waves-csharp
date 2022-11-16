@@ -13,7 +13,7 @@ namespace Waves.NET.Transactions
             Transaction.Reissuable = reissuable;
         }
 
-        public static ReissueTransactionBuilder Data(Base58s assetId, long quantity, bool reissuable)
+        public static ReissueTransactionBuilder Params(Base58s assetId, long quantity, bool reissuable)
         {
             return new ReissueTransactionBuilder(assetId, quantity, reissuable);
         }

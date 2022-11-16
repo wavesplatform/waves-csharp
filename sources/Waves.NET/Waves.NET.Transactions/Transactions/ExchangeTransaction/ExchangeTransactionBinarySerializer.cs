@@ -4,10 +4,9 @@ namespace Waves.NET.Transactions
 {
     public class ExchangeTransactionBinarySerializer : TransactionBinarySerializer
     {
-        protected override Dictionary<int, TransactionSchema> VersionToSchemaMap =>
-            new Dictionary<int, TransactionSchema> { { 1, TransactionSchema.Signature }, { 2, TransactionSchema.Proofs }, { 3, TransactionSchema.Protobuf } };
+        protected override IList<int> SupportedVersions => new List<int> { 3 };
 
-        protected override void SerializeToProtobufSchema(TransactionProto proto, Transaction transaction)
+        protected override void SerializeInner(TransactionProto proto, Transaction transaction)
         {
             var tx = (IExchangeTransaction)transaction;
             var p = new ExchangeTransactionData();
@@ -22,19 +21,9 @@ namespace Waves.NET.Transactions
             proto.Exchange = p;
         }
 
-        protected override void SerializeToProofsSchema(BinaryWriter bw, Transaction transaction)
+        private Waves.OrderProto OrderToProtobuf(Order order)
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void SerializeToSignatureSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
-        private Waves.Order OrderToProtobuf(Order order)
-        {
-            return new Waves.Order
+            return new Waves.OrderProto
             {
                 MatcherPublicKey = ByteString.CopyFrom(order.MatcherPublicKey.Bytes),
                 AssetPair = new Waves.AssetPair
@@ -42,7 +31,7 @@ namespace Waves.NET.Transactions
                     AmountAssetId = ByteString.CopyFromUtf8(order.AssetPair.AmountAsset),
                     PriceAssetId = ByteString.CopyFromUtf8(order.AssetPair.PriceAsset)
                 },
-                OrderSide = order.OrderType == OrderType.Buy ? Waves.Order.Types.Side.Buy : Waves.Order.Types.Side.Sell,
+                OrderSide = order.OrderType == OrderType.Buy ? Waves.OrderProto.Types.Side.Buy : Waves.OrderProto.Types.Side.Sell,
                 Amount = order.Amount,
                 Price = order.Price,
                 Expiration = order.Expiration,

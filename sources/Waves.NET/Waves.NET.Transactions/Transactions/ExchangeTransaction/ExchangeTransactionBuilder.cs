@@ -14,7 +14,7 @@
             Transaction.SellMatcherFee = sellMatcherFee;
         }
 
-        public static ExchangeTransactionBuilder Data(Order order1, Order order2, long amount, long price, long buyMatcherFee, long sellMatcherFee)
+        public static ExchangeTransactionBuilder Params(Order order1, Order order2, long amount, long price, long buyMatcherFee, long sellMatcherFee)
         {
             return new ExchangeTransactionBuilder(order1, order2, amount, price, buyMatcherFee, sellMatcherFee);
         }

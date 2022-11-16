@@ -4,7 +4,7 @@ namespace Waves.NET.Transactions
 {
     public class DataTransactionInfo : TransactionInfo
     {
-        public DataTransactionInfo(DataTransaction transaction, string? applicationStatus, int height) : base(transaction, applicationStatus, height) { }
+        public DataTransactionInfo(DataTransaction transaction, ApplicationStatus? applicationStatus, int height) : base(transaction, applicationStatus, height) { }
 
         public override DataTransaction Transaction => (DataTransaction)base.Transaction;
     }

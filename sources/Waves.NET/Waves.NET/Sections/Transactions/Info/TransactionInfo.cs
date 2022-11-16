@@ -8,7 +8,7 @@ namespace Waves.NET.Transactions.Info
     {
         public int Height { get; init; }
 
-        public TransactionInfo(Transaction transaction, string? applicationStatus, int height) : base(transaction, applicationStatus)
+        public TransactionInfo(Transaction transaction, ApplicationStatus? applicationStatus, int height) : base(transaction, applicationStatus)
         {
             Height = height == 0 && Transaction.Type == GenesisTransaction.TYPE ? 1 : height;
         }

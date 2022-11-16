@@ -18,6 +18,7 @@ namespace Waves.NET.Transactions.JsonConverters
                 switch ((TransactionType)type)
                 {
                     case TransactionType.Genesis: transaction = new GenesisTransaction(); break;
+                    case TransactionType.Payment: transaction = new PaymentTransaction(); break;
                     case TransactionType.Issue: transaction = new IssueTransaction(); break;
                     case TransactionType.Transfer: transaction = new TransferTransaction(); break;
                     case TransactionType.Reissue: transaction = new ReissueTransaction(); break;
@@ -33,6 +34,7 @@ namespace Waves.NET.Transactions.JsonConverters
                     case TransactionType.SetAssetScript: transaction = new SetAssetScriptTransaction(); break;
                     case TransactionType.InvokeScript: transaction = new InvokeScriptTransaction(); break;
                     case TransactionType.UpdateAssetInfo: transaction = new UpdateAssetInfoTransaction(); break;
+                    case TransactionType.Ethereum: transaction = new EthereumTransaction(); break;
                 }
 
                 if(transaction is not null)

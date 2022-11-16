@@ -12,7 +12,7 @@ namespace Waves.NET.Transactions
             Transaction.Script = script;
         }
 
-        public static SetAssetScriptTransactionBuilder Data(Base58s assetId, string script)
+        public static SetAssetScriptTransactionBuilder Params(Base58s assetId, string script)
         {
             return new SetAssetScriptTransactionBuilder(assetId, script);
         }

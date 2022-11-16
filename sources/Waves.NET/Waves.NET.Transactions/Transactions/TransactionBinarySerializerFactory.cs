@@ -4,12 +4,14 @@ namespace Waves.NET.Transactions
 {
     public sealed class TransactionBinarySerializerFactory
     {
-        private readonly IDictionary<TransactionType, Lazy<ITransactionBinarySerializer>> _serializers;
+        private readonly Dictionary<TransactionType, Lazy<ITransactionBinarySerializer>> _serializers;
 
-        public ITransactionBinarySerializer Get(Transaction transaction)
+        public ITransactionBinarySerializer GetFor(Transaction transaction) => Get((TransactionType)transaction.Type);
+
+        public ITransactionBinarySerializer Get(TransactionType transactionType)
         {
-            var lazy = GetSerializer((TransactionType)transaction.Type);
-            if (lazy == null) throw new NotSupportedException($"Transaction type {transaction.Type} is not supported.");
+            var lazy = _serializers.GetValueOrDefault(transactionType);
+            if (lazy == null) throw new NotSupportedException($"Transaction type {transactionType} is not supported.");
             return lazy.Value;
         }
 
@@ -32,11 +34,6 @@ namespace Waves.NET.Transactions
             _serializers.Add(TransactionType.SetAssetScript, new Lazy<ITransactionBinarySerializer>(() => new SetAssetScriptTransactionBinarySerializer()));
             _serializers.Add(TransactionType.InvokeScript, new Lazy<ITransactionBinarySerializer>(() => new InvokeScriptTransactionBinarySerializer()));
             _serializers.Add(TransactionType.UpdateAssetInfo, new Lazy<ITransactionBinarySerializer>(() => new UpdateAssetInfoTransactionBinarySerializer()));
-        }
-
-        private Lazy<ITransactionBinarySerializer>? GetSerializer(TransactionType transactionType)
-        {
-            return _serializers.ContainsKey(transactionType) ? _serializers[transactionType] : null;
         }
     }
 }

@@ -4,14 +4,16 @@
     {
         public virtual Transaction Transaction { get; init; }
 
-        public string ApplicationStatus { get; init; }
+        public ApplicationStatus ApplicationStatus { get; init; }
 
-        public TransactionWithStatus(Transaction transaction, string? applicationStatus)
+        public TransactionWithStatus(Transaction transaction, ApplicationStatus? applicationStatus)
         {
             if(transaction is null) throw new ArgumentNullException("Argument 'transaction' cannot be null.");
 
             Transaction = transaction;
-            ApplicationStatus = string.IsNullOrWhiteSpace(applicationStatus) ? "succeeded" : applicationStatus;
+            ApplicationStatus = applicationStatus is null || applicationStatus == ApplicationStatus.NotSet
+                ? ApplicationStatus.Succeeded
+                : applicationStatus.Value;
         }
     }
 }

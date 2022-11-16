@@ -16,7 +16,7 @@ namespace Waves.NET.Transactions.JsonConverters
 
                 if(string.IsNullOrWhiteSpace(type))
                 {
-                    return new DeleteEntry { Key = key!, Value = jt.Value<string>("value") };
+                    return new DeleteEntry { Key = key!, Value = jt.Value<object>("value") };
                 }
 
                 switch (type.ToLower())

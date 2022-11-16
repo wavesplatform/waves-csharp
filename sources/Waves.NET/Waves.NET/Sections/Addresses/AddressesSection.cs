@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Waves.NET.Addresses.ReturnTypes;
 using Waves.NET.Transactions;
-using Waves.NET.Transactions.Crypto;
+using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Addresses

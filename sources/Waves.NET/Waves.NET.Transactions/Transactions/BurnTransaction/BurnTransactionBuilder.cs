@@ -12,7 +12,7 @@ namespace Waves.NET.Transactions
             Transaction.AssetId = assetId;
         }
 
-        public BurnTransactionBuilder Data(Base58s assetId, long amount)
+        public static BurnTransactionBuilder Params(Base58s assetId, long amount)
         {
             return new BurnTransactionBuilder(assetId, amount);
         }

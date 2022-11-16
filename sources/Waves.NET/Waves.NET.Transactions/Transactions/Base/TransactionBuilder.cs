@@ -1,5 +1,4 @@
 ﻿using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions.Crypto;
 
 namespace Waves.NET.Transactions
 {
@@ -14,7 +13,6 @@ namespace Waves.NET.Transactions
         protected PublicKey SenderPublicKey { get; private set; }
         protected long Timestamp { get; private set; }
         protected ICollection<Base58s> Proofs { get; private set; } = new LinkedList<Base58s>();
-        private PrivateKey? Signer { get; set; }
 
         protected T Transaction { get; private set; } = new();
 
@@ -25,7 +23,7 @@ namespace Waves.NET.Transactions
             Fee = defaultFee;
             ExtraFee = 0;
             SenderPublicKey = PublicKey.Zero;
-            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            Timestamp = 0;
             Proofs = new List<Base58s>();
 
             Transaction.Type = transactionType;
@@ -37,26 +35,6 @@ namespace Waves.NET.Transactions
             if (string.IsNullOrWhiteSpace(proof)) return (TB)this;
 
             Proofs.Add(proof);
-
-            return (TB)this;
-        }
-
-        public TB SignedWith(PrivateKey signer)
-        {
-            if (SenderPublicKey is null || SenderPublicKey.IsZero)
-            {
-                SenderPublicKey = signer.PublicKey;
-            }
-
-            Signer = signer;
-
-            return GetUnsigned();
-        }
-
-        public TB GetUnsigned()
-        {
-            if (Timestamp == 0)
-                Timestamp = DateTime.UtcNow.Millisecond;
 
             return (TB)this;
         }
@@ -91,8 +69,25 @@ namespace Waves.NET.Transactions
             return (TB)this;
         }
 
-        public T Build()
+        public T GetSignedWith(PrivateKey signer)
         {
+            if (SenderPublicKey is null || SenderPublicKey.IsZero)
+            {
+                SenderPublicKey = signer.PublicKey;
+            }
+
+            var tx = GetUnsigned();
+            var bodyBytes = _transactionBinarySerializerFactory.GetFor(tx).Serialize(tx);
+            tx.Proofs.Add(new Base58s(signer.Sign(bodyBytes)));
+
+            return tx;
+        }
+
+        public T GetUnsigned()
+        {
+            if (Timestamp == 0)
+                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
             Transaction.Sender = Address.FromPublicKey(ChainId, SenderPublicKey);
             Transaction.SenderPublicKey = SenderPublicKey;
             Transaction.Fee = Fee + ExtraFee;
@@ -100,13 +95,6 @@ namespace Waves.NET.Transactions
             Transaction.Proofs = Proofs;
             Transaction.Version = Version;
             Transaction.ChainId = ChainId;
-
-            if (Signer is not null)
-            {
-                var binTx = _transactionBinarySerializerFactory.Get(Transaction).Serialize(Transaction);
-                AddProof(new Base58s(Signer.Sign(binTx)));
-            }
-            else { } //TODO!
 
             return Transaction;
         }

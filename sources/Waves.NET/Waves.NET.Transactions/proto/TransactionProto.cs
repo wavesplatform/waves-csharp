@@ -5471,12 +5471,12 @@ namespace Waves {
 
     /// <summary>Field number for the "orders" field.</summary>
     public const int OrdersFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::Waves.Order> _repeated_orders_codec
-        = pb::FieldCodec.ForMessage(42, global::Waves.Order.Parser);
-    private readonly pbc::RepeatedField<global::Waves.Order> orders_ = new pbc::RepeatedField<global::Waves.Order>();
+    private static readonly pb::FieldCodec<global::Waves.OrderProto> _repeated_orders_codec
+        = pb::FieldCodec.ForMessage(42, global::Waves.OrderProto.Parser);
+    private readonly pbc::RepeatedField<global::Waves.OrderProto> orders_ = new pbc::RepeatedField<global::Waves.OrderProto>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Waves.Order> Orders {
+    public pbc::RepeatedField<global::Waves.OrderProto> Orders {
       get { return orders_; }
     }
 

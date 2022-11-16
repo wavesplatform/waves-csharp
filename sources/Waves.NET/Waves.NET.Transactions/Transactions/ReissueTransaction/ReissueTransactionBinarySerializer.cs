@@ -4,10 +4,9 @@ namespace Waves.NET.Transactions
 {
     public class ReissueTransactionBinarySerializer : TransactionBinarySerializer
     {
-        protected override Dictionary<int, TransactionSchema> VersionToSchemaMap =>
-            new Dictionary<int, TransactionSchema> { { 1, TransactionSchema.Signature }, { 2, TransactionSchema.Proofs }, { 3, TransactionSchema.Protobuf } };
+        protected override IList<int> SupportedVersions => new List<int> { 3 };
 
-        protected override void SerializeToProtobufSchema(TransactionProto proto, Transaction transaction)
+        protected override void SerializeInner(TransactionProto proto, Transaction transaction)
         {
             var tx = (IReissueTransaction)transaction;
             proto.Reissue = new ReissueTransactionData();
@@ -17,16 +16,6 @@ namespace Waves.NET.Transactions
                 Amount_ = tx.Amount,
                 AssetId = ByteString.CopyFromUtf8(tx.AssetId)
             };
-        }
-
-        protected override void SerializeToProofsSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SerializeToSignatureSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,6 @@
         public string Status { get; init; } = null!;
         public int Height { get; init; }
         public int Confirmations { get; init; }
-        public string ApplicationStatus { get; init; } = null!;
+        public ApplicationStatus ApplicationStatus { get; init; }
     }
 }

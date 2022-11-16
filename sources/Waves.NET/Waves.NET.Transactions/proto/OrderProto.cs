@@ -44,7 +44,7 @@ namespace Waves {
           new pbr::FileDescriptor[] { global::Waves.AmountReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.AssetPair), global::Waves.AssetPair.Parser, new[]{ "AmountAssetId", "PriceAssetId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.Order), global::Waves.Order.Parser, new[]{ "ChainId", "MatcherPublicKey", "AssetPair", "OrderSide", "Amount", "Price", "Timestamp", "Expiration", "MatcherFee", "Version", "Proofs", "PriceMode", "SenderPublicKey", "Eip712Signature" }, new[]{ "Sender" }, new[]{ typeof(global::Waves.Order.Types.Side), typeof(global::Waves.Order.Types.PriceMode) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.OrderProto), global::Waves.OrderProto.Parser, new[]{ "ChainId", "MatcherPublicKey", "AssetPair", "OrderSide", "Amount", "Price", "Timestamp", "Expiration", "MatcherFee", "Version", "Proofs", "PriceMode", "SenderPublicKey", "Eip712Signature" }, new[]{ "Sender" }, new[]{ typeof(global::Waves.OrderProto.Types.Side), typeof(global::Waves.OrderProto.Types.PriceMode) }, null, null)
           }));
     }
     #endregion
@@ -277,16 +277,16 @@ namespace Waves {
 
   }
 
-  public sealed partial class Order : pb::IMessage<Order>
+  public sealed partial class OrderProto : pb::IMessage<OrderProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Order> _parser = new pb::MessageParser<Order>(() => new Order());
+    private static readonly pb::MessageParser<OrderProto> _parser = new pb::MessageParser<OrderProto>(() => new OrderProto());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Order> Parser { get { return _parser; } }
+    public static pb::MessageParser<OrderProto> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -302,7 +302,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Order() {
+    public OrderProto() {
       OnConstruction();
     }
 
@@ -310,7 +310,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Order(Order other) : this() {
+    public OrderProto(OrderProto other) : this() {
       chainId_ = other.chainId_;
       matcherPublicKey_ = other.matcherPublicKey_;
       assetPair_ = other.assetPair_ != null ? other.assetPair_.Clone() : null;
@@ -337,8 +337,8 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Order Clone() {
-      return new Order(this);
+    public OrderProto Clone() {
+      return new OrderProto(this);
     }
 
     /// <summary>Field number for the "chain_id" field.</summary>
@@ -379,10 +379,10 @@ namespace Waves {
 
     /// <summary>Field number for the "order_side" field.</summary>
     public const int OrderSideFieldNumber = 5;
-    private global::Waves.Order.Types.Side orderSide_ = global::Waves.Order.Types.Side.Buy;
+    private global::Waves.OrderProto.Types.Side orderSide_ = global::Waves.OrderProto.Types.Side.Buy;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Waves.Order.Types.Side OrderSide {
+    public global::Waves.OrderProto.Types.Side OrderSide {
       get { return orderSide_; }
       set {
         orderSide_ = value;
@@ -474,10 +474,10 @@ namespace Waves {
 
     /// <summary>Field number for the "price_mode" field.</summary>
     public const int PriceModeFieldNumber = 14;
-    private global::Waves.Order.Types.PriceMode priceMode_ = global::Waves.Order.Types.PriceMode.Default;
+    private global::Waves.OrderProto.Types.PriceMode priceMode_ = global::Waves.OrderProto.Types.PriceMode.Default;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Waves.Order.Types.PriceMode PriceMode {
+    public global::Waves.OrderProto.Types.PriceMode PriceMode {
       get { return priceMode_; }
       set {
         priceMode_ = value;
@@ -532,12 +532,12 @@ namespace Waves {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Order);
+      return Equals(other as OrderProto);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Order other) {
+    public bool Equals(OrderProto other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -569,7 +569,7 @@ namespace Waves {
       if (ChainId != 0) hash ^= ChainId.GetHashCode();
       if (MatcherPublicKey.Length != 0) hash ^= MatcherPublicKey.GetHashCode();
       if (assetPair_ != null) hash ^= AssetPair.GetHashCode();
-      if (OrderSide != global::Waves.Order.Types.Side.Buy) hash ^= OrderSide.GetHashCode();
+      if (OrderSide != global::Waves.OrderProto.Types.Side.Buy) hash ^= OrderSide.GetHashCode();
       if (Amount != 0L) hash ^= Amount.GetHashCode();
       if (Price != 0L) hash ^= Price.GetHashCode();
       if (Timestamp != 0L) hash ^= Timestamp.GetHashCode();
@@ -577,7 +577,7 @@ namespace Waves {
       if (matcherFee_ != null) hash ^= MatcherFee.GetHashCode();
       if (Version != 0) hash ^= Version.GetHashCode();
       hash ^= proofs_.GetHashCode();
-      if (PriceMode != global::Waves.Order.Types.PriceMode.Default) hash ^= PriceMode.GetHashCode();
+      if (PriceMode != global::Waves.OrderProto.Types.PriceMode.Default) hash ^= PriceMode.GetHashCode();
       if (senderCase_ == SenderOneofCase.SenderPublicKey) hash ^= SenderPublicKey.GetHashCode();
       if (senderCase_ == SenderOneofCase.Eip712Signature) hash ^= Eip712Signature.GetHashCode();
       hash ^= (int) senderCase_;
@@ -678,7 +678,7 @@ namespace Waves {
         output.WriteRawTag(34);
         output.WriteMessage(AssetPair);
       }
-      if (OrderSide != global::Waves.Order.Types.Side.Buy) {
+      if (OrderSide != global::Waves.OrderProto.Types.Side.Buy) {
         output.WriteRawTag(40);
         output.WriteEnum((int) OrderSide);
       }
@@ -711,7 +711,7 @@ namespace Waves {
         output.WriteRawTag(106);
         output.WriteBytes(Eip712Signature);
       }
-      if (PriceMode != global::Waves.Order.Types.PriceMode.Default) {
+      if (PriceMode != global::Waves.OrderProto.Types.PriceMode.Default) {
         output.WriteRawTag(112);
         output.WriteEnum((int) PriceMode);
       }
@@ -734,7 +734,7 @@ namespace Waves {
       if (assetPair_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(AssetPair);
       }
-      if (OrderSide != global::Waves.Order.Types.Side.Buy) {
+      if (OrderSide != global::Waves.OrderProto.Types.Side.Buy) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) OrderSide);
       }
       if (Amount != 0L) {
@@ -756,7 +756,7 @@ namespace Waves {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Version);
       }
       size += proofs_.CalculateSize(_repeated_proofs_codec);
-      if (PriceMode != global::Waves.Order.Types.PriceMode.Default) {
+      if (PriceMode != global::Waves.OrderProto.Types.PriceMode.Default) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PriceMode);
       }
       if (senderCase_ == SenderOneofCase.SenderPublicKey) {
@@ -773,7 +773,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Order other) {
+    public void MergeFrom(OrderProto other) {
       if (other == null) {
         return;
       }
@@ -789,7 +789,7 @@ namespace Waves {
         }
         AssetPair.MergeFrom(other.AssetPair);
       }
-      if (other.OrderSide != global::Waves.Order.Types.Side.Buy) {
+      if (other.OrderSide != global::Waves.OrderProto.Types.Side.Buy) {
         OrderSide = other.OrderSide;
       }
       if (other.Amount != 0L) {
@@ -814,7 +814,7 @@ namespace Waves {
         Version = other.Version;
       }
       proofs_.Add(other.proofs_);
-      if (other.PriceMode != global::Waves.Order.Types.PriceMode.Default) {
+      if (other.PriceMode != global::Waves.OrderProto.Types.PriceMode.Default) {
         PriceMode = other.PriceMode;
       }
       switch (other.SenderCase) {
@@ -938,7 +938,7 @@ namespace Waves {
             break;
           }
           case 40: {
-            OrderSide = (global::Waves.Order.Types.Side) input.ReadEnum();
+            OrderSide = (global::Waves.OrderProto.Types.Side) input.ReadEnum();
             break;
           }
           case 48: {
@@ -977,7 +977,7 @@ namespace Waves {
             break;
           }
           case 112: {
-            PriceMode = (global::Waves.Order.Types.PriceMode) input.ReadEnum();
+            PriceMode = (global::Waves.OrderProto.Types.PriceMode) input.ReadEnum();
             break;
           }
         }

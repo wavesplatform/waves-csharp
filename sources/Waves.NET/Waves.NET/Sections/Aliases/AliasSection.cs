@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Alias
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Aliases
 {
     public class AliasSection : SectionBase, IAliasSection
     {
@@ -9,7 +11,7 @@
         /// </summary>
         /// <param name="address">Address base58 encoded</param>
         /// <returns></returns>
-        public ICollection<string> GetAliasesByAddress(string address)
+        public ICollection<string> GetAliasesByAddress(Address address)
         {
             return PublicRequest<ICollection<string>>(HttpMethod.Get, "by-address/" + address);
         }
@@ -19,7 +21,7 @@
         /// </summary>
         /// <param name="alias">Alias</param>
         /// <returns></returns>
-        public string GetAddressByAlias(string alias)
+        public Address GetAddressByAlias(string alias)
         {
             return PublicRequest<dynamic>(HttpMethod.Get, "by-alias/" + alias).address;
         }

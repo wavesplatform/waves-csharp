@@ -22,6 +22,7 @@ namespace Waves.NET.Transactions.Common
         public static Base58s As(string encoded) => new Base58s(encoded);
         public static Base58s As(byte[] bytes) => new Base58s(bytes);
 
+        public static Base58s Empty => new Base58s("");
 
         public static implicit operator byte[](Base58s x) => x.bytes;
         public static explicit operator Base58s(byte[] x) => new(x);

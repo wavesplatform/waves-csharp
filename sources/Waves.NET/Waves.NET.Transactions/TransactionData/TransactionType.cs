@@ -3,6 +3,7 @@
     public enum TransactionType : int
     {
         Genesis = 1,
+        Payment = 2,
         Issue = 3,
         Transfer = 4,
         Reissue = 5,
@@ -18,5 +19,6 @@
         SetAssetScript = 15,
         InvokeScript = 16,
         UpdateAssetInfo = 17,
+        Ethereum = 18
     }
 }

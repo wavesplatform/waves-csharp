@@ -14,7 +14,7 @@ namespace Waves.NET.Transactions
             Transaction.StateChanges = stateChanges;
         }
 
-        public static InvokeScriptTransactionBuilder Data(IRecipient dApp, ICollection<Payment> payment, Call call, StateChanges stateChanges)
+        public static InvokeScriptTransactionBuilder Params(IRecipient dApp, ICollection<Payment> payment, Call call, StateChanges stateChanges)
         {
             return new InvokeScriptTransactionBuilder(dApp, payment, call, stateChanges);
         }

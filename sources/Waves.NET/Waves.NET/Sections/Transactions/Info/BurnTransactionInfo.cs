@@ -4,7 +4,7 @@ namespace Waves.NET.Transactions
 {
     public class BurnTransactionInfo : TransactionInfo
     {
-        public BurnTransactionInfo(BurnTransaction transaction, string? applicationStatus, int height) : base(transaction, applicationStatus, height) {}
+        public BurnTransactionInfo(BurnTransaction transaction, ApplicationStatus? applicationStatus, int height) : base(transaction, applicationStatus, height) {}
 
         public override BurnTransaction Transaction => (BurnTransaction)base.Transaction;
     }

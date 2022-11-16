@@ -1,16 +1,14 @@
 ﻿using Google.Protobuf;
 using System.Text;
 using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions.Crypto;
 
 namespace Waves.NET.Transactions
 {
     public class InvokeScriptTransactionBinarySerializer : TransactionBinarySerializer
     {
-        protected override Dictionary<int, TransactionSchema> VersionToSchemaMap =>
-            new Dictionary<int, TransactionSchema> { { 1, TransactionSchema.Signature }, { 2, TransactionSchema.Protobuf } };
+        protected override IList<int> SupportedVersions => new List<int> { 2 };
 
-        protected override void SerializeToProtobufSchema(TransactionProto proto, Transaction transaction)
+        protected override void SerializeInner(TransactionProto proto, Transaction transaction)
         {
             var tx = (IInvokeScriptTransaction)transaction;
             proto.InvokeScript = new InvokeScriptTransactionData();
@@ -21,41 +19,39 @@ namespace Waves.NET.Transactions
             proto.InvokeScript.FunctionCall = ByteString.FromStream(CreateFunctionData(tx.Call));
         }
 
-        protected override void SerializeToProofsSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SerializeToSignatureSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
         private Stream CreateFunctionData(Call call)
         {
             using var ms = new MemoryStream();
             using var bw = new BinaryWriter(ms);
 
-            bw.Write((byte)1);
-            bw.Write((byte)9);
-            bw.Write((byte)1);
+            bw.WriteByte(1);
+            bw.WriteByte(9);
+            bw.WriteByte(1);
             bw.Write(call.Function.Length);
             bw.Write(Encoding.UTF8.GetBytes(call.Function));
 
-            WriteArgs(bw, call.Args);
+            WriteArgsWithCount(bw, call.Args);
 
             return ms;
         }
 
-        private void WriteArgs(BinaryWriter bw, ICollection<CallArgs> args)
+        private void WriteArgsWithCount(BinaryWriter bw, ICollection<CallArgs> args)
         {
+            bw.Write(args.Count);
             foreach (var arg in args)
             {
                 if (arg.Type == CallArgType.Boolean)
                 {
-                    var boolVal = (bool)arg.Value;
-                    bw.Write(boolVal ? 6 : 7);
-                    bw.Write(boolVal ? 1 : 0);
+                    if((bool)arg.Value)
+                    {
+                        bw.WriteByte(6);
+                        bw.WriteByte(1);
+                    }
+                    else
+                    {
+                        bw.WriteByte(7);
+                        bw.WriteByte(0);
+                    }
                     continue;
                 }
 
@@ -76,8 +72,7 @@ namespace Waves.NET.Transactions
                         break;
                     case CallArgType.List:
                         var list = (List<CallArgs>)arg.Value;
-                        bw.Write(list.Count);
-                        WriteArgs(bw, list);
+                        WriteArgsWithCount(bw, list);
                         break;
                 }
             }

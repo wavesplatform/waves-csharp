@@ -8,6 +8,6 @@ namespace Waves.NET.Transactions
         Base58s? AssetId { get; set; }
         Base58s? FeeAsset { get; set; }
         long Amount { get; set; }
-        Base58s? Attachment { get; set; }
+        string Attachment { get; set; }
     }
 }

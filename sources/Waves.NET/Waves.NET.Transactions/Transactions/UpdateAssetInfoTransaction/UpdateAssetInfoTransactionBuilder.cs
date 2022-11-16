@@ -13,7 +13,7 @@ namespace Waves.NET.Transactions
             Transaction.Description = description;
         }
 
-        public static UpdateAssetInfoTransactionBuilder Data(Base58s assetId, string name, string description)
+        public static UpdateAssetInfoTransactionBuilder Params(Base58s assetId, string name, string description)
         {
             return new UpdateAssetInfoTransactionBuilder(assetId, name, description);
         }

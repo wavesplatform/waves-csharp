@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Transactions.Crypto
+namespace Waves.NET.Transactions.Common
 {
     public class Alias : IRecipient
     {
@@ -19,14 +18,17 @@ namespace Waves.NET.Transactions.Crypto
         public string Name { get; init; }
         public byte[] Bytes { get; init; }
 
-        public override string ToString() => $"{Prefix}{(char)Bytes[1]}:{Name}";
+        public string ToStringWithPrefix() => $"{Prefix}{(char)Bytes[1]}:{Name}";
+        public override string ToString() => $"{Name}";
 
         public Alias(string name) : this(WavesConfig.ChainId, name) { }
 
         public Alias(byte chainId, string name)
         {
             Name = name.Replace($"{Prefix}{(char)chainId}:", "");
-            Bytes = new [] { Type, chainId }.Concat(Encoding.UTF8.GetBytes(name)).ToArray();
+            Bytes = new byte[] { Type, chainId }
+                .Concat(BitConverter.GetBytes((short)Name.Length))
+                .Concat(Encoding.UTF8.GetBytes(name)).ToArray();
         }
 
         public static bool IsValid(string alias) => IsValid(WavesConfig.ChainId, alias);

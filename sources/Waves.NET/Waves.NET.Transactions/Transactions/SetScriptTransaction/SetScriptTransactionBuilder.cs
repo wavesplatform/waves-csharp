@@ -9,7 +9,7 @@
             Transaction.Script = script;
         }
 
-        public static SetScriptTransactionBuilder Data(string script)
+        public static SetScriptTransactionBuilder Params(string script)
         {
             return new SetScriptTransactionBuilder(script);
         }

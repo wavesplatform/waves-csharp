@@ -2,6 +2,6 @@
 {
     public record DeleteEntry : EntryData
     {
-        public string? Value { get; init; }
+        public object? Value { get; init; }
     }
 }

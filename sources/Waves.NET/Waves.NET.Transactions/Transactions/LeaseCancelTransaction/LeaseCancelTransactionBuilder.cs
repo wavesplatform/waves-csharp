@@ -12,7 +12,7 @@ namespace Waves.NET.Transactions
             Transaction.Lease = leaseInfo;
         }
 
-        public static LeaseCancelTransactionBuilder Data(Base58s leaseId, LeaseInfo leaseInfo)
+        public static LeaseCancelTransactionBuilder Params(Base58s leaseId, LeaseInfo leaseInfo)
         {
             return new LeaseCancelTransactionBuilder(leaseId, leaseInfo);
         }

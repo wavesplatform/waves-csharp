@@ -1,7 +1,6 @@
 ﻿using System.Text;
-using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Transactions.Crypto
+namespace Waves.NET.Transactions.Common
 {
     public class PrivateKey : Base58s
     {

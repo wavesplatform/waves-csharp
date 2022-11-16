@@ -1,5 +1,9 @@
-﻿namespace Waves.NET.Transactions.Common
+﻿using Newtonsoft.Json;
+using Waves.NET.Transactions.JsonConverters;
+
+namespace Waves.NET.Transactions.Common
 {
+    [JsonConverter(typeof(StringJsonConverter))]
     public class Base64s : ByteStr
     {
         public const string Prefix = "base64:";

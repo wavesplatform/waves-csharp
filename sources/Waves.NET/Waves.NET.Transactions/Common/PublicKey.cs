@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions.JsonConverters;
 
-namespace Waves.NET.Transactions.Crypto
+namespace Waves.NET.Transactions.Common
 {
     public class PublicKey : Base58s
     {

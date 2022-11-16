@@ -1,5 +1,5 @@
 ﻿using Waves.NET.Addresses;
-using Waves.NET.Alias;
+using Waves.NET.Aliases;
 using Waves.NET.Assets;
 using Waves.NET.Blockchain;
 using Waves.NET.Blocks;

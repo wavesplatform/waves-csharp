@@ -1,6 +1,6 @@
+using System.Text;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions.Crypto;
 
 namespace Waves.NET.Tests
 {
@@ -41,6 +41,16 @@ namespace Waves.NET.Tests
             var splitted = seedPhrase.Split(' ');
             Assert.AreEqual(wordsCount, splitted.Length);
 
+        }
+
+        [TestMethod]
+        public void SignAndProofValidTest()
+        {
+            var privateKey = new PrivateKey(Crypto.CreatePrivateKeyFromSeed(SeedPhrase, 0));
+            var message = Encoding.UTF8.GetBytes("The five boxing wizards jump quickly");
+            var proof = Crypto.Sign(privateKey, message);
+            var result = Crypto.IsProofValid(privateKey.PublicKey, message, proof);
+            Assert.IsTrue(result);
         }
     }
 }

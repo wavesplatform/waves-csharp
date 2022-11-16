@@ -11,7 +11,7 @@
             Transaction.Data = data;
         }
 
-        public static DataTransactionBuilder Data(ICollection<EntryData> data)
+        public static DataTransactionBuilder Params(ICollection<EntryData> data)
         {
             return new DataTransactionBuilder(data);
         }

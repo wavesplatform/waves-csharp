@@ -12,7 +12,7 @@ namespace Waves.NET.Transactions
             Transaction.MinSponsoredAssetFee = minSponsoredAssetFee;
         }
 
-        public static SponsorFeeTransactionBuilder Data(Base58s assetId, long minSponsoredAssetFee)
+        public static SponsorFeeTransactionBuilder Params(Base58s assetId, long minSponsoredAssetFee)
         {
             return new SponsorFeeTransactionBuilder(assetId, minSponsoredAssetFee);
         }

@@ -4,10 +4,9 @@ namespace Waves.NET.Transactions
 {
     public class SponsorFeeTransactionBinarySerializer : TransactionBinarySerializer
     {
-        protected override Dictionary<int, TransactionSchema> VersionToSchemaMap =>
-            new Dictionary<int, TransactionSchema> { { 1, TransactionSchema.Signature }, { 2, TransactionSchema.Protobuf } };
+        protected override IList<int> SupportedVersions => new List<int> { 2 };
 
-        protected override void SerializeToProtobufSchema(TransactionProto proto, Transaction transaction)
+        protected override void SerializeInner(TransactionProto proto, Transaction transaction)
         {
             var tx = (ISponsorFeeTransaction)transaction;
             proto.SponsorFee = new SponsorFeeTransactionData();
@@ -16,16 +15,6 @@ namespace Waves.NET.Transactions
                 Amount_ = tx.MinSponsoredAssetFee,
                 AssetId = ByteString.CopyFromUtf8(tx.AssetId)
             };
-        }
-
-        protected override void SerializeToProofsSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SerializeToSignatureSchema(BinaryWriter bw, Transaction transaction)
-        {
-            throw new NotImplementedException();
         }
     }
 }

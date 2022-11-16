@@ -7,6 +7,7 @@ namespace Waves.NET.Transactions
         [EnumMember(Value = "")]
         NotSet = 0,
 
+        [EnumMember(Value = "succeeded")]
         Succeeded,
 
         [EnumMember(Value = "script_execution_failed")]

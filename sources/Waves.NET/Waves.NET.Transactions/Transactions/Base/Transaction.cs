@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions.Crypto;
 using Waves.NET.Transactions.JsonConverters;
 
 namespace Waves.NET.Transactions
@@ -14,7 +13,7 @@ namespace Waves.NET.Transactions
         public PublicKey SenderPublicKey { get; set; } = null!;
         public long Timestamp { get; set; }
         public byte ChainId { get; set; }
-        public string ApplicationStatus { get; set; } = "";
+        public ApplicationStatus ApplicationStatus { get; set; }
         public int Version { get; set; }
         public long Fee { get; set; }
         public Base58s? FeeAssetId { get; set; }

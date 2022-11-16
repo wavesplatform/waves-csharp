@@ -1,6 +1,4 @@
-﻿using Waves.NET.Transactions.Common;
-
-namespace Waves.NET.Transactions.Crypto
+﻿namespace Waves.NET.Transactions.Common
 {
     public class Address : Base58s, IRecipient
     {
@@ -22,12 +20,5 @@ namespace Waves.NET.Transactions.Crypto
         public static explicit operator Address(string x) => new(x);
 
         public byte[] PublicKeyHash => Bytes[2..22];
-
-        public byte[] ToBytes()
-        {
-            var dataBytes = new byte[] { Type, ChainId }.Concat(PublicKeyHash).ToArray();
-            var checksum = Crypto.CalculateBlake2bKeccackHash(dataBytes).Take(4).ToArray();
-            return dataBytes.Concat(checksum).ToArray();
-        }
     }
 }

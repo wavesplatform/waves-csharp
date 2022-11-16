@@ -15,7 +15,7 @@ namespace Waves.NET.Transactions
             Transaction.Transfers = transfer;
         }
 
-        public static MassTransferTransactionBuilder Data(Base58s assetId, Base58s attachment, int transferCount, long totalAmount, ICollection<Transfer> transfer)
+        public static MassTransferTransactionBuilder Params(Base58s assetId, Base58s attachment, int transferCount, long totalAmount, ICollection<Transfer> transfer)
         {
             return new MassTransferTransactionBuilder(assetId, attachment, transferCount, totalAmount, transfer);
         }
