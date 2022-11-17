@@ -20,5 +20,9 @@
         public static explicit operator Address(string x) => new(x);
 
         public byte[] PublicKeyHash => Bytes[2..22];
+
+        public override int GetHashCode() => EncodedWithPrefix.GetHashCode();
+        public override bool Equals(object? obj) => Equals(obj as Address);
+        public bool Equals(Address? address) => address is not null && EncodedWithPrefix.Equals(address.EncodedWithPrefix, StringComparison.Ordinal);
     }
 }

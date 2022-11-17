@@ -6,24 +6,15 @@ namespace Waves.NET.Aliases
     {
         public AliasSection(HttpClient httpClient) : base(httpClient, "alias") { }
 
-        /// <summary>
-        /// Get a list of aliases associated with a given address
-        /// </summary>
-        /// <param name="address">Address base58 encoded</param>
-        /// <returns></returns>
-        public ICollection<string> GetAliasesByAddress(Address address)
+        public ICollection<Alias> GetAliasesByAddress(Address address)
         {
-            return PublicRequest<ICollection<string>>(HttpMethod.Get, "by-address/" + address);
+            return PublicRequest<ICollection<Alias>>(HttpMethod.Get, "by-address/" + address);
         }
 
-        /// <summary>
-        /// Get an address associated with a given alias. Alias should be plain text without an 'alias' prefix and chain ID
-        /// </summary>
-        /// <param name="alias">Alias</param>
-        /// <returns></returns>
         public Address GetAddressByAlias(string alias)
         {
-            return PublicRequest<dynamic>(HttpMethod.Get, "by-alias/" + alias).address;
+            var result = PublicRequest<dynamic>(HttpMethod.Get, "by-alias/" + alias).address;
+            return Address.As((string)result);
         }
     }
 }

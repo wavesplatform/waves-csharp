@@ -6,13 +6,13 @@ namespace Waves.NET.Transactions
     {
         public GenesisTransactionBuilder() : base(GenesisTransaction.LatestVersion, 0, GenesisTransaction.TYPE) { }
 
-        public GenesisTransactionBuilder(IRecipient recipient, long amount) : this()
+        public GenesisTransactionBuilder(Address recipient, long amount) : this()
         {
             Transaction.Recipient = recipient;
             Transaction.Amount = amount;
         }
 
-        public static GenesisTransactionBuilder Params(IRecipient recipient, long amount)
+        public static GenesisTransactionBuilder Params(Address recipient, long amount)
         {
             return new GenesisTransactionBuilder(recipient, amount);
         }

@@ -43,7 +43,7 @@ namespace Waves {
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Waves.AmountReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.AssetPair), global::Waves.AssetPair.Parser, new[]{ "AmountAssetId", "PriceAssetId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.AssetPairProto), global::Waves.AssetPairProto.Parser, new[]{ "AmountAssetId", "PriceAssetId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.OrderProto), global::Waves.OrderProto.Parser, new[]{ "ChainId", "MatcherPublicKey", "AssetPair", "OrderSide", "Amount", "Price", "Timestamp", "Expiration", "MatcherFee", "Version", "Proofs", "PriceMode", "SenderPublicKey", "Eip712Signature" }, new[]{ "Sender" }, new[]{ typeof(global::Waves.OrderProto.Types.Side), typeof(global::Waves.OrderProto.Types.PriceMode) }, null, null)
           }));
     }
@@ -51,16 +51,16 @@ namespace Waves {
 
   }
   #region Messages
-  public sealed partial class AssetPair : pb::IMessage<AssetPair>
+  public sealed partial class AssetPairProto : pb::IMessage<AssetPairProto>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<AssetPair> _parser = new pb::MessageParser<AssetPair>(() => new AssetPair());
+    private static readonly pb::MessageParser<AssetPairProto> _parser = new pb::MessageParser<AssetPairProto>(() => new AssetPairProto());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<AssetPair> Parser { get { return _parser; } }
+    public static pb::MessageParser<AssetPairProto> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -76,7 +76,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public AssetPair() {
+    public AssetPairProto() {
       OnConstruction();
     }
 
@@ -84,7 +84,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public AssetPair(AssetPair other) : this() {
+    public AssetPairProto(AssetPairProto other) : this() {
       amountAssetId_ = other.amountAssetId_;
       priceAssetId_ = other.priceAssetId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -92,8 +92,8 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public AssetPair Clone() {
-      return new AssetPair(this);
+    public AssetPairProto Clone() {
+      return new AssetPairProto(this);
     }
 
     /// <summary>Field number for the "amount_asset_id" field.</summary>
@@ -123,12 +123,12 @@ namespace Waves {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as AssetPair);
+      return Equals(other as AssetPairProto);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(AssetPair other) {
+    public bool Equals(AssetPairProto other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -214,7 +214,7 @@ namespace Waves {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(AssetPair other) {
+    public void MergeFrom(AssetPairProto other) {
       if (other == null) {
         return;
       }
@@ -367,10 +367,10 @@ namespace Waves {
 
     /// <summary>Field number for the "asset_pair" field.</summary>
     public const int AssetPairFieldNumber = 4;
-    private global::Waves.AssetPair assetPair_;
+    private global::Waves.AssetPairProto assetPair_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Waves.AssetPair AssetPair {
+    public global::Waves.AssetPairProto AssetPair {
       get { return assetPair_; }
       set {
         assetPair_ = value;
@@ -785,7 +785,7 @@ namespace Waves {
       }
       if (other.assetPair_ != null) {
         if (assetPair_ == null) {
-          AssetPair = new global::Waves.AssetPair();
+          AssetPair = new global::Waves.AssetPairProto();
         }
         AssetPair.MergeFrom(other.AssetPair);
       }
@@ -932,7 +932,7 @@ namespace Waves {
           }
           case 34: {
             if (assetPair_ == null) {
-              AssetPair = new global::Waves.AssetPair();
+              AssetPair = new global::Waves.AssetPairProto();
             }
             input.ReadMessage(AssetPair);
             break;

@@ -25,6 +25,9 @@ namespace Waves.NET.Transactions.Common
 
         public Alias(byte chainId, string name)
         {
+            if(!IsValid(name))
+                throw new ArgumentException($"Invalid alias. Must be {MinLength}-{MaxLength} characters long and contains [{Alphabet}] only");
+
             Name = name.Replace($"{Prefix}{(char)chainId}:", "");
             Bytes = new byte[] { Type, chainId }
                 .Concat(BitConverter.GetBytes((short)Name.Length))
@@ -44,5 +47,9 @@ namespace Waves.NET.Transactions.Common
 
         public static implicit operator string(Alias x) => x.ToString();
         public static explicit operator Alias(string x) => new(x);
+
+        public override int GetHashCode() => ToStringWithPrefix().GetHashCode();
+        public override bool Equals(object? obj) => Equals(obj as Alias);
+        public bool Equals(Alias? alias) => alias is not null && ToStringWithPrefix().Equals(alias.ToStringWithPrefix(), StringComparison.Ordinal);
     }
 }

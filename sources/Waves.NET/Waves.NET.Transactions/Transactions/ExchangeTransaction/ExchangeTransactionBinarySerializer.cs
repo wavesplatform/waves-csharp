@@ -26,7 +26,7 @@ namespace Waves.NET.Transactions
             return new Waves.OrderProto
             {
                 MatcherPublicKey = ByteString.CopyFrom(order.MatcherPublicKey.Bytes),
-                AssetPair = new Waves.AssetPair
+                AssetPair = new Waves.AssetPairProto
                 {
                     AmountAssetId = ByteString.CopyFromUtf8(order.AssetPair.AmountAsset),
                     PriceAssetId = ByteString.CopyFromUtf8(order.AssetPair.PriceAsset)

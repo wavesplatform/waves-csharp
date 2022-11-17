@@ -2,6 +2,7 @@
 {
     public enum TransactionType : int
     {
+        Unknown = 0,
         Genesis = 1,
         Payment = 2,
         Issue = 3,

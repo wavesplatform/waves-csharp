@@ -1,5 +1,4 @@
 ﻿using Google.Protobuf;
-using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Transactions
 {
@@ -13,9 +12,7 @@ namespace Waves.NET.Transactions
             proto.Genesis = new GenesisTransactionData
             {
                 Amount = tx.Amount,
-                RecipientAddress = tx.Recipient.Type == Address.TYPE
-                    ? ByteString.CopyFrom(((Address)tx.Recipient).PublicKeyHash)
-                    : ByteString.CopyFromUtf8(((Alias)tx.Recipient).Name)
+                RecipientAddress = ByteString.CopyFrom(tx.Recipient.PublicKeyHash)
             };
         }
     }

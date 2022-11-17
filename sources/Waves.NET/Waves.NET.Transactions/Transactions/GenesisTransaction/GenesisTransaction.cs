@@ -7,7 +7,7 @@ namespace Waves.NET.Transactions
         public const int TYPE = 1;
         public const int LatestVersion = 1;
 
-        public IRecipient Recipient { get; set; } = null!;
+        public Address Recipient { get; set; } = null!;
         public long Amount { get; set; }
     }
 }

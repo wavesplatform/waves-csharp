@@ -16,10 +16,10 @@ namespace Waves.NET.Transactions
             proto.InvokeScript.DApp = tx.DApp.Type == Address.TYPE
                 ? new Recipient { PublicKeyHash = ByteString.CopyFrom(((Address)tx.DApp).PublicKeyHash) }
                 : new Recipient { PublicKeyHash = ByteString.CopyFromUtf8(((Alias)tx.DApp).Name) };
-            proto.InvokeScript.FunctionCall = ByteString.FromStream(CreateFunctionData(tx.Call));
+            proto.InvokeScript.FunctionCall = ByteString.CopyFrom(CreateFunctionData(tx.Call));
         }
 
-        private Stream CreateFunctionData(Call call)
+        private byte[] CreateFunctionData(Call call)
         {
             using var ms = new MemoryStream();
             using var bw = new BinaryWriter(ms);
@@ -32,7 +32,7 @@ namespace Waves.NET.Transactions
 
             WriteArgsWithCount(bw, call.Args);
 
-            return ms;
+            return ms.ToArray();
         }
 
         private void WriteArgsWithCount(BinaryWriter bw, ICollection<CallArgs> args)
