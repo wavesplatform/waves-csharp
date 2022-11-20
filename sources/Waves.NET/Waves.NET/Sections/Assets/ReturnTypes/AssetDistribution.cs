@@ -1,9 +1,11 @@
-﻿namespace Waves.NET.Assets.ReturnTypes
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Assets.ReturnTypes
 {
     public record AssetDistribution
     {
         public bool HasNext { get; init; }
-        public string Last { get; init; } = null!;
-        public IDictionary<string, long> Values { get; init; } = null!;
+        public Address LastItem { get; init; } = null!;
+        public IDictionary<string, long> Items { get; init; } = null!;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Waves.NET.Transactions.Utils;
+﻿using Waves.NET.Addresses.ReturnTypes;
+using Waves.NET.Transactions.Utils;
 using Waves.NET.Utils.ReturnTypes;
 
 namespace Waves.NET.Utils
@@ -32,22 +33,23 @@ namespace Waves.NET.Utils
             return PublicRequest<dynamic>(HttpMethod.Post, "hash/secure", message).hash;
         }
 
-        public ScriptResult GetScriptCompiledCode(string script, bool compact = false)
+        public ScriptInfo CompileScript(string script, bool compact = false)
         {
-            return PublicRequest<ScriptResult>(HttpMethod.Post, "script/compileCode", script);
+            var url = "script/compileCode";
+            return PublicRequest<ScriptInfo>(HttpMethod.Post, compact ? url += "?compact=true" : url, script);
         }
 
-        public ScriptResult GetScriptCompiledCodeWithImports(string scriptWithImports)
+        public ScriptInfo GetScriptCompiledCodeWithImports(string scriptWithImports)
         {
-            return PublicRequest<ScriptResult>(HttpMethod.Post, "script/compileWithImports", scriptWithImports);
+            return PublicRequest<ScriptInfo>(HttpMethod.Post, "script/compileWithImports", scriptWithImports);
         }
 
-        public string GetScriptDecompiledCode(string code)
+        public string DecompileScript(string code)
         {
             return PublicRequest<dynamic>(HttpMethod.Post, "script/decompile", code).script;
         }
 
-        public ScriptEstimateResult GetScriptEstimate(string code)
+        public ScriptInfo GetScriptEstimate(string code)
         {
             return PublicRequest<dynamic>(HttpMethod.Post, "script/estimate", code).script;
         }

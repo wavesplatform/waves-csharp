@@ -6,18 +6,29 @@ namespace Waves.NET.Transactions
     {
         public MassTransferTransactionBuilder() : base(MassTransferTransaction.LatestVersion, MassTransferTransaction.MinFee, MassTransferTransaction.TYPE) { }
 
-        public MassTransferTransactionBuilder(Base58s assetId, Base58s attachment, int transferCount, long totalAmount, ICollection<Transfer> transfer) : this()
+        public MassTransferTransactionBuilder(ICollection<Transfer> transfers, Base58s? assetId = null, Base58s? attachment = null) : this()
         {
             Transaction.AssetId = assetId;
-            Transaction.Attachment = attachment;
-            Transaction.TransferCount = transferCount;
-            Transaction.TotalAmount = totalAmount;
-            Transaction.Transfers = transfer;
+            Transaction.Attachment = attachment ?? Base58s.Empty;
+            Transaction.Transfers = transfers;
         }
 
-        public static MassTransferTransactionBuilder Params(Base58s assetId, Base58s attachment, int transferCount, long totalAmount, ICollection<Transfer> transfer)
+        public static MassTransferTransactionBuilder Params(ICollection<Transfer> transfers, Base58s? assetId = null, Base58s? attachment = null)
         {
-            return new MassTransferTransactionBuilder(assetId, attachment, transferCount, totalAmount, transfer);
+            return new MassTransferTransactionBuilder(transfers, assetId, attachment);
+        }
+
+        public override long CalculatedFee()
+        {
+            return Transaction.Transfers is null || !Transaction.Transfers.Any()
+                ? MassTransferTransaction.MinFee
+                : MassTransferTransaction.MinFee * (1 + (Transaction.Transfers.Count + 1) / 2);
+        }
+
+        public MassTransferTransactionBuilder SetAssetId(Base58s? assetId)
+        {
+            Transaction.AssetId = assetId;
+            return this;
         }
     }
 }

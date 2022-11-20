@@ -13,7 +13,7 @@ namespace Waves.NET.Debug
             return PublicRequest<ICollection<HistoryBalance>>(HttpMethod.Get, $"balances/history/{address}");
         }
 
-        public TransactionValidationResult ValidateTransaction<T>(T transaction) where T : Waves.NET.Transactions.Transaction //TODO! not sure
+        public TransactionValidationResult ValidateTransaction<T>(T transaction) where T : Transaction
         {
             var jsonBody = JsonUtils.Serialize(transaction);
             return PublicRequest<TransactionValidationResult>(HttpMethod.Post, "validate", jsonBody);

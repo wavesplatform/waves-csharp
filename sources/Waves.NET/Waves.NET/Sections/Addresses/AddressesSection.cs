@@ -25,9 +25,14 @@ namespace Waves.NET.Addresses
             return PublicRequest<ICollection<Address>>(HttpMethod.Get, $"seq/{from}/{to}");
         }
 
-        public ICollection<AddressBalance> GetBalances(ICollection<Address> addresses, int height, string asset)
+        public ICollection<AddressBalance> GetBalances(ICollection<Address> addresses, int height)
         {
-            return PublicRequest<ICollection<AddressBalance>>(HttpMethod.Post, BalanceUrl, JsonUtils.Serialize(new { addresses, height, asset }));
+            return PublicRequest<ICollection<AddressBalance>>(HttpMethod.Post, BalanceUrl, JsonUtils.Serialize(new { addresses, height }));
+        }
+
+        public ICollection<AddressBalance> GetBalances(ICollection<Address> addresses)
+        {
+            return PublicRequest<ICollection<AddressBalance>>(HttpMethod.Post, BalanceUrl, JsonUtils.Serialize(new { addresses }));
         }
 
         public long GetBalance(Address address)
@@ -85,7 +90,7 @@ namespace Waves.NET.Addresses
 
         public ScriptMeta GetScriptMeta(Address address)
         {
-            return PublicRequest<ScriptMeta>(HttpMethod.Get, $"{ScriptInfoUrl}/{address}/meta");
+            return PublicRequest<ScriptMetaResponse>(HttpMethod.Get, $"{ScriptInfoUrl}/{address}/meta").Meta;
         }
     }
 }

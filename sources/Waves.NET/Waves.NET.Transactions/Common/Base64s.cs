@@ -1,19 +1,16 @@
 ﻿using Newtonsoft.Json;
+using System.Text;
 using Waves.NET.Transactions.JsonConverters;
 
 namespace Waves.NET.Transactions.Common
 {
     [JsonConverter(typeof(StringJsonConverter))]
-    public class Base64s : ByteStr
+    public class Base64s : ByteStr, IEquatable<Base64s?>
     {
         public const string Prefix = "base64:";
         public override string EncodedWithPrefix => $"{Prefix}{encoded}";
 
-        public Base64s(string encoded)
-        {
-            bytes = Convert.FromBase64String(RemovePrefix(encoded));
-        }
-
+        public Base64s(string encoded) : this(Convert.FromBase64String(RemovePrefix(encoded))) { }
         public Base64s(byte[] bytes)
         {
             this.bytes = bytes ?? new byte[0];
@@ -31,9 +28,23 @@ namespace Waves.NET.Transactions.Common
         public static implicit operator string(Base64s b) => b.encoded;
         public static explicit operator Base64s(string s) => new(RemovePrefix(s));
 
-        public static string Encode(byte[] bytes) => Convert.ToBase64String(bytes);
+        public static Base64s From(string str) => new Base64s(Convert.ToBase64String(Encoding.UTF8.GetBytes(str)));
         public static byte[] Decode(string encoded) => Convert.FromBase64String(RemovePrefix(encoded));
 
         private static string RemovePrefix(string encoded) => (encoded ?? "").Replace(Prefix, "");
+
+        public static bool operator ==(Base64s? left, Base64s? right) => EqualityComparer<Base64s>.Default.Equals(left, right);
+        public static bool operator !=(Base64s? left, Base64s? right) => !(left == right);
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null || obj as Base64s is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals(obj as Base64s);
+        }
+
+        public bool Equals(Base64s? other) => other is not null && encoded == other.encoded;
+
+        public override int GetHashCode() => HashCode.Combine(encoded);
     }
 }

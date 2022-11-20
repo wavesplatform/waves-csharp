@@ -26,24 +26,24 @@ namespace Waves.NET.Blocks
             return PublicRequest<dynamic>(HttpMethod.Get, $"delay/{startBlockId}/{blocksNum}").delay;
         }
 
-        public BlockHeaders GetBlockHeaders(string blockId)
+        public BlockHeader GetBlockHeaders(string blockId)
         {
-            return PublicRequest<BlockHeaders>(HttpMethod.Get, $"headers/{blockId}");
+            return PublicRequest<BlockHeader>(HttpMethod.Get, $"headers/{blockId}");
         }
 
-        public BlockHeaders GetBlockHeaders(int height)
+        public BlockHeader GetBlockHeaders(int height)
         {
-            return PublicRequest<BlockHeaders>(HttpMethod.Get, $"headers/at/{height}");
+            return PublicRequest<BlockHeader>(HttpMethod.Get, $"headers/at/{height}");
         }
 
-        public BlockHeaders GetLastBlockHeaders()
+        public BlockHeader GetLastBlockHeaders()
         {
-            return PublicRequest<BlockHeaders>(HttpMethod.Get, $"headers/last");
+            return PublicRequest<BlockHeader>(HttpMethod.Get, $"headers/last");
         }
 
-        public ICollection<BlockHeaders> GetBlocksHeaders(int fromHeight, int toHeight)
+        public ICollection<BlockHeader> GetBlocksHeaders(int fromHeight, int toHeight)
         {
-            return PublicRequest<ICollection<BlockHeaders>>(HttpMethod.Get, $"headers/seq/{fromHeight}/{toHeight}");
+            return PublicRequest<ICollection<BlockHeader>>(HttpMethod.Get, $"headers/seq/{fromHeight}/{toHeight}");
         }
 
         public int GetHeight()
@@ -64,6 +64,11 @@ namespace Waves.NET.Blocks
         public Block GetLastBlock()
         {
             return PublicRequest<Block>(HttpMethod.Get, $"last");
+        }
+
+        public Block GetGenesisBlock()
+        {
+            return GetBlock(1);
         }
 
         public ICollection<Block> GetBlocks(int fromHeight, int toHeight)

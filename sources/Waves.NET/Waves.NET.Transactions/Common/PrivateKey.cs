@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Transactions.Common
 {

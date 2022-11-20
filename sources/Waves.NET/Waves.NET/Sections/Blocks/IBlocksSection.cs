@@ -40,20 +40,20 @@ namespace Waves.NET.Blocks
         /// </summary>
         /// <param name="blockId">Block ID base58 encoded</param>
         /// <returns>Block headers by ID</returns>
-        public BlockHeaders GetBlockHeaders(string blockId);
+        public BlockHeader GetBlockHeaders(string blockId);
 
         /// <summary>
         /// Get block headers at a given height
         /// </summary>
         /// <param name="height">Block height</param>
         /// <returns>Block headers at height</returns>
-        public BlockHeaders GetBlockHeaders(int height);
+        public BlockHeader GetBlockHeaders(int height);
 
         /// <summary>
         /// Get headers of the block at the current blockchain height
         /// </summary>
         /// <returns>Last block headers</returns>
-        public BlockHeaders GetLastBlockHeaders();
+        public BlockHeader GetLastBlockHeaders();
 
         /// <summary>
         /// Get block headers at a given range of heights. Max range {from}-{to} is 100 blocks
@@ -61,7 +61,7 @@ namespace Waves.NET.Blocks
         /// <param name="fromHeight">Start block height</param>
         /// <param name="toHeight">End block height</param>
         /// <returns>Block headers at range</returns>
-        public ICollection<BlockHeaders> GetBlocksHeaders(int fromHeight, int toHeight);
+        public ICollection<BlockHeader> GetBlocksHeaders(int fromHeight, int toHeight);
 
         /// <summary>
         /// Get the current blockchain height
@@ -96,5 +96,11 @@ namespace Waves.NET.Blocks
         /// <param name="toHeight">End block height</param>
         /// <returns>Block range</returns>
         public ICollection<Block> GetBlocks(int fromHeight, int toHeight);
+
+        /// <summary>
+        /// Get the block at the first blockchain height
+        /// </summary>
+        /// <returns></returns>
+        public Block GetGenesisBlock();
     }
 }

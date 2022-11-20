@@ -34,5 +34,18 @@ namespace Waves.NET.Transactions.Common
         public static byte[] Decode(string encoded) => SimpleBase.Base58.Bitcoin.Decode(RemovePrefix(encoded)).ToArray();
 
         private static string RemovePrefix(string encoded) => (encoded ?? "").Replace(Prefix, "");
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null || obj as Base58s is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals(obj as Base58s);
+        }
+
+        public bool Equals(Base58s? other) => other is not null && encoded == other.encoded;
+
+        public override int GetHashCode() => HashCode.Combine(encoded);
+        public static bool operator ==(Base58s? left, Base58s? right) => EqualityComparer<Base58s>.Default.Equals(left, right);
+        public static bool operator !=(Base58s? left, Base58s? right) => !(left == right);
     }
 }

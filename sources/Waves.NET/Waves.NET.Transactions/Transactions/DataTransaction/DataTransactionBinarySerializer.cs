@@ -9,9 +9,13 @@ namespace Waves.NET.Transactions
         protected override void SerializeInner(TransactionProto proto, Transaction transaction)
         {
             var tx = (IDataTransaction)transaction;
-            proto.DataTransaction = new DataTransactionData();
+            proto.DataTransaction = CreateDataProto(tx.Data);
+        }
 
-            var mappedData = tx.Data.Select(x =>
+        public static DataTransactionData CreateDataProto(ICollection<EntryData> data)
+        {
+            var proto = new DataTransactionData();
+            proto.Data.Add(data.Select(x =>
             {
                 switch (x)
                 {
@@ -22,9 +26,8 @@ namespace Waves.NET.Transactions
                     case DeleteEntry de: return new DataTransactionData.Types.DataEntry { Key = de.Key };
                     default: throw new ArgumentException($"Unknown data entry type: {x.GetType()}");
                 }
-            });
-
-            proto.DataTransaction.Data.Add(mappedData);
+            }));
+            return proto;
         }
     }
 }

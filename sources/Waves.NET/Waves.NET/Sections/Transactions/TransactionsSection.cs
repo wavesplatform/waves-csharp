@@ -1,4 +1,5 @@
-﻿using Waves.NET.Transactions.Info;
+﻿using Waves.NET.Transactions.Common;
+using Waves.NET.Transactions.Info;
 using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Transactions
@@ -22,7 +23,7 @@ namespace Waves.NET.Transactions
                 url += $"?after={afterTxId}";
             }
 
-            return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Get, url, null); //TODO! json converter?
+            return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Get, url, null);
         }
 
         public T Broadcast<T>(T transaction, bool trace = false) where T : Transaction
@@ -32,13 +33,13 @@ namespace Waves.NET.Transactions
             return PublicRequest<T>(HttpMethod.Post, url, jsonBody);
         }
 
-        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<string> ids)
+        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids)
         {
             var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Post, "info", jsonBody);
         }
 
-        public TransactionInfo GetTransactionInfo(string id)
+        public TransactionInfo GetTransactionInfo(Base58s id)
         {
             return PublicRequest<TransactionInfo>(HttpMethod.Get, $"info/{id}");
         }
@@ -49,7 +50,7 @@ namespace Waves.NET.Transactions
             return PublicRequest<ICollection<TransactionMerkleProofs>>(HttpMethod.Post, "merkleProof", jsonBody);
         }
 
-        public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<string> ids)
+        public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<Base58s> ids)
         {
             var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionStatus>>(HttpMethod.Post, "status", jsonBody);

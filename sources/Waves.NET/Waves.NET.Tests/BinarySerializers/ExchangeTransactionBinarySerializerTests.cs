@@ -1,5 +1,5 @@
 using Waves.NET.Transactions;
-using Waves.NET.Transactions.Common;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Tests
 {
@@ -10,15 +10,15 @@ namespace Waves.NET.Tests
         public void ExchangeTransactionBinarySerializerSuccessTest()
         {
             var order = new Order {
-                SenderPublicKey = PrivateKey.PublicKey,
-                MatcherPublicKey = PrivateKey.PublicKey, AssetPair = new AssetPair { AmountAsset = "", PriceAsset = "" }
+                SenderPublicKey = PublicKey,
+                MatcherPublicKey = PublicKey, AssetPair = new AssetPair { AmountAsset = "", PriceAsset = "" }
             };
             var tr = ExchangeTransactionBuilder.Params(order, order, 0, 0, 0, 0).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
             Assert.IsTrue(tr.Proofs.Count == 1);
-            Assert.IsTrue(Crypto.IsProofValid(PrivateKey.PublicKey, trBytes, tr.Proofs.Single()));
+            Assert.IsTrue(Crypto.IsProofValid(PublicKey, trBytes, tr.Proofs.Single()));
         }
 
         [TestMethod]

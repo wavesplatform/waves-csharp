@@ -1,5 +1,4 @@
 ﻿using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions;
 
 namespace Waves.NET.Transactions
 {
@@ -17,6 +16,6 @@ namespace Waves.NET.Transactions
         public bool Reissuable { get; set; }
         public int Decimals { get; set; }
         public string Description { get; set; } = "";
-        public string? Script { get; set; }
+        public Base64s? Script { get; set; }
     }
 }

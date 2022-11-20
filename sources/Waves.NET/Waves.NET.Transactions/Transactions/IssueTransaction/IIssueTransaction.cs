@@ -11,6 +11,6 @@ namespace Waves.NET.Transactions
         bool Reissuable { get; set; }
         int Decimals { get; set; }
         string Description { get; set; }
-        string? Script { get; set; }
+        Base64s? Script { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Waves.NET.Transactions
                 Amount = tx.Quantity,
                 Decimals = tx.Decimals,
                 Reissuable = tx.Reissuable,
-                Script = tx.Script is null ? ByteString.Empty : ByteString.CopyFromUtf8(tx.Script)
+                Script = tx.Script is null ? ByteString.Empty : ByteString.FromBase64(tx.Script)
             };
         }
     }

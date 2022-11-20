@@ -23,7 +23,13 @@ namespace Waves.NET.Addresses
         /// Get regular balances for multiple addresses. Max number of addresses is set by <c>waves.rest-api.transactions-by-address-limit</c>, 1000 by default
         /// </summary>
         /// <returns></returns>
-        ICollection<AddressBalance> GetBalances(ICollection<Address> addresses, int height, string asset);
+        ICollection<AddressBalance> GetBalances(ICollection<Address> addresses, int height);
+
+        /// <summary>
+        /// Get regular balances for multiple addresses. Max number of addresses is set by <c>waves.rest-api.transactions-by-address-limit</c>, 1000 by default
+        /// </summary>
+        /// <returns></returns>
+        ICollection<AddressBalance> GetBalances(ICollection<Address> addresses);
 
         /// <summary>
         /// Get the regular balance in WAVES at a given address

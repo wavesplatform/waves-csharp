@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Waves.NET.Transactions.JsonConverters
 {
@@ -16,7 +16,7 @@ namespace Waves.NET.Transactions.JsonConverters
 
                 switch ((EthTransactionPayloadType)type)
                 {
-                    case EthTransactionPayloadType.Invoke:payload = new EthTransactionInvokePayload(); break;
+                    case EthTransactionPayloadType.Invoke: payload = new EthTransactionInvokePayload(); break;
                     case EthTransactionPayloadType.Transfer: payload = new EthTransactionTransferPayload(); break;
                 }
 

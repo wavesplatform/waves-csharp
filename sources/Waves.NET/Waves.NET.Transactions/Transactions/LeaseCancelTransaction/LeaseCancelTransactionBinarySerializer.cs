@@ -10,7 +10,7 @@ namespace Waves.NET.Transactions
         {
             var tx = (ILeaseCancelTransaction)transaction;
             proto.LeaseCancel = new LeaseCancelTransactionData();
-            proto.LeaseCancel.LeaseId = ByteString.CopyFromUtf8(tx.LeaseId);
+            proto.LeaseCancel.LeaseId = ByteString.CopyFrom(tx.LeaseId);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Waves.NET.Assets.ReturnTypes;
+using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Assets
 {
@@ -13,7 +14,7 @@ namespace Waves.NET.Assets
         /// <param name="limit">Number of addresses to be returned</param>
         /// <param name="after">Address to paginate after</param>
         /// <returns></returns>
-        public AssetDistribution GetAssetDistribution(string assetId, int height, int limit = 1000, string? after = null);
+        public AssetDistribution GetAssetDistribution(Base58s assetId, int height, int limit = 1000, string? after = null);
 
         /// <summary>
         /// Get account balances in specified assets (excluding WAVES) at a given address
@@ -29,7 +30,7 @@ namespace Waves.NET.Assets
         /// <param name="address">Address base58 encoded</param>
         /// <param name="ids">Asset ID base58 encoded</param>
         /// <returns></returns>
-        public long GetAssetsBalance(string address, string assetId);
+        public long GetAssetsBalance(string address, Base58s? assetId);
 
         /// <summary>
         /// Get detailed information about given asset
@@ -37,7 +38,7 @@ namespace Waves.NET.Assets
         /// <param name="id">Asset ID base58 encoded</param>
         /// <param name="full">If true, the response contains scriptDetails for scripted assets. False by default</param>
         /// <returns></returns>
-        public AssetDetails GetAssetDetails(string assetId, bool full = false);
+        public AssetDetails GetAssetDetails(Base58s? assetId, bool full = false);
 
         /// <summary>
         /// Get detailed information about given assets
@@ -45,7 +46,7 @@ namespace Waves.NET.Assets
         /// <param name="ids">Asset IDs base58 encoded</param>
         /// <param name="full">If true, the response contains scriptDetails for scripted assets. False by default</param>
         /// <returns></returns>
-        public ICollection<AssetDetails> GetAssetDetails(ICollection<string> assetIds, bool full = false);
+        public ICollection<AssetDetails> GetAssetDetails(ICollection<Base58s?> assetIds, bool full = false);
 
         /// <summary>
         /// Get a list of <see href="https://docs.waves.tech/en/blockchain/token/non-fungible-token">non-fungible tokens</see> at a given address. Max for 1000 tokens.

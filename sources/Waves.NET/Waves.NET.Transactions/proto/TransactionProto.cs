@@ -104,7 +104,7 @@ namespace Waves {
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.TransferTransactionData), global::Waves.TransferTransactionData.Parser, new[]{ "Recipient", "Amount", "Attachment" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.CreateAliasTransactionData), global::Waves.CreateAliasTransactionData.Parser, new[]{ "Alias" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.DataTransactionData), global::Waves.DataTransactionData.Parser, new[]{ "Data" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Waves.DataTransactionData.Types.DataEntry), global::Waves.DataTransactionData.Types.DataEntry.Parser, new[]{ "Key", "IntValue", "BoolValue", "BinaryValue", "StringValue" }, new[]{ "Value" }, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.MassTransferTransactionData), global::Waves.MassTransferTransactionData.Parser, new[]{ "AssetId", "Transfers", "Attachment" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Waves.MassTransferTransactionData.Types.Transfer), global::Waves.MassTransferTransactionData.Types.Transfer.Parser, new[]{ "Recipient", "Amount" }, null, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Waves.MassTransferTransactionData), global::Waves.MassTransferTransactionData.Parser, new[]{ "AssetId", "Transfers", "Attachment" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Waves.MassTransferTransactionData.Types.TransferProto), global::Waves.MassTransferTransactionData.Types.TransferProto.Parser, new[]{ "Recipient", "Amount" }, null, null, null, null)}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.LeaseTransactionData), global::Waves.LeaseTransactionData.Parser, new[]{ "Recipient", "Amount" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.LeaseCancelTransactionData), global::Waves.LeaseCancelTransactionData.Parser, new[]{ "LeaseId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Waves.BurnTransactionData), global::Waves.BurnTransactionData.Parser, new[]{ "AssetAmount" }, null, null, null, null),
@@ -3292,12 +3292,12 @@ namespace Waves {
 
     /// <summary>Field number for the "transfers" field.</summary>
     public const int TransfersFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Waves.MassTransferTransactionData.Types.Transfer> _repeated_transfers_codec
-        = pb::FieldCodec.ForMessage(18, global::Waves.MassTransferTransactionData.Types.Transfer.Parser);
-    private readonly pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.Transfer> transfers_ = new pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.Transfer>();
+    private static readonly pb::FieldCodec<global::Waves.MassTransferTransactionData.Types.TransferProto> _repeated_transfers_codec
+        = pb::FieldCodec.ForMessage(18, global::Waves.MassTransferTransactionData.Types.TransferProto.Parser);
+    private readonly pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.TransferProto> transfers_ = new pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.TransferProto>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.Transfer> Transfers {
+    public pbc::RepeatedField<global::Waves.MassTransferTransactionData.Types.TransferProto> Transfers {
       get { return transfers_; }
     }
 
@@ -3487,16 +3487,16 @@ namespace Waves {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static partial class Types {
-      public sealed partial class Transfer : pb::IMessage<Transfer>
+      public sealed partial class TransferProto : pb::IMessage<TransferProto>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
       #endif
       {
-        private static readonly pb::MessageParser<Transfer> _parser = new pb::MessageParser<Transfer>(() => new Transfer());
+        private static readonly pb::MessageParser<TransferProto> _parser = new pb::MessageParser<TransferProto>(() => new TransferProto());
         private pb::UnknownFieldSet _unknownFields;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public static pb::MessageParser<Transfer> Parser { get { return _parser; } }
+        public static pb::MessageParser<TransferProto> Parser { get { return _parser; } }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -3512,7 +3512,7 @@ namespace Waves {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public Transfer() {
+        public TransferProto() {
           OnConstruction();
         }
 
@@ -3520,7 +3520,7 @@ namespace Waves {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public Transfer(Transfer other) : this() {
+        public TransferProto(TransferProto other) : this() {
           recipient_ = other.recipient_ != null ? other.recipient_.Clone() : null;
           amount_ = other.amount_;
           _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -3528,8 +3528,8 @@ namespace Waves {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public Transfer Clone() {
-          return new Transfer(this);
+        public TransferProto Clone() {
+          return new TransferProto(this);
         }
 
         /// <summary>Field number for the "recipient" field.</summary>
@@ -3559,12 +3559,12 @@ namespace Waves {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public override bool Equals(object other) {
-          return Equals(other as Transfer);
+          return Equals(other as TransferProto);
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public bool Equals(Transfer other) {
+        public bool Equals(TransferProto other) {
           if (ReferenceEquals(other, null)) {
             return false;
           }
@@ -3650,7 +3650,7 @@ namespace Waves {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-        public void MergeFrom(Transfer other) {
+        public void MergeFrom(TransferProto other) {
           if (other == null) {
             return;
           }

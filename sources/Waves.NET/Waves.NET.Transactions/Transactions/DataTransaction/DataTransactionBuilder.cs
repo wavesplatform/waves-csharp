@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions
+﻿using Google.Protobuf;
+
+namespace Waves.NET.Transactions
 {
     public class DataTransactionBuilder : TransactionBuilder<DataTransactionBuilder, DataTransaction>
     {
@@ -14,6 +16,12 @@
         public static DataTransactionBuilder Params(ICollection<EntryData> data)
         {
             return new DataTransactionBuilder(data);
+        }
+
+        public override long CalculatedFee()
+        {
+            var payloadSize = DataTransactionBinarySerializer.CreateDataProto(Transaction.Data).ToByteArray().Length;
+            return DataTransaction.MinFee * (1 + (payloadSize - 1) / 1024);
         }
     }
 }

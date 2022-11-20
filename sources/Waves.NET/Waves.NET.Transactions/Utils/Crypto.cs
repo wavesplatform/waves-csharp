@@ -1,33 +1,23 @@
 ﻿using Chaos.NaCl;
 using Nethereum.Util;
 using org.whispersystems.curve25519;
-using Org.BouncyCastle.Crypto;
-using System;
 using System.Security.Cryptography;
 using System.Text;
-using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
 using HashAlgorithm = NSec.Cryptography.HashAlgorithm;
 
-namespace Waves.NET
+namespace Waves.NET.Transactions.Utils
 {
     public static class Crypto
     {
-        public static byte[] CalculateBlake2bKeccackHash(byte[] bytes)
-        {
-            return Sha3Keccack.Current.CalculateHash(HashAlgorithm.Blake2b_256.Hash(bytes));
-        }
+        public static byte[] CalculateBlake2bKeccackHash(byte[] bytes) => Sha3Keccack.Current.CalculateHash(HashAlgorithm.Blake2b_256.Hash(bytes));
 
-        public static byte[] CalculateKeccackHash(byte[] bytes)
-        {
-            return Sha3Keccack.Current.CalculateHash(bytes);
-        }
+        public static byte[] CalculateBlake2bHash(byte[] bytes) => HashAlgorithm.Blake2b_256.Hash(bytes);
 
-        public static byte[] CalculateBlake2bKeccackSha256Hash(byte[] bytes)
-        {
-            return HashAlgorithm.Sha256.Hash(CalculateBlake2bKeccackHash(bytes));
-        }
+        public static byte[] CalculateKeccackHash(byte[] bytes) => Sha3Keccack.Current.CalculateHash(bytes);
+
+        public static byte[] CalculateBlake2bKeccackSha256Hash(byte[] bytes) => HashAlgorithm.Sha256.Hash(CalculateBlake2bKeccackHash(bytes));
 
         public static byte[] CreatePrivateKeyFromSeed(string seedString, int nonce) => CreatePrivateKeyFromSeed(Encoding.UTF8.GetBytes(seedString), nonce);
 
@@ -90,14 +80,9 @@ namespace Waves.NET
             return sb.ToString().TrimEnd();
         }
 
-        public static byte[] Sign(PrivateKey privateKey, byte[] message)
-        {
-            return Curve25519.getInstance(Curve25519.BEST).calculateSignature(privateKey, message);
-        }
+        public static byte[] Sign(PrivateKey privateKey, byte[] message) => Curve25519.getInstance(Curve25519.BEST).calculateSignature(privateKey, message);
 
-        public static bool IsProofValid(byte[] publicKey, byte[] message, byte[] signature)
-        {
-            return Curve25519.getInstance(Curve25519.BEST).verifySignature(publicKey, message, signature);
-        }
+        public static bool IsProofValid(byte[] publicKey, byte[] message, byte[] signature) =>
+            Curve25519.getInstance(Curve25519.BEST).verifySignature(publicKey, message, signature);
     }
 }

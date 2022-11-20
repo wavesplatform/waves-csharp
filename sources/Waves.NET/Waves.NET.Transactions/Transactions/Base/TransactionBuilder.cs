@@ -1,4 +1,5 @@
 ﻿using Waves.NET.Transactions.Common;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Transactions
 {
@@ -78,6 +79,7 @@ namespace Waves.NET.Transactions
 
             var tx = GetUnsigned();
             var bodyBytes = _transactionBinarySerializerFactory.GetFor(tx).Serialize(tx);
+            tx.Id = Base58s.As(Crypto.CalculateBlake2bHash(bodyBytes));
             tx.Proofs.Add(new Base58s(signer.Sign(bodyBytes)));
 
             return tx;
@@ -90,7 +92,7 @@ namespace Waves.NET.Transactions
 
             Transaction.Sender = Address.FromPublicKey(ChainId, SenderPublicKey);
             Transaction.SenderPublicKey = SenderPublicKey;
-            Transaction.Fee = Fee + ExtraFee;
+            Transaction.Fee = CalculatedFee() + ExtraFee;
             Transaction.Timestamp = Timestamp;
             Transaction.Proofs = Proofs;
             Transaction.Version = Version;
@@ -98,5 +100,7 @@ namespace Waves.NET.Transactions
 
             return Transaction;
         }
+
+        public virtual long CalculatedFee() => Fee;
     }
 }

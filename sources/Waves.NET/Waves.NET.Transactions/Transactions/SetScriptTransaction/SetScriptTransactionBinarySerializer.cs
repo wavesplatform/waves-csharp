@@ -10,7 +10,7 @@ namespace Waves.NET.Transactions
         {
             var tx = (ISetScriptTransaction)transaction;
             proto.SetScript = new SetScriptTransactionData();
-            proto.SetScript.Script = ByteString.CopyFromUtf8(tx.Script);
+            proto.SetScript.Script = ByteString.FromBase64(tx.Script);
         }
     }
 }

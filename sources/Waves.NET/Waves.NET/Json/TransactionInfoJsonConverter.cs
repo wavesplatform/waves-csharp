@@ -15,29 +15,28 @@ namespace Waves.NET.Json
             {
                 var jObj = JObject.Load(reader);
                 var type = jObj.Value<int>("type");
-                var appStatus = jObj.Value<ApplicationStatus?>("applicationStatus");
                 var height = jObj.Value<int>("height");
 
                 switch (type)
                 {
-                    case 1: tInfo = new GenesisTransactionInfo(ReadTransaction<GenesisTransaction>(jObj, serializer), appStatus, height); break;
-                    case 2: tInfo = new PaymentTransactionInfo(ReadTransaction<PaymentTransaction>(jObj, serializer), appStatus, height); break;
-                    case 3: tInfo = new IssueTransactionInfo(ReadTransaction<IssueTransaction>(jObj, serializer), appStatus, height); break;
-                    case 4: tInfo = new TransferTransactionInfo(ReadTransaction<TransferTransaction>(jObj, serializer), appStatus, height); break;
-                    case 5: tInfo = new ReissueTransactionInfo(ReadTransaction<ReissueTransaction>(jObj, serializer), appStatus, height); break;
-                    case 6: tInfo = new BurnTransactionInfo(ReadTransaction<BurnTransaction>(jObj, serializer), appStatus, height); break;
-                    case 7: tInfo = new ExchangeTransactionInfo(ReadTransaction<ExchangeTransaction>(jObj, serializer), appStatus, height); break;
-                    case 8: tInfo = new LeaseTransactionInfo(ReadTransaction<LeaseTransaction>(jObj, serializer), appStatus, height); break;
-                    case 9: tInfo = new LeaseCancelTransactionInfo(ReadTransaction<LeaseCancelTransaction>(jObj, serializer), appStatus, height); break;
-                    case 10: tInfo = new CreateAliasTransactionInfo(ReadTransaction<CreateAliasTransaction>(jObj, serializer), appStatus, height); break;
-                    case 11: tInfo = new MassTransferTransactionInfo(ReadTransaction<MassTransferTransaction>(jObj, serializer), appStatus, height); break;
-                    case 12: tInfo = new DataTransactionInfo(ReadTransaction<DataTransaction>(jObj, serializer), appStatus, height); break;
-                    case 13: tInfo = new SetScriptTransactionInfo(ReadTransaction<SetScriptTransaction>(jObj, serializer), appStatus, height); break;
-                    case 14: tInfo = new SponsorFeeTransactionInfo(ReadTransaction<SponsorFeeTransaction>(jObj, serializer), appStatus, height); break;
-                    case 15: tInfo = new SetAssetScriptTransactionInfo(ReadTransaction<SetAssetScriptTransaction>(jObj, serializer), appStatus, height); break;
-                    case 16: tInfo = new InvokeScriptTransactionInfo(ReadTransaction<InvokeScriptTransaction>(jObj, serializer), appStatus, height); break;
-                    case 17: tInfo = new UpdateAssetInfoTransactionInfo(ReadTransaction<UpdateAssetInfoTransaction>(jObj, serializer), appStatus, height); break;
-                    case 18: tInfo = new EthereumTransactionInfo(ReadTransaction<EthereumTransaction>(jObj, serializer), appStatus, height); break;
+                    case 1: tInfo = new GenesisTransactionInfo(ReadTransaction<GenesisTransaction>(jObj, serializer), null, height); break;
+                    case 2: tInfo = new PaymentTransactionInfo(ReadTransaction<PaymentTransaction>(jObj, serializer), null, height); break;
+                    case 3: tInfo = new IssueTransactionInfo(ReadTransaction<IssueTransaction>(jObj, serializer), null, height); break;
+                    case 4: tInfo = new TransferTransactionInfo(ReadTransaction<TransferTransaction>(jObj, serializer), null, height); break;
+                    case 5: tInfo = new ReissueTransactionInfo(ReadTransaction<ReissueTransaction>(jObj, serializer), null, height); break;
+                    case 6: tInfo = new BurnTransactionInfo(ReadTransaction<BurnTransaction>(jObj, serializer), null, height); break;
+                    case 7: tInfo = new ExchangeTransactionInfo(ReadTransaction<ExchangeTransaction>(jObj, serializer), null, height); break;
+                    case 8: tInfo = new LeaseTransactionInfo(ReadTransaction<LeaseTransaction>(jObj, serializer), null, height); break;
+                    case 9: tInfo = new LeaseCancelTransactionInfo(ReadTransaction<LeaseCancelTransaction>(jObj, serializer), null, height); break;
+                    case 10: tInfo = new CreateAliasTransactionInfo(ReadTransaction<CreateAliasTransaction>(jObj, serializer), null, height); break;
+                    case 11: tInfo = new MassTransferTransactionInfo(ReadTransaction<MassTransferTransaction>(jObj, serializer), null, height); break;
+                    case 12: tInfo = new DataTransactionInfo(ReadTransaction<DataTransaction>(jObj, serializer), null, height); break;
+                    case 13: tInfo = new SetScriptTransactionInfo(ReadTransaction<SetScriptTransaction>(jObj, serializer), null, height); break;
+                    case 14: tInfo = new SponsorFeeTransactionInfo(ReadTransaction<SponsorFeeTransaction>(jObj, serializer), null, height); break;
+                    case 15: tInfo = new SetAssetScriptTransactionInfo(ReadTransaction<SetAssetScriptTransaction>(jObj, serializer), null, height); break;
+                    case 16: tInfo = new InvokeScriptTransactionInfo(ReadTransaction<InvokeScriptTransaction>(jObj, serializer), null, height); break;
+                    case 17: tInfo = new UpdateAssetInfoTransactionInfo(ReadTransaction<UpdateAssetInfoTransaction>(jObj, serializer), null, height); break;
+                    case 18: tInfo = new EthereumTransactionInfo(ReadTransaction<EthereumTransaction>(jObj, serializer), null, height); break;
                 }
             }
 

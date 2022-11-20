@@ -1,6 +1,8 @@
-﻿namespace Waves.NET.Transactions.Common
+﻿using Waves.NET.Transactions.Utils;
+
+namespace Waves.NET.Transactions.Common
 {
-    public class Address : Base58s, IRecipient
+    public class Address : Base58s, IRecipient, IEquatable<Address?>
     {
         public const byte TYPE = 1;
 
@@ -21,8 +23,19 @@
 
         public byte[] PublicKeyHash => Bytes[2..22];
 
-        public override int GetHashCode() => EncodedWithPrefix.GetHashCode();
-        public override bool Equals(object? obj) => Equals(obj as Address);
-        public bool Equals(Address? address) => address is not null && EncodedWithPrefix.Equals(address.EncodedWithPrefix, StringComparison.Ordinal);
+        public override int GetHashCode() => encoded.GetHashCode();
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null || obj as Address is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals(obj as Address);
+        }
+
+        public bool Equals(Address? address) =>
+            address is not null && (ReferenceEquals(this, address) || encoded.Equals(address.encoded, StringComparison.Ordinal));
+
+        public static bool operator ==(Address a, Address b) => a.Equals(b);
+        public static bool operator !=(Address a, Address b) => !a.Equals(b);
     }
 }

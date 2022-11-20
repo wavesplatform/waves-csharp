@@ -1,5 +1,4 @@
 ﻿using Waves.NET.Transactions.Common;
-using Waves.NET.Transactions;
 
 namespace Waves.NET.Transactions
 {

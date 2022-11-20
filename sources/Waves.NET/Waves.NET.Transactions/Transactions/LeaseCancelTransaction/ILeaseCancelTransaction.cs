@@ -5,6 +5,6 @@ namespace Waves.NET.Transactions
     public interface ILeaseCancelTransaction : INonGenesisTransaction
     {
         Base58s LeaseId { get; set; }
-        LeaseInfo Lease { get; set; }
+        LeaseInfo? Lease { get; set; }
     }
 }

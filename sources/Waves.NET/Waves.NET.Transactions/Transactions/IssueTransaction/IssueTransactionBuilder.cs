@@ -6,20 +6,37 @@ namespace Waves.NET.Transactions
     {
         public IssueTransactionBuilder() : base(IssueTransaction.LatestVersion, IssueTransaction.MinFee, IssueTransaction.TYPE) { }
 
-        public IssueTransactionBuilder(Base58s? assetId, string name, long quantity, int decimals, bool reissuable, string description, string? script) : this()
+        public IssueTransactionBuilder(string name, long quantity, int decimals) : this()
         {
-            Transaction.AssetId = assetId;
-            Transaction.Name = name;
+            Transaction.Name = name ?? "";
             Transaction.Quantity = quantity;
-            Transaction.Reissuable = reissuable;
+            Transaction.Reissuable = true;
             Transaction.Decimals = decimals;
-            Transaction.Description = description;
-            Transaction.Script = script;
+            Transaction.Description = "";
+            Transaction.Script = null;
         }
 
-        public static IssueTransactionBuilder Params(Base58s? assetId, string name, long quantity, int decimals, bool reissuable, string description, string? script)
+        public static IssueTransactionBuilder Params(string name, long quantity, int decimals)
         {
-            return new IssueTransactionBuilder(assetId, name, quantity, decimals, reissuable, description, script);
+            return new IssueTransactionBuilder(name, quantity, decimals);
+        }
+
+        public IssueTransactionBuilder SetReissuable(bool reissuable)
+        {
+            Transaction.Reissuable = reissuable;
+            return this;
+        }
+
+        public IssueTransactionBuilder SetDescription(string description)
+        {
+            Transaction.Description = description;
+            return this;
+        }
+
+        public IssueTransactionBuilder SetScript(Base64s? script)
+        {
+            Transaction.Script = script;
+            return this;
         }
     }
 }

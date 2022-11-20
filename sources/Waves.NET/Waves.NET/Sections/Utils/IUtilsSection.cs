@@ -1,4 +1,5 @@
-﻿using Waves.NET.Utils.ReturnTypes;
+﻿using Waves.NET.Addresses.ReturnTypes;
+using Waves.NET.Utils.ReturnTypes;
 
 namespace Waves.NET.Utils
 {
@@ -44,7 +45,7 @@ namespace Waves.NET.Utils
         /// <param name="script">Code</param>
         /// <param name="compact">If true, compacts the contract. False by default</param>
         /// <returns>Compiled script</returns>
-        public ScriptResult GetScriptCompiledCode(string script, bool compact = false);
+        public ScriptInfo CompileScript(string script, bool compact = false);
 
         /// <summary>
         /// Compiles string code with imports to base64 script representation
@@ -60,21 +61,21 @@ namespace Waves.NET.Utils
         ///    }
         ///}</code></param>
         /// <returns>Compiled script</returns>
-        public ScriptResult GetScriptCompiledCodeWithImports(string scriptWithImports);
+        public ScriptInfo GetScriptCompiledCodeWithImports(string scriptWithImports);
 
         /// <summary>
         /// Decompiles base64 script representation to string code
         /// </summary>
         /// <param name="code">base64 string of script code</param>
         /// <returns>Decompiled script code</returns>
-        public string GetScriptDecompiledCode(string code);
+        public string DecompileScript(string code);
 
         /// <summary>
         /// Estimates complexity of a given compiled code
         /// </summary>
         /// <param name="code">Compiled code in base64 script representation</param>
         /// <returns></returns>
-        public ScriptEstimateResult GetScriptEstimate(string code);
+        public ScriptInfo GetScriptEstimate(string code);
 
         /// <summary>
         /// Evaluates the provided expression, taking into account the deployed dApp contract

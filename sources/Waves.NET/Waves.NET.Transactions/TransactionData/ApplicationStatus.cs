@@ -1,7 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Waves.NET.Transactions
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ApplicationStatus
     {
         [EnumMember(Value = "")]
@@ -11,6 +14,9 @@ namespace Waves.NET.Transactions
         Succeeded,
 
         [EnumMember(Value = "script_execution_failed")]
-        ScriptExecutionFailed
+        ScriptExecutionFailed,
+
+        [EnumMember(Value = "script_execution_in_progress")]
+        ScriptExecutionInProgress
     }
 }

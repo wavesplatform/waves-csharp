@@ -1,6 +1,4 @@
-﻿using Waves.NET.Transactions;
-
-namespace Waves.NET.Transactions
+﻿namespace Waves.NET.Transactions
 {
     public class SetScriptTransaction : Transaction, ISetScriptTransaction
     {

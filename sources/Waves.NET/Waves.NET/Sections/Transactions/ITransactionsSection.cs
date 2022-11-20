@@ -1,4 +1,5 @@
-﻿using Waves.NET.Transactions.Info;
+﻿using Waves.NET.Transactions.Common;
+using Waves.NET.Transactions.Info;
 
 namespace Waves.NET.Transactions
 {
@@ -36,14 +37,14 @@ namespace Waves.NET.Transactions
         /// </summary>
         /// <param name="ids">Transaction IDs base58 encoded</param>
         /// <returns>Transactions info</returns>
-        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<string> ids);
+        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids);
 
         /// <summary>
         /// Get transactions by ID
         /// </summary>
         /// <param name="id">Transaction ID base58 encoded</param>
         /// <returns>Transaction info</returns>
-        public TransactionInfo GetTransactionInfo(string id);
+        public TransactionInfo GetTransactionInfo(Base58s id);
 
         /// <summary>
         /// Get <see href="https://docs.waves.tech/en/blockchain/block/merkle-root#proof-of-transaction-in-block">merkle proofs</see> for given transactions
@@ -58,7 +59,7 @@ namespace Waves.NET.Transactions
         /// </summary>
         /// <param name="ids">Transaction IDs</param>
         /// <returns>Transaction statuses</returns>
-        public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<string> ids);
+        public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<Base58s> ids);
 
         /// <summary>
         /// Get transaction status by ID

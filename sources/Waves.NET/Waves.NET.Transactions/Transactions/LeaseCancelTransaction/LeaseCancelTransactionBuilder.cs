@@ -6,15 +6,14 @@ namespace Waves.NET.Transactions
     {
         public LeaseCancelTransactionBuilder() : base(LeaseCancelTransaction.LatestVersion, LeaseCancelTransaction.MinFee, LeaseCancelTransaction.TYPE) { }
 
-        public LeaseCancelTransactionBuilder(Base58s leaseId, LeaseInfo leaseInfo) : this()
+        public LeaseCancelTransactionBuilder(Base58s leaseId) : this()
         {
             Transaction.LeaseId = leaseId;
-            Transaction.Lease = leaseInfo;
         }
 
-        public static LeaseCancelTransactionBuilder Params(Base58s leaseId, LeaseInfo leaseInfo)
+        public static LeaseCancelTransactionBuilder Params(Base58s leaseId)
         {
-            return new LeaseCancelTransactionBuilder(leaseId, leaseInfo);
+            return new LeaseCancelTransactionBuilder(leaseId);
         }
     }
 }

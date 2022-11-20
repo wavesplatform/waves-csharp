@@ -1,5 +1,6 @@
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
+using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Tests
 {
@@ -9,19 +10,19 @@ namespace Waves.NET.Tests
         [TestMethod]
         public void InvokeScriptTransactionBinarySerializerSuccessTest()
         {
-            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new List<Payment>(), new Call(), new StateChanges()).GetSignedWith(PrivateKey);
+            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new Call()).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
             Assert.IsTrue(tr.Proofs.Count == 1);
-            Assert.IsTrue(Crypto.IsProofValid(PrivateKey.PublicKey, trBytes, tr.Proofs.Single()));
+            Assert.IsTrue(Crypto.IsProofValid(PublicKey, trBytes, tr.Proofs.Single()));
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void InvokeScriptTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new List<Payment>(), new Call(), new StateChanges())
+            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new Call())
                 .SetVersion(InvokeScriptTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
