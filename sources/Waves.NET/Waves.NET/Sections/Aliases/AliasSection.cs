@@ -2,7 +2,7 @@
 
 namespace Waves.NET.Aliases
 {
-    public class AliasSection : SectionBase, IAliasSection
+    public class AliasSection : SectionBase, IAliasesSection
     {
         public AliasSection(HttpClient httpClient) : base(httpClient, "alias") { }
 

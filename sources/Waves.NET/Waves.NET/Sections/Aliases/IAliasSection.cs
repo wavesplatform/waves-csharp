@@ -2,7 +2,7 @@
 
 namespace Waves.NET.Aliases
 {
-    public interface IAliasSection
+    public interface IAliasesSection
     {
         /// <summary>
         /// Get an address associated with a given alias. Alias should be plain text without an 'alias' prefix and chain ID

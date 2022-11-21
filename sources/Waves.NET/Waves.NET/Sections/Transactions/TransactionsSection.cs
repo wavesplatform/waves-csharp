@@ -44,6 +44,16 @@ namespace Waves.NET.Transactions
             return PublicRequest<TransactionInfo>(HttpMethod.Get, $"info/{id}");
         }
 
+        public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo
+        {
+            var txi = PublicRequest<TransactionInfo>(HttpMethod.Get, $"info/{id}") as T;
+            if(txi is null)
+            {
+                throw new InvalidCastException("GetTransactionInfo: requested transaction info type mismatches");
+            }
+            return txi;
+        }
+
         public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids)
         {
             var jsonBody = JsonUtils.Serialize(new { ids });
@@ -56,7 +66,7 @@ namespace Waves.NET.Transactions
             return PublicRequest<ICollection<TransactionStatus>>(HttpMethod.Post, "status", jsonBody);
         }
 
-        public TransactionStatus GetTransactionStatus(string id)
+        public TransactionStatus GetTransactionStatus(Base58s id)
         {
             return PublicRequest<TransactionStatus>(HttpMethod.Get, $"status/{id}");
         }
@@ -66,7 +76,7 @@ namespace Waves.NET.Transactions
             return PublicRequest<ICollection<Transaction>>(HttpMethod.Get, "unconfirmed");
         }
 
-        public Transaction GetUnconfirmedTransaction(string id)
+        public Transaction GetUnconfirmedTransaction(Base58s id)
         {
             return PublicRequest<Transaction>(HttpMethod.Get, $"unconfirmed/info/{id}");
         }

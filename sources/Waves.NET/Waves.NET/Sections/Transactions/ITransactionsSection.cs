@@ -40,11 +40,18 @@ namespace Waves.NET.Transactions
         public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids);
 
         /// <summary>
-        /// Get transactions by ID
+        /// Get transaction by ID
         /// </summary>
         /// <param name="id">Transaction ID base58 encoded</param>
         /// <returns>Transaction info</returns>
         public TransactionInfo GetTransactionInfo(Base58s id);
+
+        /// <summary>
+        /// Get transaction by ID of specified type
+        /// </summary>
+        /// <param name="id">Transaction ID base58 encoded</param>
+        /// <returns>Transaction info of specified type</returns>
+        public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo;
 
         /// <summary>
         /// Get <see href="https://docs.waves.tech/en/blockchain/block/merkle-root#proof-of-transaction-in-block">merkle proofs</see> for given transactions
@@ -66,7 +73,7 @@ namespace Waves.NET.Transactions
         /// </summary>
         /// <param name="id">Transaction ID base58 encoded</param>
         /// <returns>Transaction status</returns>
-        public TransactionStatus GetTransactionStatus(string id);
+        public TransactionStatus GetTransactionStatus(Base58s id);
 
         /// <summary>
         /// Get a list of transactions in node's UTX pool
@@ -79,7 +86,7 @@ namespace Waves.NET.Transactions
         /// </summary>
         /// <param name="id">Transaction ID base58 encoded</param>
         /// <returns>Unconfirmed transaction info</returns>
-        public Transaction GetUnconfirmedTransaction(string id);
+        public Transaction GetUnconfirmedTransaction(Base58s id);
 
         /// <summary>
         /// Get the number of transactions in the UTX pool

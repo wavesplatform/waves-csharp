@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Addresses.ReturnTypes
+﻿namespace Waves.NET.Addresses
 {
     public record ScriptMetaResponse
     {

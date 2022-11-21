@@ -4,7 +4,7 @@ namespace Waves.NET.Transactions
 {
     public record LeaseInfo
     {
-        public string Id { get; init; } = null!;
+        public Base58s Id { get; init; } = null!;
         public string OriginTransactionId { get; init; } = null!;
         public string Sender { get; init; } = null!;
         public string Recipient { get; init; } = null!;

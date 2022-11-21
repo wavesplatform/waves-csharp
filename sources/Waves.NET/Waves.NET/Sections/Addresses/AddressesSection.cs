@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Waves.NET.Addresses.ReturnTypes;
+using Waves.NET.Addresses;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;

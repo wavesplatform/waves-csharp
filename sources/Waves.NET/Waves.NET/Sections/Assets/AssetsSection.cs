@@ -1,4 +1,4 @@
-﻿using Waves.NET.Assets.ReturnTypes;
+﻿using Waves.NET.Assets;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 

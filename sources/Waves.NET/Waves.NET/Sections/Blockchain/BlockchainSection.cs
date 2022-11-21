@@ -1,4 +1,4 @@
-﻿using Waves.NET.Blockchain.ReturnTypes;
+﻿using Waves.NET.Blockchain;
 
 namespace Waves.NET.Blockchain
 {

@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Debug.ReturnTypes
+﻿namespace Waves.NET.Debug
 {
     public record HistoryBalance
     {

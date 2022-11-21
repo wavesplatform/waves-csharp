@@ -12,14 +12,14 @@ namespace Waves.NET.Transactions
         {
             var tx = (IInvokeScriptTransaction)transaction;
             proto.InvokeScript = new InvokeScriptTransactionData();
-            proto.InvokeScript.Payments.Add(tx.Payment.Select(x => new AmountProto { Amount_ = x.Amount, AssetId = ByteString.CopyFromUtf8(x.AssetId) }));
             proto.InvokeScript.DApp = tx.DApp.Type == Address.TYPE
                 ? new Recipient { PublicKeyHash = ByteString.CopyFrom(((Address)tx.DApp).PublicKeyHash) }
                 : new Recipient { PublicKeyHash = ByteString.CopyFromUtf8(((Alias)tx.DApp).Name) };
+            proto.InvokeScript.Payments.Add(tx.Payment.Select(x => new AmountProto { Amount_ = x.Amount, AssetId = ByteString.CopyFrom(x.AssetId) }));
             proto.InvokeScript.FunctionCall = ByteString.CopyFrom(CreateFunctionData(tx.Call));
         }
 
-        private byte[] CreateFunctionData(Call call)
+        private byte[] CreateFunctionData(Call call)    
         {
             using var ms = new MemoryStream();
             using var bw = new BinaryWriter(ms);

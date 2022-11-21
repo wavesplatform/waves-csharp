@@ -11,12 +11,12 @@ using Waves.NET.Utils;
 
 namespace Waves.NET
 {
-    public interface INodeClient
+    public interface INodeSections
     {
         byte ChainId { get; }
 
         IAddressesSection Addresses { get; }
-        IAliasSection Alias { get; }
+        IAliasesSection Aliases { get; }
         IAssetsSection Assets { get; }
         IBlockchainSection Blockchain { get; }
         IBlocksSection Blocks { get; }

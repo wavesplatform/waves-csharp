@@ -1,6 +1,6 @@
 ﻿using Waves.NET.Transactions.Info;
 
-namespace Waves.NET.Blocks.ReturnTypes
+namespace Waves.NET.Blocks
 {
     public class Block : BlockHeader, IEquatable<Block?>
     {

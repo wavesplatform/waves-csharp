@@ -15,12 +15,12 @@ namespace Waves.NET.Tests.Sections
 
             WaitForTransaction(Node.Transactions.Broadcast(CreateAliasTransactionBuilder.Params(alias).GetSignedWith(alice.Pk)).Id);
 
-            var aliases = Node.Alias.GetAliasesByAddress(alice.Addr);
+            var aliases = Node.Aliases.GetAliasesByAddress(alice.Addr);
             Assert.IsNotNull(aliases);
             Assert.IsNotNull(aliases.FirstOrDefault());
             Assert.AreEqual(alias, aliases.FirstOrDefault());
 
-            var result = Node.Alias.GetAddressByAlias(alias);
+            var result = Node.Aliases.GetAddressByAlias(alias);
             Assert.IsNotNull(result);
             Assert.AreEqual(alice.Addr, result);
         }

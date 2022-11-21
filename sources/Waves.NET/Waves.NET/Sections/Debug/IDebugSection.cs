@@ -1,4 +1,4 @@
-﻿using Waves.NET.Debug.ReturnTypes;
+﻿using Waves.NET.Debug;
 using Waves.NET.Transactions;
 
 namespace Waves.NET.Debug

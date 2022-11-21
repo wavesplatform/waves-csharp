@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Waves.NET.Blocks.ReturnTypes
+namespace Waves.NET.Blocks
 {
     public record NxtConsensus
     {

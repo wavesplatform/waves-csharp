@@ -1,8 +1,10 @@
-﻿namespace Waves.NET.Transactions.Actions
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Transactions.Actions
 {
     public record LeaseAction
     {
-        public string Id { get; init; } = "";
+        public Base58s Id { get; init; } = null!;
         public string OriginTransactionId { get; init; } = "";
         public string Sender { get; init; } = "";
         public string Recipient { get; init; } = "";

@@ -1,6 +1,6 @@
 ﻿using Waves.NET.Transactions;
 
-namespace Waves.NET.Addresses.ReturnTypes
+namespace Waves.NET.Addresses
 {
     public class ScriptMeta : IEquatable<ScriptMeta?>
     {

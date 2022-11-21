@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Waves.NET.Addresses.ReturnTypes
+namespace Waves.NET.Addresses
 {
     public record AddressBalance
     {

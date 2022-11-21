@@ -1,6 +1,4 @@
-﻿using Waves.NET.Blocks.ReturnTypes;
-
-namespace Waves.NET.Blocks
+﻿namespace Waves.NET.Blocks
 {
     public interface IBlocksSection
     {

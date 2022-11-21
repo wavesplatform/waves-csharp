@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Assets.ReturnTypes
+﻿namespace Waves.NET.Assets
 {
     public record IssueTransaction
     {

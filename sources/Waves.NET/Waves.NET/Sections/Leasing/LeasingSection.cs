@@ -1,4 +1,5 @@
 ﻿using Waves.NET.Transactions;
+using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Leasing
@@ -7,23 +8,23 @@ namespace Waves.NET.Leasing
     {
         public LeasingSection(HttpClient httpClient) : base(httpClient, "leasing") { }
 
-        public ICollection<LeaseInfo> GetActiveLeases(string address)
+        public ICollection<LeaseInfo> GetActiveLeases(Address address)
         {
             return PublicRequest<ICollection<LeaseInfo>>(HttpMethod.Get, $"active/{address}");
         }
 
-        public LeaseInfo GetLeaseInfo(string leaseId)
+        public LeaseInfo GetLeaseInfo(Base58s leaseId)
         {
             return PublicRequest<LeaseInfo>(HttpMethod.Get, $"info/{leaseId}");
         }
 
-        public ICollection<LeaseInfo> GetLeasesInfo(ICollection<string> leaseIds)
+        public ICollection<LeaseInfo> GetLeasesInfo(ICollection<Base58s> leaseIds)
         {
             var jsonBody = JsonUtils.Serialize(new { ids = leaseIds });
             return PublicRequest<ICollection<LeaseInfo>>(HttpMethod.Post, $"info", jsonBody);
         }
 
-        public ICollection<LeaseInfo> GetLeasesInfo(params string[] leaseIds)
+        public ICollection<LeaseInfo> GetLeasesInfo(params Base58s[] leaseIds)
         {
             var jsonBody = JsonUtils.Serialize(new { ids = leaseIds });
             return PublicRequest<ICollection<LeaseInfo>>(HttpMethod.Post, $"info", jsonBody);

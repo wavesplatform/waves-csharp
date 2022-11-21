@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Waves.NET.Addresses;
-using Waves.NET.Addresses.ReturnTypes;
-using Waves.NET.Debug.ReturnTypes;
+using Waves.NET.Addresses;
+using Waves.NET.Debug;
 using Waves.NET.Exceptions;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;

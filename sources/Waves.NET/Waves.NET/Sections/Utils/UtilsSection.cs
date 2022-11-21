@@ -1,6 +1,6 @@
-﻿using Waves.NET.Addresses.ReturnTypes;
+﻿using Waves.NET.Addresses;
 using Waves.NET.Transactions.Utils;
-using Waves.NET.Utils.ReturnTypes;
+using Waves.NET.Utils;
 
 namespace Waves.NET.Utils
 {

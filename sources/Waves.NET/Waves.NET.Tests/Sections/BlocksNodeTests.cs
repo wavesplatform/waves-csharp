@@ -1,4 +1,4 @@
-using Waves.NET.Blocks.ReturnTypes;
+using Waves.NET.Blocks;
 using Waves.NET.Transactions;
 
 namespace Waves.NET.Tests.Sections

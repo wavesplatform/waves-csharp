@@ -1,4 +1,4 @@
-﻿using Waves.NET.Node.ReturnTypes;
+﻿using Waves.NET.Node;
 
 namespace Waves.NET.Node
 {

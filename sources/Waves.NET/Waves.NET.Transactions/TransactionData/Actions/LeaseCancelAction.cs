@@ -1,7 +1,9 @@
-﻿namespace Waves.NET.Transactions.Actions
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Transactions.Actions
 {
     public record LeaseCancelAction
     {
-        public string LeaseId { get; init; } = null!;
+        public Base58s LeaseId { get; init; } = null!;
     }
 }

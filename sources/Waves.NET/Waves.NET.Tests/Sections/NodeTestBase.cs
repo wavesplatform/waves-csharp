@@ -12,13 +12,13 @@ namespace Waves.NET.Tests.Sections
 
         public const string FaucetSeedPhrase = "waves private node seed with waves tokens";
 
-        public INodeClient Node { get; set; }
+        public INodeSections Node { get; set; }
         public PrivateKey FaucetPrivateKey { get; set; }
         public Address FaucetAddress { get; set; }
 
         public NodeTestBase()
         {
-            Node = NodeClient.Create(Profile.Private);
+            Node = NodeClient.CreateSections(Profile.Private);
             FaucetPrivateKey = PrivateKey.FromSeed(FaucetSeedPhrase);
             FaucetAddress = Address.FromPublicKey(Node.ChainId, FaucetPrivateKey.PublicKey);
         }

@@ -1,7 +1,7 @@
 ﻿using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Addresses.ReturnTypes
+namespace Waves.NET.Addresses
 {
     public class ScriptInfo : IEquatable<ScriptInfo?>
     {
