@@ -1,7 +1,7 @@
 ﻿using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Leasing
+namespace Waves.NET.Sections
 {
     public interface ILeasingSection
     {

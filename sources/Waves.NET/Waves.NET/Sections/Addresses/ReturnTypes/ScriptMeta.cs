@@ -1,6 +1,7 @@
-﻿using Waves.NET.Transactions;
+﻿using Waves.NET.Addresses;
+using Waves.NET.Transactions;
 
-namespace Waves.NET.Addresses
+namespace Waves.NET.ReturnTypes
 {
     public class ScriptMeta : IEquatable<ScriptMeta?>
     {

@@ -1,7 +1,7 @@
 ﻿using Waves.NET.Addresses;
-using Waves.NET.Utils;
+using Waves.NET.ReturnTypes;
 
-namespace Waves.NET.Utils
+namespace Waves.NET.Sections
 {
     public interface IUtilsSection
     {

@@ -1,6 +1,6 @@
 ﻿using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Aliases
+namespace Waves.NET.Sections
 {
     public class AliasSection : SectionBase, IAliasesSection
     {

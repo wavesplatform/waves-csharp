@@ -1,7 +1,7 @@
-﻿using Waves.NET.Assets;
+﻿using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Assets
+namespace Waves.NET.Sections
 {
     public interface IAssetsSection
     {

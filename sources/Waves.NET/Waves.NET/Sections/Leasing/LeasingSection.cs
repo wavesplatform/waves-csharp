@@ -2,7 +2,7 @@
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Leasing
+namespace Waves.NET.Sections
 {
     public class LeasingSection : SectionBase, ILeasingSection
     {

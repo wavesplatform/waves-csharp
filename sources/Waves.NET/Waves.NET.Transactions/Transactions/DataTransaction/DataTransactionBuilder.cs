@@ -18,6 +18,11 @@ namespace Waves.NET.Transactions
             return new DataTransactionBuilder(data);
         }
 
+        public static DataTransactionBuilder Params(EntryData data)
+        {
+            return new DataTransactionBuilder(new[] { data });
+        }
+
         public override long CalculatedFee()
         {
             var payloadSize = DataTransactionBinarySerializer.CreateDataProto(Transaction.Data).ToByteArray().Length;

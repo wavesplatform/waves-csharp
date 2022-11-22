@@ -6,11 +6,11 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void BlockchainRewardTest()
         {
-            var height = Node.Blocks.GetHeight();
-            var rewards = Node.Blockchain.GetBlockchainRewards();
+            var height = Node.GetHeight();
+            var rewards = Node.GetBlockchainRewards();
 
-            Assert.AreEqual(rewards, Node.Blockchain.GetBlockchainRewards(rewards.Height));
-            Assert.AreNotEqual(rewards, Node.Blockchain.GetBlockchainRewards(height - 1));
+            Assert.AreEqual(rewards, Node.GetBlockchainRewards(rewards.Height));
+            Assert.AreNotEqual(rewards, Node.GetBlockchainRewards(height - 1));
 
             Assert.IsTrue(rewards.Height >= height && rewards.Height <= height + 10);
             Assert.IsTrue(rewards.TotalWavesAmount > 10000000000000000);

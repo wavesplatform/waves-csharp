@@ -1,16 +1,10 @@
-﻿using System.Text.RegularExpressions;
-using Waves.NET.Addresses;
-using Waves.NET.Aliases;
-using Waves.NET.Assets;
-using Waves.NET.Blockchain;
-using Waves.NET.Blocks;
-using Waves.NET.Debug;
-using Waves.NET.Leasing;
-using Waves.NET.Node;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Waves.NET.ReturnTypes;
+using Waves.NET.Sections;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Info;
-using Waves.NET.Utils;
 
 namespace Waves.NET
 {
@@ -138,7 +132,8 @@ namespace Waves.NET
         public ICollection<TransactionInfo> GetTransactionsByAddress(string address, int limit = 1000, string afterTxId = "") =>
             Transactions.GetTransactionsByAddress(address, limit, afterTxId);
         public T Broadcast<T>(T transaction, bool trace = false) where T : Transaction => Transactions.Broadcast(transaction, trace);
-        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids) => Transactions.GetTransactionInfo(ids);
+        public ICollection<TransactionInfo> GetTransactionsInfo(ICollection<Base58s> ids) => Transactions.GetTransactionsInfo(ids);
+        public ICollection<T> GetTransactionsInfo<T>(ICollection<Base58s> ids) where T : TransactionInfo => Transactions.GetTransactionsInfo<T>(ids);
         public TransactionInfo GetTransactionInfo(Base58s id) => Transactions.GetTransactionInfo(id);
         public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo => Transactions.GetTransactionInfo<T>(id);
         public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids) => Transactions.GetTransactionMerkleProofs(ids);
@@ -160,6 +155,111 @@ namespace Waves.NET
         public string DecompileScript(string code) => Utils.DecompileScript(code);
         public ScriptInfo GetScriptEstimate(string code) => Utils.GetScriptEstimate(code);
         public ScriptEvaluationResult EvaluateScript(string address, ScriptEvaluationExpression evaluationExpression) => Utils.EvaluateScript(address, evaluationExpression);
+        #endregion
+
+        #region Waitings
+        public void WaitForTransactions(ICollection<Base58s> transactionIds, uint waitForSeconds = 60)
+        {
+            const int PollingIntervalInMillis = 1000;
+            uint waitForMillis = waitForSeconds * 1000;
+            Exception? lastException = null;
+
+            var sw = Stopwatch.StartNew();
+            while (true)
+            {
+                try
+                {
+                    var statuses = GetTransactionsStatus(transactionIds);
+                    if (statuses.All(x => x.Status.Equals("confirmed", StringComparison.OrdinalIgnoreCase))) return;
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
+                    Thread.Sleep(PollingIntervalInMillis);
+                }
+
+                if (sw.ElapsedMilliseconds > waitForMillis)
+                    throw new Exception($"WaitForTransaction: Operation timeout ({waitForSeconds} seconds). Last exception: {lastException}");
+            }
+        }
+
+        public T WaitForTransaction<T>(Base58s? transactionId, uint waitForSeconds = 60) where T : TransactionInfo
+        {
+            return (T) WaitForTransaction(transactionId, waitForSeconds);
+        }
+
+        public TransactionInfo WaitForTransaction(Base58s? transactionId, uint waitForSeconds = 60)
+        {
+            if (transactionId is null)
+                throw new ArgumentNullException($"WaitForTransaction: transaction ID cannot be null");
+
+            const int PollingIntervalInMillis = 100;
+            uint waitForMillis = waitForSeconds * 1000;
+            Exception? lastException;
+
+            var sw = Stopwatch.StartNew();
+            while (true)
+            {
+                try
+                {
+                    return GetTransactionInfo(transactionId);
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
+                    Thread.Sleep(PollingIntervalInMillis);
+                }
+
+                if (sw.ElapsedMilliseconds > waitForMillis)
+                    throw new Exception($"WaitForTransaction: Operation timeout ({waitForSeconds} seconds). Last exception: {lastException}");
+            }
+        }
+
+
+        public int WaitForHeight(int target, uint waitForSeconds = 60)
+        {
+            int start = GetHeight();
+            int prev = start;
+            const int PollingIntervalInMillis = 100;
+            uint waitForMillis = waitForSeconds * 1000;
+
+            var sw = Stopwatch.StartNew();
+
+            while (true)
+            {
+                try
+                {
+                    int current = GetHeight();
+
+                    if (current >= target)
+                    {
+                        return current;
+                    }
+                    else if (current > prev)
+                    {
+                        prev = current;
+                    }
+                }
+                catch
+                {
+                    Thread.Sleep(PollingIntervalInMillis);
+                }
+
+                if (sw.ElapsedMilliseconds > waitForMillis)
+                    throw new Exception($"WaitForHeight: timeout reached ({waitForSeconds} seconds)");
+            }
+        }
+
+        public int WaitBlocks(int blocksCount, uint waitingInSeconds = 60)
+        {
+            var height = GetHeight();
+            return WaitForHeight(height + blocksCount, waitingInSeconds);
+        }
+
+        public int WaitBlocks(int blocksCount)
+        {
+            return WaitBlocks(blocksCount, 60 * 3);
+        }
         #endregion
     }
 }

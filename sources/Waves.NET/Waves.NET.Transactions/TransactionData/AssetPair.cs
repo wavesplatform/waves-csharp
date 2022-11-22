@@ -1,8 +1,10 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions.Common;
+
+namespace Waves.NET.Transactions
 {
     public record AssetPair
     {
-        public string? AmountAsset { get; init; }
-        public string? PriceAsset { get; init; }
+        public Base58s? AmountAsset { get; init; }
+        public Base58s? PriceAsset { get; init; }
     }
 }

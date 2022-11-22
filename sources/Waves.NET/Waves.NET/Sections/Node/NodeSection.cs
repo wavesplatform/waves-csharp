@@ -1,6 +1,6 @@
-﻿using Waves.NET.Node;
+﻿using Waves.NET.ReturnTypes;
 
-namespace Waves.NET.Node
+namespace Waves.NET.Sections
 {
     public class NodeSection : SectionBase, INodeSection
     {

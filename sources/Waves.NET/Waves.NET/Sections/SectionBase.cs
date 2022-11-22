@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Text;
+﻿using System.Text;
 using Waves.NET.Exceptions;
+using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET
+namespace Waves.NET.Sections
 {
     public abstract class SectionBase
     {
@@ -27,51 +27,17 @@ namespace Waves.NET
                     request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 }
 
-                return ProcessRequest<TResult>(request, false);
+                var response = HttpClient.Send(request);
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonUtils.Deserialize<TResult>(jsonString)!;
+                }
+
+                var apiError = JsonUtils.Deserialize<ApiError>(jsonString);
+                throw new NodeException(apiError!);
             }
-        }
-
-        private TResult ProcessRequest<TResult>(HttpRequestMessage request, bool readAsStream)
-        {
-            var response = HttpClient.Send(request);
-
-            return readAsStream
-                ? ProcessResponseReadStreamed<TResult>(response)
-                : ProcessResponseReadStringed<TResult>(response);
-        }
-
-        private TResult ProcessResponseReadStreamed<TResult>(HttpResponseMessage response, JsonConverter? jsonConverter = null)
-        {
-            var jsonStream = response.Content.ReadAsStream();
-
-            using var sr = new StreamReader(jsonStream);
-            using var jsonReader = new JsonTextReader(sr);
-            var serializer = new JsonSerializer();
-
-            if (jsonConverter is not null) {
-                serializer.Converters.Add(jsonConverter);
-            }
-
-            if (response.IsSuccessStatusCode)
-            {
-                return serializer.Deserialize<TResult>(jsonReader)!;
-            }
-
-            var apiError = serializer.Deserialize<ApiError>(jsonReader);
-            throw new NodeException(apiError!);
-        }
-
-        private TResult ProcessResponseReadStringed<TResult>(HttpResponseMessage response)
-        {
-            var jsonString = response.Content.ReadAsStringAsync().Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<TResult>(jsonString)!;
-            }
-
-            var apiError = JsonConvert.DeserializeObject<ApiError>(jsonString);
-            throw new NodeException(apiError!);
         }
     }
 }

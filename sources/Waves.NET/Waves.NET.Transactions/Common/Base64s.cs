@@ -29,6 +29,7 @@ namespace Waves.NET.Transactions.Common
         public static explicit operator Base64s(string s) => new(RemovePrefix(s));
 
         public static Base64s From(string str) => new Base64s(Convert.ToBase64String(Encoding.UTF8.GetBytes(str)));
+        public static Base64s From(byte[] bytes) => new Base64s(Convert.ToBase64String(bytes));
         public static byte[] Decode(string encoded) => Convert.FromBase64String(RemovePrefix(encoded));
 
         private static string RemovePrefix(string encoded) => (encoded ?? "").Replace(Prefix, "");

@@ -6,14 +6,14 @@ namespace Waves.NET.Transactions
     {
         public ReissueTransactionBuilder() : base(ReissueTransaction.LatestVersion, ReissueTransaction.MinFee, ReissueTransaction.TYPE) { }
 
-        public ReissueTransactionBuilder(Base58s assetId, long quantity, bool reissuable) : this()
+        public ReissueTransactionBuilder(Base58s assetId, long quantity, bool reissuable = true) : this()
         {
             Transaction.AssetId = assetId;
             Transaction.Quantity = quantity;
             Transaction.Reissuable = reissuable;
         }
 
-        public static ReissueTransactionBuilder Params(Base58s assetId, long quantity, bool reissuable)
+        public static ReissueTransactionBuilder Params(Base58s assetId, long quantity, bool reissuable = true)
         {
             return new ReissueTransactionBuilder(assetId, quantity, reissuable);
         }

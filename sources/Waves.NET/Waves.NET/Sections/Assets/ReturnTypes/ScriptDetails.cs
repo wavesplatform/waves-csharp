@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Assets
+﻿namespace Waves.NET.ReturnTypes
 {
     public class ScriptDetails : IEquatable<ScriptDetails?>
     {

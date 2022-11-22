@@ -1,7 +1,7 @@
-﻿using Waves.NET.Debug;
+﻿using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 
-namespace Waves.NET.Debug
+namespace Waves.NET.Sections
 {
     public interface IDebugSection
     {

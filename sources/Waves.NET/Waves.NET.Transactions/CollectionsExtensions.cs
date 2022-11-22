@@ -1,6 +1,6 @@
 ﻿namespace Waves.NET.Transactions
 {
-    public static class Extensions
+    public static class CollectionsExtensions
     {
         public static bool ContentEquals<TK, TV>(this IDictionary<TK, TV> o, IDictionary<TK, TV> other)
         {

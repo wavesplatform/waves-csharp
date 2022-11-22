@@ -1,6 +1,6 @@
 ﻿using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Assets
+namespace Waves.NET.ReturnTypes
 {
     public record AssetDistribution
     {

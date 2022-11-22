@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
-using Waves.NET.Addresses;
+using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Addresses
+namespace Waves.NET.Sections
 {
     public interface IAddressesSection
     {

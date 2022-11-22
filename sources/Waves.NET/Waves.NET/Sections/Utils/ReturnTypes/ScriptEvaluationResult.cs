@@ -1,6 +1,6 @@
 ﻿using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Utils
+namespace Waves.NET.ReturnTypes
 {
     public record ScriptEvaluationResult
     {

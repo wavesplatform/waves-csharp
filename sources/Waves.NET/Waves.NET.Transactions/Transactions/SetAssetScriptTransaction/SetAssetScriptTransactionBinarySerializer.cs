@@ -10,8 +10,8 @@ namespace Waves.NET.Transactions
         {
             var tx = (ISetAssetScriptTransaction)transaction;
             proto.SetAssetScript = new SetAssetScriptTransactionData();
-            proto.SetAssetScript.AssetId = ByteString.CopyFromUtf8(tx.AssetId);
-            proto.SetAssetScript.Script = ByteString.CopyFromUtf8(tx.Script);
+            proto.SetAssetScript.AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(tx.AssetId);
+            proto.SetAssetScript.Script = ByteString.FromBase64(tx.Script);
         }
     }
 }

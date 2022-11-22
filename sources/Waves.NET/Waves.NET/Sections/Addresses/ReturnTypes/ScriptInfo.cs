@@ -1,13 +1,11 @@
 ﻿using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Addresses
+namespace Waves.NET.ReturnTypes
 {
     public class ScriptInfo : IEquatable<ScriptInfo?>
     {
-        //public string Address { get; init; } = null!;
         public Base64s? Script { get; init; }
-        //public string? ScriptText { get; init; }
         public int Complexity { get; init; }
         public int VerifierComplexity { get; init; }
         public IDictionary<string, int> CallableComplexities { get; init; } = new Dictionary<string, int>();
@@ -34,9 +32,6 @@ namespace Waves.NET.Addresses
                 (ccNulls || CallableComplexities!.ContentEquals(other.CallableComplexities!));
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Script, Complexity, VerifierComplexity, ExtraFee, CallableComplexities);
-        }
+        public override int GetHashCode() => HashCode.Combine(Script, Complexity, VerifierComplexity, ExtraFee, CallableComplexities);
     }
 }

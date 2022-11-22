@@ -13,7 +13,7 @@ namespace Waves.NET.Transactions
             proto.SponsorFee.MinFee = new AmountProto
             {
                 Amount_ = tx.MinSponsoredAssetFee,
-                AssetId = ByteString.CopyFromUtf8(tx.AssetId)
+                AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(tx.AssetId)
             };
         }
     }

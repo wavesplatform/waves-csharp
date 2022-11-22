@@ -1,17 +1,8 @@
-﻿using Waves.NET.Addresses;
-using Waves.NET.Aliases;
-using Waves.NET.Assets;
-using Waves.NET.Blockchain;
-using Waves.NET.Blocks;
-using Waves.NET.Debug;
-using Waves.NET.Leasing;
-using Waves.NET.Node;
-using Waves.NET.Transactions;
-using Waves.NET.Utils;
+﻿using Waves.NET.Sections;
 
 namespace Waves.NET
 {
-    public interface INodeSections
+    public interface INodeSections : IWaitings
     {
         byte ChainId { get; }
 

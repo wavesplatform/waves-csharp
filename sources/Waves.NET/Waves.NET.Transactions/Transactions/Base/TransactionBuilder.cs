@@ -28,7 +28,7 @@ namespace Waves.NET.Transactions
             Proofs = new List<Base58s>();
 
             Transaction.Type = transactionType;
-            Transaction.Version = transactionType;
+            Transaction.Version = defaultVersion;
         }
 
         public TB AddProof(Base58s proof)
@@ -97,6 +97,7 @@ namespace Waves.NET.Transactions
             Transaction.Proofs = Proofs;
             Transaction.Version = Version;
             Transaction.ChainId = ChainId;
+            Transaction.ApplicationStatus = ApplicationStatus.Succeeded;
 
             return Transaction;
         }

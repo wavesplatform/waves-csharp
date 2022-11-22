@@ -12,13 +12,13 @@ namespace Waves.NET.Transactions
         {
             if(SupportedVersions.Any(x => x == transaction.Version))
             {
-                return SerializeInner(transaction);
+                return BuildProtoBytes(transaction);
             }
 
-            throw new NotSupportedException($"Ver.{transaction.Version} of a transaction is not supported ({BurnTransaction.LatestVersion} or less).");
+            throw new NotSupportedException($"Ver.{transaction.Version} of a transaction is not supported.");
         }
 
-        private byte[] SerializeInner(Transaction transaction)
+        protected virtual byte[] BuildProtoBytes(Transaction transaction)
         {
             var proto = new TransactionProto();
             proto.ChainId = transaction.ChainId;

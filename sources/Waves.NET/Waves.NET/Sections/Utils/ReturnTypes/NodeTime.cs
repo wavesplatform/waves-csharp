@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Utils
+﻿namespace Waves.NET.ReturnTypes
 {
     public record NodeTime
     {

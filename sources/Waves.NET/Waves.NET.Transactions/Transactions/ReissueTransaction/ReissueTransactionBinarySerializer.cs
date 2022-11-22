@@ -13,8 +13,8 @@ namespace Waves.NET.Transactions
             proto.Reissue.Reissuable = tx.Reissuable;
             proto.Reissue.AssetAmount = new AmountProto
             {
-                Amount_ = tx.Amount,
-                AssetId = ByteString.CopyFromUtf8(tx.AssetId)
+                Amount_ = tx.Quantity,
+                AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(tx.AssetId)
             };
         }
     }

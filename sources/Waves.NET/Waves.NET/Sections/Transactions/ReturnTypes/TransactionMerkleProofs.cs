@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Transactions
+﻿namespace Waves.NET.ReturnTypes
 {
     public record TransactionMerkleProofs
     {

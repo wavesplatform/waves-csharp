@@ -1,8 +1,9 @@
-﻿using Waves.NET.Assets;
+﻿using Waves.NET.ReturnTypes;
+using Waves.NET.Sections;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Assets
+namespace Waves.NET.Sections
 {
     public class AssetsSection : SectionBase, IAssetsSection
     {

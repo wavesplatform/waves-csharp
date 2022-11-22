@@ -1,4 +1,4 @@
-using Waves.NET.Assets;
+using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
@@ -23,16 +23,16 @@ namespace Waves.NET.Tests.Sections
                         "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
                         "sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)";
 
-            var compileScript = Node.Utils.CompileScript(script);
+            var compileScript = Node.CompileScript(script);
 
-            var tx = Node.Transactions.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).SetScript(compileScript.Script).GetSignedWith(alice.Pk));
+            var tx = Node.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).SetScript(compileScript.Script).GetSignedWith(alice.Pk));
             var assetId1 = tx.AssetId;
-            WaitForTransaction(assetId1);
+            Node.WaitForTransaction(assetId1);
 
-            var assetId2 = Node.Transactions.Broadcast(IssueTransactionBuilder.Params("Asset 2", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
-            WaitForTransaction(assetId2);
+            var assetId2 = Node.Broadcast(IssueTransactionBuilder.Params("Asset 2", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
+            Node.WaitForTransaction(assetId2);
 
-            var height = Node.Blocks.GetHeight();
+            var height = Node.GetHeight();
             var expectedAsset1Details = new AssetDetails {
                 AssetId = assetId1,
                 Issuer = alice.Addr,
@@ -49,11 +49,11 @@ namespace Waves.NET.Tests.Sections
                 Scripted = true
             };
 
-            var asset1Details = Node.Assets.GetAssetDetails(assetId1, true);
+            var asset1Details = Node.GetAssetDetails(assetId1, true);
             Assert.IsNotNull(asset1Details);
             Assert.AreEqual(expectedAsset1Details, asset1Details);
 
-            var assetsDetails = Node.Assets.GetAssetDetails(new[] { assetId1, assetId2 });
+            var assetsDetails = Node.GetAssetDetails(new[] { assetId1, assetId2 });
             Assert.IsNotNull(assetsDetails);
             Assert.AreEqual(2, assetsDetails.Count);
             Assert.IsNotNull(assetsDetails.FirstOrDefault(x => x.AssetId == assetId1!));
@@ -64,14 +64,14 @@ namespace Waves.NET.Tests.Sections
         public void BalanceTest() {
             var alice = CreateAccountWithBalance(1000000000);
 
-            var assetId1 = Node.Transactions.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
-            WaitForTransaction(assetId1);
+            var assetId1 = Node.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
+            Node.WaitForTransaction(assetId1);
 
-            var assetId2 = Node.Transactions.Broadcast(IssueTransactionBuilder.Params("Asset 2", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
-            WaitForTransaction(assetId2);
+            var assetId2 = Node.Broadcast(IssueTransactionBuilder.Params("Asset 2", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
+            Node.WaitForTransaction(assetId2);
 
-            var assetBalance = Node.Assets.GetAssetsBalance(alice.Addr);
-            var asset1Balance = Node.Assets.GetAssetsBalance(alice.Addr, assetId1);
+            var assetBalance = Node.GetAssetsBalance(alice.Addr);
+            var asset1Balance = Node.GetAssetsBalance(alice.Addr, assetId1);
             Assert.IsNotNull(assetBalance);
             Assert.IsNotNull(assetBalance.Balances);
             Assert.AreEqual(2, assetBalance.Balances.Count);
@@ -90,10 +90,10 @@ namespace Waves.NET.Tests.Sections
         {
             var alice = CreateAccountWithBalance(1000000000);
             int recipientsNumber = 190;
-            var assetId = Node.Transactions.Broadcast(
+            var assetId = Node.Broadcast(
                 IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2).GetSignedWith(alice.Pk)).AssetId;
 
-            WaitForTransaction(assetId);
+            Node.WaitForTransaction(assetId);
 
             var transfersToDistribute = Enumerable.Range(1, recipientsNumber).Select(x =>
                 new Transfer
@@ -111,14 +111,14 @@ namespace Waves.NET.Tests.Sections
 
             foreach(var tx in transactions)
             {
-                Node.Transactions.Broadcast(tx);
+                Node.Broadcast(tx);
             }
 
-            WaitForTransactions(transactionIds!);
-            WaitBlocks(1);
+            Node.WaitForTransactions(transactionIds!);
+            Node.WaitBlocks(1);
 
-            var distributionPage1 = Node.Assets.GetAssetDistribution(assetId!, Node.Blocks.GetHeight() - 1, 100);
-            var distributionPage2 = Node.Assets.GetAssetDistribution(assetId!, Node.Blocks.GetHeight() - 1, 100, distributionPage1.LastItem);
+            var distributionPage1 = Node.GetAssetDistribution(assetId!, Node.GetHeight() - 1, 100);
+            var distributionPage2 = Node.GetAssetDistribution(assetId!, Node.GetHeight() - 1, 100, distributionPage1.LastItem);
 
             Assert.IsTrue(distributionPage1.HasNext);
             Assert.IsFalse(distributionPage2.HasNext);

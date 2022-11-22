@@ -1,8 +1,8 @@
 ﻿using Waves.NET.Addresses;
+using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions.Utils;
-using Waves.NET.Utils;
 
-namespace Waves.NET.Utils
+namespace Waves.NET.Sections
 {
     public class UtilsSection : SectionBase, IUtilsSection
     {

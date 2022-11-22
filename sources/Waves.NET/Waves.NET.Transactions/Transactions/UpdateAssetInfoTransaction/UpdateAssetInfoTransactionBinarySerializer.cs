@@ -10,7 +10,7 @@ namespace Waves.NET.Transactions
         {
             var tx = (IUpdateAssetInfoTransaction)transaction;
             proto.UpdateAssetInfo = new UpdateAssetInfoTransactionData();
-            proto.UpdateAssetInfo.AssetId = ByteString.CopyFromUtf8(tx.AssetId);
+            proto.UpdateAssetInfo.AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(tx.AssetId);
             proto.UpdateAssetInfo.Name = tx.Name;
             proto.UpdateAssetInfo.Description = tx.Description;
         }

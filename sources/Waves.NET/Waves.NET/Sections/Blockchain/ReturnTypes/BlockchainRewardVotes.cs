@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Blockchain
+﻿namespace Waves.NET.ReturnTypes
 {
     public record BlockchainRewardVotes
     {

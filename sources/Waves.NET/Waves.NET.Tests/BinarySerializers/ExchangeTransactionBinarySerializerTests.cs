@@ -1,4 +1,5 @@
 using Waves.NET.Transactions;
+using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Tests
@@ -11,7 +12,7 @@ namespace Waves.NET.Tests
         {
             var order = new Order {
                 SenderPublicKey = PublicKey,
-                MatcherPublicKey = PublicKey, AssetPair = new AssetPair { AmountAsset = "", PriceAsset = "" }
+                MatcherPublicKey = PublicKey, AssetPair = new AssetPair { AmountAsset = null, PriceAsset = null }
             };
             var tr = ExchangeTransactionBuilder.Params(order, order, 0, 0, 0, 0).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);

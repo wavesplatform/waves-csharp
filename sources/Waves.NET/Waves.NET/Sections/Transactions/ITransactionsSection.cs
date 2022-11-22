@@ -1,7 +1,9 @@
-﻿using Waves.NET.Transactions.Common;
+﻿using Waves.NET.ReturnTypes;
+using Waves.NET.Transactions;
+using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Info;
 
-namespace Waves.NET.Transactions
+namespace Waves.NET.Sections
 {
     public interface ITransactionsSection
     {
@@ -37,7 +39,14 @@ namespace Waves.NET.Transactions
         /// </summary>
         /// <param name="ids">Transaction IDs base58 encoded</param>
         /// <returns>Transactions info</returns>
-        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids);
+        public ICollection<TransactionInfo> GetTransactionsInfo(ICollection<Base58s> ids);
+
+        /// <summary>
+        /// Get transactions by IDs of specified type
+        /// </summary>
+        /// <param name="ids">Transaction IDs base58 encoded</param>
+        /// <returns>Transactions info of specified type</returns>
+        public ICollection<T> GetTransactionsInfo<T>(ICollection<Base58s> ids) where T : TransactionInfo;
 
         /// <summary>
         /// Get transaction by ID

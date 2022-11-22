@@ -1,4 +1,6 @@
-﻿namespace Waves.NET.Transactions
+﻿using Waves.NET.Transactions;
+
+namespace Waves.NET.ReturnTypes
 {
     public record TransactionStatus
     {

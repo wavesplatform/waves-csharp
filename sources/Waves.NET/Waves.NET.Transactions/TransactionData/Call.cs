@@ -3,6 +3,6 @@
     public record Call
     {
         public string Function { get; init; } = "";
-        public ICollection<CallArgs> Args { get; init; } = new List<CallArgs>();
+        public ICollection<CallArg> Args { get; init; } = new List<CallArg>();
     }
 }

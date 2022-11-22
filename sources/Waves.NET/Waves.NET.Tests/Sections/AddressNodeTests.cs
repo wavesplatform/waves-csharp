@@ -1,8 +1,7 @@
 using System.Text.RegularExpressions;
 using Waves.NET.Addresses;
-using Waves.NET.Addresses;
-using Waves.NET.Debug;
 using Waves.NET.Exceptions;
+using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
@@ -14,7 +13,7 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void GetAddressesTest()
         {
-            var result = Node.Addresses.GetAddresses();
+            var result = Node.GetAddresses();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count == 1);
         }
@@ -22,7 +21,7 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void GetAddressesRangeTest()
         {
-            var result = Node.Addresses.GetAddresses(0, 100);
+            var result = Node.GetAddresses(0, 100);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Any());
         }
@@ -38,40 +37,40 @@ namespace Waves.NET.Tests.Sections
             var alice = CreateAccountWithBalance(initBalance);
             var bob = CreateAccountWithBalance(initBalance);
 
-            WaitForTransaction(Node.Transactions.Broadcast(
+            Node.WaitForTransaction(Node.Broadcast(
                     LeaseTransactionBuilder.Params(alice.Addr, leasedIn).GetSignedWith(FaucetPrivateKey)).Id);
 
-            int height = WaitForTransaction(Node.Transactions.Broadcast(
+            int height = Node.WaitForTransaction(Node.Broadcast(
                     LeaseTransactionBuilder.Params(bob.Addr, leasedOut).GetSignedWith(alice.Pk)).Id).Height;
 
-            Assert.AreEqual(balanceAfterLeaseOutFee, Node.Addresses.GetBalance(alice.Addr));
+            Assert.AreEqual(balanceAfterLeaseOutFee, Node.GetBalance(alice.Addr));
 
-            var aliceBalanceDetails = Node.Addresses.GetBalanceDetails(alice.Addr);
+            var aliceBalanceDetails = Node.GetBalanceDetails(alice.Addr);
             Assert.AreEqual(alice.Addr, aliceBalanceDetails.Address);
             Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut, aliceBalanceDetails.Available);
             Assert.AreEqual(balanceAfterLeaseOutFee, aliceBalanceDetails.Regular);
             Assert.AreEqual(0, aliceBalanceDetails.Generating);
             Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut + leasedIn, aliceBalanceDetails.Effective);
 
-            Assert.IsTrue(Node.Addresses.GetBalanceDetails(FaucetAddress).Generating > 0);
-            Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut + leasedIn, Node.Addresses.GetEffectiveBalance(alice.Addr));
+            Assert.IsTrue(Node.GetBalanceDetails(FaucetAddress).Generating > 0);
+            Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut + leasedIn, Node.GetEffectiveBalance(alice.Addr));
 
-            var balances = Node.Addresses.GetBalances(new List<Address> { alice.Addr, bob.Addr });
+            var balances = Node.GetBalances(new List<Address> { alice.Addr, bob.Addr });
             CollectionAssert.IsSubsetOf(balances.ToList(), new List<AddressBalance> {
                 new AddressBalance { Address = alice.Addr, Balance = balanceAfterLeaseOutFee },
                 new AddressBalance { Address = bob.Addr, Balance = initBalance },
             });
 
-            balances = Node.Addresses.GetBalances(new List<Address> { alice.Addr, bob.Addr }, height);
+            balances = Node.GetBalances(new List<Address> { alice.Addr, bob.Addr }, height);
             CollectionAssert.IsSubsetOf(balances.ToList(), new List<AddressBalance> {
                 new AddressBalance { Address = alice.Addr, Balance = balanceAfterLeaseOutFee },
                 new AddressBalance { Address = bob.Addr, Balance = initBalance },
             });
 
-            WaitForHeight(height + 1);
+            Node.WaitForHeight(height + 1);
 
-            Assert.AreEqual(balanceAfterLeaseOutFee, Node.Addresses.GetBalance(alice.Addr, 1));
-            Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut + leasedIn, Node.Addresses.GetEffectiveBalance(alice.Addr, 1));
+            Assert.AreEqual(balanceAfterLeaseOutFee, Node.GetBalance(alice.Addr, 1));
+            Assert.AreEqual(balanceAfterLeaseOutFee - leasedOut + leasedIn, Node.GetEffectiveBalance(alice.Addr, 1));
         }
 
         [TestMethod]
@@ -81,15 +80,15 @@ namespace Waves.NET.Tests.Sections
             long transferAmount = 50000;
 
             var alice = CreateAccount();
-            int initHeight = WaitForTransaction(Node.Transactions.Broadcast(
+            int initHeight = Node.WaitForTransaction(Node.Broadcast(
                 TransferTransactionBuilder.Params(alice.Addr, initBalance).GetSignedWith(FaucetPrivateKey)).Id).Height;
-            WaitForHeight(initHeight + 1);
+            Node.WaitForHeight(initHeight + 1);
 
-            int transferHeight = WaitForTransaction(Node.Transactions.Broadcast(
+            int transferHeight = Node.WaitForTransaction(Node.Broadcast(
                 TransferTransactionBuilder.Params(alice.Addr, transferAmount).GetSignedWith(FaucetPrivateKey)).Id).Height;
-            WaitForHeight(transferHeight + 1);
+            Node.WaitForHeight(transferHeight + 1);
 
-            var balanceHistory = Node.Debug.GetBalanceHistory(alice.Addr);
+            var balanceHistory = Node.GetBalanceHistory(alice.Addr);
             var expected = new List<HistoryBalance>
             {
                 new HistoryBalance { Height = initHeight, Balance = initBalance },
@@ -117,19 +116,19 @@ namespace Waves.NET.Tests.Sections
                 new StringEntry { Key = "str-max", Value = stringWithMaxLength }
             };
 
-            WaitForTransaction(Node.Transactions.Broadcast(
+            Node.WaitForTransaction(Node.Broadcast(
                     DataTransactionBuilder.Params(expectedEntries).GetSignedWith(alice.Pk)).Id);
 
-            CollectionAssert.IsSubsetOf(Node.Addresses.GetData(alice.Addr).ToList(), expectedEntries);
-            Assert.AreEqual(new BinaryEntry { Key = "bin-max", Value = binaryValue }, Node.Addresses.GetData(alice.Addr, "bin-max"));
+            CollectionAssert.IsSubsetOf(Node.GetData(alice.Addr).ToList(), expectedEntries);
+            Assert.AreEqual(new BinaryEntry { Key = "bin-max", Value = binaryValue }, Node.GetData(alice.Addr, "bin-max"));
 
-            CollectionAssert.IsSubsetOf(Node.Addresses.GetData(alice.Addr, new[] { "bin-max", "int-max" }).ToList(), new List<EntryData> {
+            CollectionAssert.IsSubsetOf(Node.GetData(alice.Addr, new[] { "bin-max", "int-max" }).ToList(), new List<EntryData> {
                 new BinaryEntry { Key = "bin-max", Value = binaryValue },
                 new IntegerEntry { Key = "int-max", Value = long.MaxValue }
             });
 
             ;
-            CollectionAssert.IsSubsetOf(Node.Addresses.GetData(alice.Addr, new Regex("int.+")).ToList(), new List<EntryData> {
+            CollectionAssert.IsSubsetOf(Node.GetData(alice.Addr, new Regex("int.+")).ToList(), new List<EntryData> {
                 new IntegerEntry { Key = "int-min", Value = long.MinValue },
                 new IntegerEntry { Key = "int-max", Value = long.MaxValue },
                 new IntegerEntry { Key = "int-zero", Value = 0 }
@@ -144,16 +143,16 @@ namespace Waves.NET.Tests.Sections
                         "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
                         "sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)";
 
-            var scriptInfo = Node.Utils.CompileScript(script);
+            var scriptInfo = Node.CompileScript(script);
 
             var expectedScript =
                 new Base64s("BQkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAAIBQAAAAJ0eAAAAA9zZW5kZXJQdWJsaWNLZXlzTh3b");
 
             var alice = CreateAccountWithBalance(SetScriptTransaction.MinFee);
 
-            WaitForTransaction(Node.Transactions.Broadcast(SetScriptTransactionBuilder.Params(scriptInfo.Script!).GetSignedWith(alice.Pk)).Id);
+            Node.WaitForTransaction(Node.Broadcast(SetScriptTransactionBuilder.Params(scriptInfo.Script!).GetSignedWith(alice.Pk)).Id);
 
-            var si = Node.Addresses.GetScriptInfo(alice.Addr);
+            var si = Node.GetScriptInfo(alice.Addr);
             Assert.AreEqual(scriptInfo, si);
             Assert.AreEqual(new ScriptInfo
             {
@@ -165,7 +164,7 @@ namespace Waves.NET.Tests.Sections
 
             try
             {
-                Node.Addresses.GetScriptMeta(alice.Addr);
+                Node.GetScriptMeta(alice.Addr);
                 Assert.Fail();
             }
             catch (NodeException ex)
@@ -177,7 +176,7 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void DAppCompileAndScriptInfoTest()
         {
-            var compileScriptInfo = Node.Utils.CompileScript(
+            var compileScriptInfo = Node.CompileScript(
                 "{-# STDLIB_VERSION 5 #-}\n" +
                 "{-# CONTENT_TYPE DAPP #-}\n" +
                 "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
@@ -206,10 +205,10 @@ namespace Waves.NET.Tests.Sections
 
             var alice = CreateAccountWithBalance(SetScriptTransaction.MinFee);
 
-            WaitForTransaction(Node.Transactions.Broadcast(
+            Node.WaitForTransaction(Node.Broadcast(
                     SetScriptTransactionBuilder.Params(compileScriptInfo.Script!).GetSignedWith(alice.Pk)).Id);
 
-            var actualScriptInfo = Node.Addresses.GetScriptInfo(alice.Addr);
+            var actualScriptInfo = Node.GetScriptInfo(alice.Addr);
 
             Assert.AreEqual(actualScriptInfo, new ScriptInfo {
                 Script = expectedScript,
@@ -219,8 +218,8 @@ namespace Waves.NET.Tests.Sections
                 ExtraFee = 0
             });
 
-            Assert.AreEqual(Node.Addresses.GetScriptMeta(alice.Addr), new ScriptMeta { Version = 2, CallableFuncTypes = expectedFunctions });
-            Assert.AreEqual(Node.Addresses.GetScriptInfo(alice.Addr), compileScriptInfo);
+            Assert.AreEqual(Node.GetScriptMeta(alice.Addr), new ScriptMeta { Version = 2, CallableFuncTypes = expectedFunctions });
+            Assert.AreEqual(Node.GetScriptInfo(alice.Addr), compileScriptInfo);
         }
 
         [TestMethod]
@@ -238,8 +237,8 @@ namespace Waves.NET.Tests.Sections
                 "func veryLongName5() = if (veryLongName4()) then veryLongName0() else veryLongName0()\n" +
                 "func veryLongName6() = if (veryLongName5()) then veryLongName0() else veryLongName0()";
 
-            var fullScriptInfo = Node.Utils.CompileScript(scriptText, false);
-            var compactScriptInfo = Node.Utils.CompileScript(scriptText, true);
+            var fullScriptInfo = Node.CompileScript(scriptText, false);
+            var compactScriptInfo = Node.CompileScript(scriptText, true);
 
             Assert.IsTrue(fullScriptInfo.Script!.Bytes.Length > compactScriptInfo.Script!.Bytes.Length);
         }

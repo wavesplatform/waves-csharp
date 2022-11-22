@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Waves.NET.Blocks
+namespace Waves.NET.ReturnTypes
 {
     public class BlockHeader : IEquatable<BlockHeader?>
     {

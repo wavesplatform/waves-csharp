@@ -1,6 +1,6 @@
-﻿using Waves.NET.Blockchain;
+﻿using Waves.NET.ReturnTypes;
 
-namespace Waves.NET.Blockchain
+namespace Waves.NET.Sections
 {
     public class BlockchainSection : SectionBase, IBlockchainSection
     {

@@ -18,6 +18,11 @@ namespace Waves.NET.Transactions
             return new MassTransferTransactionBuilder(transfers, assetId, attachment);
         }
 
+        public static MassTransferTransactionBuilder Params(Transfer transfer, Base58s? assetId = null, Base58s? attachment = null)
+        {
+            return new MassTransferTransactionBuilder(new[] { transfer }, assetId, attachment);
+        }
+
         public override long CalculatedFee()
         {
             return Transaction.Transfers is null || !Transaction.Transfers.Any()

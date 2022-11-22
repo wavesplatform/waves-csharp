@@ -1,8 +1,10 @@
-﻿using Waves.NET.Transactions.Common;
+﻿using Waves.NET.ReturnTypes;
+using Waves.NET.Transactions;
+using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Info;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Transactions
+namespace Waves.NET.Sections
 {
     public class TransactionsSection : SectionBase, ITransactionsSection
     {
@@ -33,10 +35,16 @@ namespace Waves.NET.Transactions
             return PublicRequest<T>(HttpMethod.Post, url, jsonBody);
         }
 
-        public ICollection<TransactionInfo> GetTransactionInfo(ICollection<Base58s> ids)
+        public ICollection<TransactionInfo> GetTransactionsInfo(ICollection<Base58s> ids)
         {
             var jsonBody = JsonUtils.Serialize(new { ids });
             return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Post, "info", jsonBody);
+        }
+
+        public ICollection<T> GetTransactionsInfo<T>(ICollection<Base58s> ids) where T : TransactionInfo
+        {
+            var jsonBody = JsonUtils.Serialize(new { ids });
+            return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Post, "info", jsonBody).Cast<T>().ToList();
         }
 
         public TransactionInfo GetTransactionInfo(Base58s id)
@@ -46,7 +54,7 @@ namespace Waves.NET.Transactions
 
         public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo
         {
-            var txi = PublicRequest<TransactionInfo>(HttpMethod.Get, $"info/{id}") as T;
+            var txi = GetTransactionInfo(id) as T;
             if(txi is null)
             {
                 throw new InvalidCastException("GetTransactionInfo: requested transaction info type mismatches");

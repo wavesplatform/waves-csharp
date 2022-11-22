@@ -1,4 +1,4 @@
-﻿namespace Waves.NET.Node
+﻿namespace Waves.NET.ReturnTypes
 {
     public record NodeStatus
     {

@@ -10,8 +10,8 @@ namespace Waves.NET.Transactions
         public ICollection<ReissueAction> Reissues { get; init; } = null!;
         public ICollection<BurnAction> Burns { get; init; } = null!;
         public ICollection<SponsorFeeAction> SponsorFees { get; init; } = null!;
-        public ICollection<LeaseAction> Leases { get; init; } = null!;
-        public ICollection<LeaseCancelAction> LeaseCancels { get; init; } = null!;
+        public ICollection<LeaseInfo> Leases { get; init; } = null!;
+        public ICollection<LeaseInfo> LeaseCancels { get; init; } = null!;
         public ICollection<InvokeAction> Invokes { get; init; } = null!;
     }
 }
