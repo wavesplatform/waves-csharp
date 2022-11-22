@@ -26,8 +26,7 @@ namespace Waves.NET.Sections
 
         public ICollection<LeaseInfo> GetLeasesInfo(params Base58s[] leaseIds)
         {
-            var jsonBody = JsonUtils.Serialize(new { ids = leaseIds });
-            return PublicRequest<ICollection<LeaseInfo>>(HttpMethod.Post, $"info", jsonBody);
+            return GetLeasesInfo(leaseIds.ToList());
         }
     }
 }

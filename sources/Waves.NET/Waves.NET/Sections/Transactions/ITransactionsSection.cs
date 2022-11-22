@@ -63,13 +63,6 @@ namespace Waves.NET.Sections
         public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo;
 
         /// <summary>
-        /// Get <see href="https://docs.waves.tech/en/blockchain/block/merkle-root#proof-of-transaction-in-block">merkle proofs</see> for given transactions
-        /// </summary>
-        /// <param name="ids">Transaction IDs</param>
-        /// <returns>Merkle proofs</returns>
-        public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids);
-
-        /// <summary>
         /// Get transaction statuses by their ID. Max number of transactions is set by <c>waves.rest-api.transactions-by-address-limit</c>, 1000 by default.<br/>
         /// Transactions in the response are in the same order as in the request.
         /// </summary>

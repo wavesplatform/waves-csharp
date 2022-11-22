@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Org.BouncyCastle.Crypto;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Waves.NET.ReturnTypes;
 using Waves.NET.Sections;
@@ -136,7 +137,6 @@ namespace Waves.NET
         public ICollection<T> GetTransactionsInfo<T>(ICollection<Base58s> ids) where T : TransactionInfo => Transactions.GetTransactionsInfo<T>(ids);
         public TransactionInfo GetTransactionInfo(Base58s id) => Transactions.GetTransactionInfo(id);
         public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo => Transactions.GetTransactionInfo<T>(id);
-        public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids) => Transactions.GetTransactionMerkleProofs(ids);
         public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<Base58s> ids) => Transactions.GetTransactionsStatus(ids);
         public TransactionStatus GetTransactionStatus(Base58s id) => Transactions.GetTransactionStatus(id);
         public ICollection<Transaction> GetUnconfirmedTransaction() => Transactions.GetUnconfirmedTransaction();

@@ -4,7 +4,7 @@ using Waves.NET.Transactions.Common;
 namespace Waves.NET.Tests.Sections
 {
     [TestClass]
-    public class TransactionsInfoTest : NodeTestBase
+    public class TransactionsTest : NodeTestBase
     {
         [TestMethod]
         public void SetAssetScriptTransactionInfoTest()
@@ -502,6 +502,37 @@ namespace Waves.NET.Tests.Sections
             {
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void GetUtxSizeTest()
+        {
+            try
+            {
+                var utxSize = Node.GetUtxSize();
+                Assert.IsTrue(utxSize >= 0);
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void GetUnconfirmedTransactionsTest()
+        {
+            var alice = CreateAccountWithBalance(CreateAliasTransaction.MinFee);
+
+            var txId =  Node.Broadcast(CreateAliasTransactionBuilder
+                .Params(Alias.As(Node.ChainId, "c" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())).GetSignedWith(alice.Pk)).Id;
+
+            var utxSize = Node.GetUtxSize();
+            var utxs = Node.GetUnconfirmedTransaction();
+            var utx = Node.GetUnconfirmedTransaction(txId!);
+
+            Assert.AreEqual(1, utxSize);
+            Assert.AreEqual(txId, utx.Id);
+            Assert.AreEqual(1, utxs.Count);
         }
     }
 }

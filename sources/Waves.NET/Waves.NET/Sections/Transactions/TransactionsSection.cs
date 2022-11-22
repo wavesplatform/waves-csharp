@@ -62,12 +62,6 @@ namespace Waves.NET.Sections
             return txi;
         }
 
-        public ICollection<TransactionMerkleProofs> GetTransactionMerkleProofs(ICollection<string> ids)
-        {
-            var jsonBody = JsonUtils.Serialize(new { ids });
-            return PublicRequest<ICollection<TransactionMerkleProofs>>(HttpMethod.Post, "merkleProof", jsonBody);
-        }
-
         public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<Base58s> ids)
         {
             var jsonBody = JsonUtils.Serialize(new { ids });
