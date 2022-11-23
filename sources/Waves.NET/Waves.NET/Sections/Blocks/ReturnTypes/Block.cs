@@ -18,7 +18,7 @@ namespace Waves.NET.ReturnTypes
         {
             return other is not null &&
                    base.Equals(other) &&
-                   Transactions.SequenceEqual(other.Transactions);
+                   (Transactions is null && other.Transactions is null || Transactions.SequenceEqual(other.Transactions));
         }
 
         public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Transactions);

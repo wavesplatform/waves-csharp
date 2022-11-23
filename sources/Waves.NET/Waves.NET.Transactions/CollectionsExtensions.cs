@@ -24,5 +24,16 @@
             if (other == null || o.Count != other.Count) return false;
             return o.SequenceEqual(other);
         }
+
+        public static int CalcHashCode<T>(this ICollection<T> collection)
+        {
+            var hash = new HashCode();
+            foreach(T item in collection)
+            {
+                if(item is null) continue;
+                hash.Add(item.GetHashCode());
+            }
+            return hash.ToHashCode();
+        }
     }
 }

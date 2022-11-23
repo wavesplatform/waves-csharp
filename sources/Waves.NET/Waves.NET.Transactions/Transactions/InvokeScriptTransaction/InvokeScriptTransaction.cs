@@ -13,6 +13,8 @@ namespace Waves.NET.Transactions
         public Call Call { get; set; } = null!;
         public StateChanges StateChanges { get; set; } = null!;
 
+        public InvokeScriptTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as InvokeScriptTransaction is null) return false;
@@ -29,7 +31,7 @@ namespace Waves.NET.Transactions
                    (Payment is null && other.Payment is null || Payment.SequenceEqual(other.Payment));
         }
 
-        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), DApp, Payment, Call, StateChanges);
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), DApp, Payment.CalcHashCode(), Call, StateChanges);
         public static bool operator ==(InvokeScriptTransaction? left, InvokeScriptTransaction? right) =>
             EqualityComparer<InvokeScriptTransaction>.Default.Equals(left, right);
         public static bool operator !=(InvokeScriptTransaction? left, InvokeScriptTransaction? right) => !(left == right);

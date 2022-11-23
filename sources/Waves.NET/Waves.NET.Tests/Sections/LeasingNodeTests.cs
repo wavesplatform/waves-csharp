@@ -1,4 +1,5 @@
 using Waves.NET.Transactions;
+using Waves.NET.Transactions.Common;
 
 namespace Waves.NET.Tests.Sections
 {
@@ -31,7 +32,7 @@ namespace Waves.NET.Tests.Sections
                         bob.Addr,
                         new Call {
                             Function = "lease",
-                            Args = new List<CallArg> { new CallArg { Type = CallArgType.Integer, Value = invokeLeaseAmount } }
+                            Args = new List<CallArg> { CallArg.AsInteger(invokeLeaseAmount) }
                         }
                     ).GetSignedWith(alice.Pk)).Id);
 
@@ -48,7 +49,7 @@ namespace Waves.NET.Tests.Sections
 
             var leasing = Node.GetLeaseInfo(leaseTx.Transaction.Id!);
 
-            var invokeLeasing = Node.GetLeasesInfo(new[] { stateChangesLease.Id }).FirstOrDefault();
+            var invokeLeasing = Node.GetLeasesInfo(new List<Base58s>{ stateChangesLease.Id }).FirstOrDefault();
             Assert.IsNotNull(invokeLeasing);
 
             var leasingList = Node.GetLeasesInfo(leaseTx.Transaction.Id!, stateChangesLease.Id);
@@ -101,7 +102,7 @@ namespace Waves.NET.Tests.Sections
                         new Call
                         {
                             Function = "cancel",
-                            Args = new List<CallArg> { new CallArg { Type = CallArgType.String, Value = invokeLeasing.Id.ToString() } }
+                            Args = new List<CallArg> { CallArg.AsString(invokeLeasing.Id) }
                         }).GetSignedWith(alice.Pk)).Id);
 
             var stateChangesCancelInfo = Node.GetTransactionInfo<InvokeScriptTransactionInfo>(invokeCancelTx.Transaction.Id!);

@@ -8,6 +8,8 @@
 
         public ICollection<EntryData> Data { get; set; } = null!;
 
+        public DataTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as DataTransaction is null) return false;
@@ -21,7 +23,7 @@
                    EqualityComparer<ICollection<EntryData>>.Default.Equals(Data, other.Data);
         }
 
-        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Data);
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Data.CalcHashCode());
         public static bool operator ==(DataTransaction? left, DataTransaction? right) => EqualityComparer<DataTransaction>.Default.Equals(left, right);
         public static bool operator !=(DataTransaction? left, DataTransaction? right) => !(left == right);
     }

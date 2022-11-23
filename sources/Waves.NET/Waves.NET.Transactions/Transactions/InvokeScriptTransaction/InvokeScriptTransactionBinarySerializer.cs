@@ -21,7 +21,7 @@ namespace Waves.NET.Transactions
             {
                 proto.InvokeScript.Payments.Add(new AmountProto {
                     Amount_ = p.Amount,
-                    AssetId = ByteString.CopyFrom(p.AssetId),
+                    AssetId = p.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(p.AssetId)
                 });
             }
         }
@@ -68,7 +68,7 @@ namespace Waves.NET.Transactions
                         bw.Write(str);
                         break;
                     case CallArgType.ByteArray:
-                        var bytes = Base64s.Decode((string)arg.Value);
+                        var bytes = ((Base64s)arg.Value).Bytes;
                         bw.WriteInt(bytes.Length);
                         bw.Write(bytes);
                         break;

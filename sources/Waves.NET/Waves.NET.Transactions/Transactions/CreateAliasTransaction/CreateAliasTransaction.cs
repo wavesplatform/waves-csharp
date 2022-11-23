@@ -8,6 +8,8 @@
 
         public string Alias { get; set; } = null!;
 
+        public CreateAliasTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as CreateAliasTransaction is null) return false;

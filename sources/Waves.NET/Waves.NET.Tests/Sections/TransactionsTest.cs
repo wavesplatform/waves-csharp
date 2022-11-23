@@ -396,11 +396,11 @@ namespace Waves.NET.Tests.Sections
                     {
                         Function = "call",
                         Args = new[] {
-                            CallArg.As(CallArgType.ByteArray, Base64s.From(alice.Addr.Bytes).ToString()),
-                            CallArg.As(CallArgType.Boolean, true),
-                            CallArg.As(CallArgType.Integer, 100500L),
-                            CallArg.As(CallArgType.String, alice.Addr.ToString()),
-                            CallArg.As(CallArgType.List, new List<CallArg> { CallArg.As(CallArgType.Integer, 100500L) })
+                            CallArg.AsByteArray(Base64s.From(alice.Addr.Bytes)),
+                            CallArg.AsBoolean(true),
+                            CallArg.AsInteger(100500L),
+                            CallArg.AsString(alice.Addr.ToString()),
+                            CallArg.AsList(new List<CallArg> { CallArg.AsInteger(100500L) })
                         }
                     }
                 ).SetExtraFee(100000000).GetSignedWith(alice.Pk);
@@ -494,7 +494,7 @@ namespace Waves.NET.Tests.Sections
 
             try
             {
-                Node.GetTransactionsInfo<CreateAliasTransactionInfo>(new[] { aliasTxId1, issueTxId });
+                Node.GetTransactionsInfo<CreateAliasTransactionInfo>(new List<Base58s> { aliasTxId1, issueTxId });
                 Assert.Fail();
             }
             catch(InvalidCastException) { }
@@ -527,12 +527,46 @@ namespace Waves.NET.Tests.Sections
                 .Params(Alias.As(Node.ChainId, "c" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())).GetSignedWith(alice.Pk)).Id;
 
             var utxSize = Node.GetUtxSize();
-            var utxs = Node.GetUnconfirmedTransaction();
+            var utxs = Node.GetUnconfirmedTransactions();
             var utx = Node.GetUnconfirmedTransaction(txId!);
 
             Assert.AreEqual(1, utxSize);
             Assert.AreEqual(txId, utx.Id);
             Assert.AreEqual(1, utxs.Count);
+        }
+
+        [TestMethod]
+        public void GetTransactionsByAddressTest()
+        {
+            var alice = CreateAccountWithBalance(1000000000);
+
+            var aliasTxId1 = Node.WaitForTransaction(
+                Node.Broadcast(CreateAliasTransactionBuilder.Params(Alias.As(Node.ChainId, "a1" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()))
+                .GetSignedWith(alice.Pk)).Id
+            ).Transaction.Id!;
+            Assert.IsTrue(Node.GetTransactionStatus(aliasTxId1).Status.Equals("confirmed", StringComparison.OrdinalIgnoreCase));
+
+            var aliasTxId2 = Node.WaitForTransaction(
+                Node.Broadcast(CreateAliasTransactionBuilder.Params(Alias.As(Node.ChainId, "a2" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()))
+                .GetSignedWith(alice.Pk)).Id
+            ).Transaction.Id!;
+            Assert.IsTrue(Node.GetTransactionStatus(aliasTxId2).Status.Equals("confirmed", StringComparison.OrdinalIgnoreCase));
+
+            var issueTxId = Node.WaitForTransaction(
+                Node.Broadcast(IssueTransactionBuilder.Params("Asset", 1000, 2).GetSignedWith(alice.Pk), true).Id
+            ).Transaction.Id!;
+            Assert.IsTrue(Node.GetTransactionStatus(issueTxId).Status.Equals("confirmed", StringComparison.OrdinalIgnoreCase));
+
+            var transactionsPage1 = Node.GetTransactionsByAddress(alice.Addr, 3);
+            Assert.AreEqual(3, transactionsPage1.Count);
+            Assert.IsTrue(transactionsPage1.Any(x => x.Transaction.Id == issueTxId));
+            Assert.IsTrue(transactionsPage1.Any(x => x.Transaction.Id == aliasTxId2));
+            Assert.IsTrue(transactionsPage1.Any(x => x.Transaction.Id == aliasTxId1));
+
+            var lastTxId = transactionsPage1.Last().Transaction.Id;
+            var transactionsPage2 = Node.GetTransactionsByAddress(alice.Addr, 3, lastTxId);
+            Assert.AreEqual(1, transactionsPage2.Count); // the transfer transaction from CreateAccountWithBalance method
+            Assert.IsInstanceOfType(transactionsPage2.First(), typeof(TransferTransactionInfo));
         }
     }
 }

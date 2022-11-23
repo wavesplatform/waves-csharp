@@ -16,16 +16,18 @@ namespace Waves.NET.Sections
             return PublicRequest<TransactionFeeAmount>(HttpMethod.Post, "calculateFee", jsonBody);
         }
 
-        public ICollection<TransactionInfo> GetTransactionsByAddress(string address, int limit = 1000, string afterTxId = "")
+        public ICollection<TransactionInfo> GetTransactionsByAddress(Address address, int limit = 1000, Base58s? afterTxId = null)
         {
             var url = $"address/{address}/limit/{limit}";
 
-            if (!string.IsNullOrWhiteSpace(afterTxId))
+            if (afterTxId != null)
             {
                 url += $"?after={afterTxId}";
             }
 
-            return PublicRequest<ICollection<TransactionInfo>>(HttpMethod.Get, url, null);
+            // Node returns array of arrays, bug? (o_O)
+            var result = PublicRequest<ICollection<ICollection<TransactionInfo>>>(HttpMethod.Get, url, null);
+            return result.FirstOrDefault() ?? new List<TransactionInfo>();
         }
 
         public T Broadcast<T>(T transaction, bool trace = false) where T : Transaction
@@ -73,7 +75,7 @@ namespace Waves.NET.Sections
             return PublicRequest<TransactionStatus>(HttpMethod.Get, $"status/{id}");
         }
 
-        public ICollection<Transaction> GetUnconfirmedTransaction()
+        public ICollection<Transaction> GetUnconfirmedTransactions()
         {
             return PublicRequest<ICollection<Transaction>>(HttpMethod.Get, "unconfirmed");
         }

@@ -11,6 +11,8 @@ namespace Waves.NET.Transactions
         public Base58s? AssetId { get; set; } = null!;
         public long Amount { get; set; }
 
+        public BurnTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as BurnTransaction is null) return false;

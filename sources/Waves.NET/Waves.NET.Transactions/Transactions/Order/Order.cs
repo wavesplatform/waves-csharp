@@ -48,7 +48,7 @@ namespace Waves.NET.Transactions
                    MatcherFee == other.MatcherFee &&
                    EqualityComparer<Base58s?>.Default.Equals(MatcherFeeAssetId, other.MatcherFeeAssetId) &&
                    (Proofs is null && other.Proofs is null || Proofs.SequenceEqual(other.Proofs)) &&
-                   EqualityComparer<byte[]?>.Default.Equals(Eip712Signature, other.Eip712Signature);
+                   (Eip712Signature is null && other.Eip712Signature is null || Eip712Signature.SequenceEqual(other.Eip712Signature));
         }
 
         public override int GetHashCode()
@@ -67,8 +67,8 @@ namespace Waves.NET.Transactions
             hash.Add(Expiration);
             hash.Add(MatcherFee);
             hash.Add(MatcherFeeAssetId);
-            hash.Add(Proofs);
-            hash.Add(Eip712Signature);
+            hash.Add(Proofs.CalcHashCode());
+            hash.Add(Eip712Signature?.CalcHashCode());
             return hash.ToHashCode();
         }
 

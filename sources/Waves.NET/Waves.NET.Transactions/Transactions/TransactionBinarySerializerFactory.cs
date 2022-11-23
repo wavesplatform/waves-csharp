@@ -6,6 +6,8 @@ namespace Waves.NET.Transactions
     {
         private readonly Dictionary<TransactionType, Lazy<ITransactionBinarySerializer>> _serializers;
 
+        public int CerializersCount => _serializers.Count;
+
         public ITransactionBinarySerializer GetFor(Transaction transaction) => Get((TransactionType)transaction.Type);
 
         public ITransactionBinarySerializer Get(TransactionType transactionType)

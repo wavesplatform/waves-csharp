@@ -13,6 +13,8 @@
         public long BuyMatcherFee { get; set; }
         public long SellMatcherFee { get; set; }
 
+        public ExchangeTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as ExchangeTransaction is null) return false;

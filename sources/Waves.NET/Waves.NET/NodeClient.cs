@@ -1,5 +1,4 @@
-﻿using Org.BouncyCastle.Crypto;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Waves.NET.ReturnTypes;
 using Waves.NET.Sections;
@@ -130,7 +129,7 @@ namespace Waves.NET
 
         #region Transactions
         public TransactionFeeAmount CalculateTransactionFee<T>(T transaction) where T : Transaction => Transactions.CalculateTransactionFee(transaction);
-        public ICollection<TransactionInfo> GetTransactionsByAddress(string address, int limit = 1000, string afterTxId = "") =>
+        public ICollection<TransactionInfo> GetTransactionsByAddress(Address address, int limit = 1000, Base58s? afterTxId = null) =>
             Transactions.GetTransactionsByAddress(address, limit, afterTxId);
         public T Broadcast<T>(T transaction, bool trace = false) where T : Transaction => Transactions.Broadcast(transaction, trace);
         public ICollection<TransactionInfo> GetTransactionsInfo(ICollection<Base58s> ids) => Transactions.GetTransactionsInfo(ids);
@@ -139,7 +138,7 @@ namespace Waves.NET
         public T GetTransactionInfo<T>(Base58s id) where T : TransactionInfo => Transactions.GetTransactionInfo<T>(id);
         public ICollection<TransactionStatus> GetTransactionsStatus(ICollection<Base58s> ids) => Transactions.GetTransactionsStatus(ids);
         public TransactionStatus GetTransactionStatus(Base58s id) => Transactions.GetTransactionStatus(id);
-        public ICollection<Transaction> GetUnconfirmedTransaction() => Transactions.GetUnconfirmedTransaction();
+        public ICollection<Transaction> GetUnconfirmedTransactions() => Transactions.GetUnconfirmedTransactions();
         public Transaction GetUnconfirmedTransaction(Base58s id) => Transactions.GetUnconfirmedTransaction(id);
         public int GetUtxSize() => Transactions.GetUtxSize();
         #endregion

@@ -10,6 +10,8 @@ namespace Waves.NET.Transactions
         public Address Recipient { get; set; } = null!;
         public long Amount { get; set; }
 
+        public GenesisTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as GenesisTransaction is null) return false;

@@ -59,7 +59,7 @@ namespace Waves.NET.Transactions
             hash.Add(Fee);
             hash.Add(FeeAssetId);
             hash.Add(Signature);
-            hash.Add(Proofs);
+            hash.Add(Proofs.CalcHashCode());
             hash.Add(Height);
             return hash.ToHashCode();
         }

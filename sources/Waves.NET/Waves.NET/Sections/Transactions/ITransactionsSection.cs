@@ -24,7 +24,7 @@ namespace Waves.NET.Sections
         /// <param name="limit">Number of transactions to be returned</param>
         /// <param name="afterTxId">ID of the transaction to paginate after</param>
         /// <returns>List of transactions by address</returns>
-        public ICollection<TransactionInfo> GetTransactionsByAddress(string address, int limit = 1000, string afterTxId = "");
+        public ICollection<TransactionInfo> GetTransactionsByAddress(Address address, int limit = 1000, Base58s? afterTxId = null);
 
         /// <summary>
         /// Broadcast a signed transaction.
@@ -81,7 +81,7 @@ namespace Waves.NET.Sections
         /// Get a list of transactions in node's UTX pool
         /// </summary>
         /// <returns>Unconfirmed transactions</returns>
-        public ICollection<Transaction> GetUnconfirmedTransaction();
+        public ICollection<Transaction> GetUnconfirmedTransactions();
 
         /// <summary>
         /// Get an unconfirmed transaction by its ID

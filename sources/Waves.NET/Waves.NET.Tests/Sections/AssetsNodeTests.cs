@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
@@ -8,12 +9,6 @@ namespace Waves.NET.Tests.Sections
     [TestClass]
     public class AssetsNodeTests : NodeTestBase
     {
-        //TODO need more tests, see at WavesJ
-        [TestMethod]
-        public void bbbbbbbbbb()
-        {
-        }
-
         [TestMethod]
         public void DetailsTest() {
             var alice = CreateAccountWithBalance(1000000000);
@@ -122,6 +117,47 @@ namespace Waves.NET.Tests.Sections
 
             Assert.IsTrue(distributionPage1.HasNext);
             Assert.IsFalse(distributionPage2.HasNext);
+        }
+
+        [TestMethod]
+        public void CalcTransactionFeeTest()
+        {
+            var alice = CreateAccountWithBalance(1000000000);
+            int recipientsNumber = 10;
+            var assetId = Node.Broadcast(
+                IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2).GetSignedWith(alice.Pk)).AssetId;
+
+            Node.WaitForTransaction(assetId);
+
+            var transfersToDistribute = Enumerable.Range(1, recipientsNumber).Select(x =>
+                new Transfer
+                {
+                    Amount = x,
+                    Recipient = Address.As(Crypto.CreateAddressFromPublicKey(Node.ChainId, PrivateKey.FromSeed(Crypto.GenerateRandomSeedPhrase()).PublicKey))
+                }
+            ).ToList();
+
+            var tx = MassTransferTransactionBuilder.Params(transfersToDistribute.ToList()).SetAssetId(assetId).GetSignedWith(alice.Pk);
+            var txFee = Node.CalculateTransactionFee(tx);
+            Assert.AreEqual(tx.Fee, txFee.FeeAmount);
+        }
+
+        [TestMethod]
+        public void GetNftTest()
+        {
+            var alice = CreateAccountWithBalance(1000000000);
+            //TODO issue many NFTs
+
+            try
+            {
+                var nfts = Node.GetNft(alice.Addr);
+                nfts = Node.GetNft(alice.Addr, 1);
+                nfts = Node.GetNft(alice.Addr, 1, "nft");
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Waves.NET.Addresses;
-using Waves.NET.ReturnTypes;
+﻿using Waves.NET.ReturnTypes;
 
 namespace Waves.NET.Sections
 {

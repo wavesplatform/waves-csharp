@@ -18,6 +18,8 @@ namespace Waves.NET.Transactions
         public string Description { get; set; } = "";
         public Base64s? Script { get; set; }
 
+        public IssueTransaction() => Type = TYPE;
+
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as IssueTransaction is null) return false;
