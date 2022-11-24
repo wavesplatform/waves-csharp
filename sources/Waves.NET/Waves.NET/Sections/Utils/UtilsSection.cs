@@ -1,5 +1,4 @@
 ﻿using Waves.NET.ReturnTypes;
-using Waves.NET.Transactions.Utils;
 
 namespace Waves.NET.Sections
 {
@@ -38,25 +37,9 @@ namespace Waves.NET.Sections
             return PublicRequest<ScriptInfo>(HttpMethod.Post, compact ? url += "?compact=true" : url, script);
         }
 
-        public ScriptInfo GetScriptCompiledCodeWithImports(string scriptWithImports)
-        {
-            return PublicRequest<ScriptInfo>(HttpMethod.Post, "script/compileWithImports", scriptWithImports);
-        }
-
         public string DecompileScript(string code)
         {
             return PublicRequest<dynamic>(HttpMethod.Post, "script/decompile", code).script;
-        }
-
-        public ScriptInfo GetScriptEstimate(string code)
-        {
-            return PublicRequest<dynamic>(HttpMethod.Post, "script/estimate", code).script;
-        }
-
-        public ScriptEvaluationResult EvaluateScript(string address, ScriptEvaluationExpression evaluationExpression)
-        {
-            var jsonBody = JsonUtils.Serialize(evaluationExpression);
-            return PublicRequest<ScriptEvaluationResult>(HttpMethod.Post, $"script/evaluate/{address}", jsonBody);
         }
     }
 }

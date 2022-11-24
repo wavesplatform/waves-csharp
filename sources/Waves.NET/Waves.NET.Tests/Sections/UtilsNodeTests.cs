@@ -7,7 +7,7 @@ namespace Waves.NET.Tests.Sections
     [TestClass]
     public class UtilsNodeTests : NodeTestBase
     {
-        private const string MessageToHash = "40000 monkeys and bananas";
+        private const string MessageToHash = "Story of 40k monkeys and bananas";
 
         [TestMethod]
         public void GenerateRandomSeedTest()
@@ -50,6 +50,20 @@ namespace Waves.NET.Tests.Sections
             var hash = Node.GetSecureHash(MessageToHash);
             Assert.IsNotNull(hash);
             Assert.AreEqual(expectedHash, hash);
+        }
+
+        [TestMethod]
+        public void DecompileScriptTest()
+        {
+            string script = "{-# STDLIB_VERSION 5 #-}\n" +
+                        "{-# CONTENT_TYPE EXPRESSION #-}\n" +
+                        "sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)";
+
+            var compiledScript =
+                new Base64s("BQkAAfQAAAADCAUAAAACdHgAAAAJYm9keUJ5dGVzCQABkQAAAAIIBQAAAAJ0eAAAAAZwcm9vZnMAAAAAAAAAAAAIBQAAAAJ0eAAAAA9zZW5kZXJQdWJsaWNLZXlzTh3b");
+
+            var decompiledScript = Node.DecompileScript(compiledScript);
+            Assert.AreEqual(script, decompiledScript);
         }
     }
 }

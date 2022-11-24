@@ -27,14 +27,8 @@ namespace Waves.NET.Transactions.Utils
             {
                 throw new ArgumentNullException("Argument 'jsonToDeserialize' cannot be null.");
             }
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(jsonToDeserialize);
-            }
-            catch(Exception ex)
-            {
-                throw;
-            }
+
+            return JsonConvert.DeserializeObject<T>(jsonToDeserialize);
         }
     }
 }

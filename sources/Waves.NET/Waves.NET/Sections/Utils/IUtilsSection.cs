@@ -47,41 +47,10 @@ namespace Waves.NET.Sections
         public ScriptInfo CompileScript(string script, bool compact = false);
 
         /// <summary>
-        /// Compiles string code with imports to base64 script representation
-        /// </summary>
-        /// <param name="scriptWithImports">
-        /// Json string like:
-        /// <code>{
-        ///    "script": "string",
-        ///    "imports": {
-        ///        "additionalProp1": "string",
-        ///        "additionalProp2": "string",
-        ///        "additionalProp3": "string"
-        ///    }
-        ///}</code></param>
-        /// <returns>Compiled script</returns>
-        public ScriptInfo GetScriptCompiledCodeWithImports(string scriptWithImports);
-
-        /// <summary>
         /// Decompiles base64 script representation to string code
         /// </summary>
         /// <param name="code">base64 string of script code</param>
         /// <returns>Decompiled script code</returns>
         public string DecompileScript(string code);
-
-        /// <summary>
-        /// Estimates complexity of a given compiled code
-        /// </summary>
-        /// <param name="code">Compiled code in base64 script representation</param>
-        /// <returns></returns>
-        public ScriptInfo GetScriptEstimate(string code);
-
-        /// <summary>
-        /// Evaluates the provided expression, taking into account the deployed dApp contract
-        /// </summary>
-        /// <param name="address"></param>
-        /// <param name="evaluationExpression">Expression to evaluate</param>
-        /// <returns>Evaluation result</returns>
-        public ScriptEvaluationResult EvaluateScript(string address, ScriptEvaluationExpression evaluationExpression);
     }
 }

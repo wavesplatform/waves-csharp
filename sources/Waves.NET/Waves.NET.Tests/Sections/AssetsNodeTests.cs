@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;

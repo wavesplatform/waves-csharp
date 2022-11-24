@@ -11,7 +11,7 @@
             return _words[idx];
         }
 
-        //TODO: why not? :)
+        //why not? :)
         private static readonly string[] _words = new string[] {
             "abandon",
             "ability",

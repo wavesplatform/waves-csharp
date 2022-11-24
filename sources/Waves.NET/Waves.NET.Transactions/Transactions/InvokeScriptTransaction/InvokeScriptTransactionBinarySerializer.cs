@@ -17,10 +17,10 @@ namespace Waves.NET.Transactions
                 : new Recipient { PublicKeyHash = ByteString.CopyFromUtf8(((Alias)tx.DApp).Name) };
             proto.InvokeScript.FunctionCall = ByteString.CopyFrom(CreateFunctionData(tx.Call));
 
-            foreach(var p in tx.Payment ?? new List<Payment>())
+            foreach(var p in tx.Payment ?? new List<Amount>())
             {
                 proto.InvokeScript.Payments.Add(new AmountProto {
-                    Amount_ = p.Amount,
+                    Amount_ = p.Value,
                     AssetId = p.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(p.AssetId)
                 });
             }

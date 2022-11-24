@@ -150,10 +150,7 @@ namespace Waves.NET
         public string GetFastHash(string message) => Utils.GetFastHash(message);
         public string GetSecureHash(string message) => Utils.GetSecureHash(message);
         public ScriptInfo CompileScript(string script, bool compact = false) => Utils.CompileScript(script, compact);
-        public ScriptInfo GetScriptCompiledCodeWithImports(string scriptWithImports) => Utils.GetScriptCompiledCodeWithImports(scriptWithImports);
         public string DecompileScript(string code) => Utils.DecompileScript(code);
-        public ScriptInfo GetScriptEstimate(string code) => Utils.GetScriptEstimate(code);
-        public ScriptEvaluationResult EvaluateScript(string address, ScriptEvaluationExpression evaluationExpression) => Utils.EvaluateScript(address, evaluationExpression);
         #endregion
 
         #region Waitings

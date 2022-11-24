@@ -381,16 +381,16 @@ namespace Waves.NET.Tests.Sections
             var tx = InvokeScriptTransactionBuilder.Params(
                     bob.Addr,
                     new[] {
-                        Payment.As(1, assetId),
-                        Payment.As(2, assetId),
-                        Payment.As(3, assetId),
-                        Payment.As(4, assetId),
-                        Payment.As(5, assetId),
-                        Payment.As(6, assetId),
-                        Payment.As(7, assetId),
-                        Payment.As(8, assetId),
-                        Payment.As(9, assetId),
-                        Payment.As(10, assetId)
+                        Amount.As(1, assetId),
+                        Amount.As(2, assetId),
+                        Amount.As(3, assetId),
+                        Amount.As(4, assetId),
+                        Amount.As(5, assetId),
+                        Amount.As(6, assetId),
+                        Amount.As(7, assetId),
+                        Amount.As(8, assetId),
+                        Amount.As(9, assetId),
+                        Amount.As(10, assetId)
                     },
                     new Call
                     {
@@ -487,7 +487,7 @@ namespace Waves.NET.Tests.Sections
                 Node.Broadcast(IssueTransactionBuilder.Params("Asset", 1000, 2).GetSignedWith(alice.Pk)).Id
             ).Transaction.Id!;
 
-            var txsInfo = Node.GetTransactionsInfo(new[] { aliasTxId1, aliasTxId2 }).ToList();
+            var txsInfo = Node.GetTransactionsInfo<CreateAliasTransactionInfo>(new[] { aliasTxId1, aliasTxId2 }).ToList();
 
             Assert.AreEqual(2, txsInfo.Count);
             CollectionAssert.AllItemsAreInstancesOfType(txsInfo, typeof(CreateAliasTransactionInfo));

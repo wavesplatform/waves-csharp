@@ -4,7 +4,7 @@ namespace Waves.NET.Transactions
 {
     public interface IEthereumTransaction
     {
-        byte[] Bytes { get; set; }
+        string Bytes { get; set; }
         EthTransactionPayload Payload { get; set; }
 
         int Type { get; set; }

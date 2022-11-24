@@ -10,6 +10,6 @@ namespace Waves.NET.ReturnTypes
         public string? FeeAssetId { get; init; }
         public string Sender { get; init; } = "";
         public string SenderPublicKey { get; init; } = "";
-        public ICollection<Payment> Payment { get; init; } = new List<Payment>();
+        public ICollection<Amount> Payment { get; init; } = new List<Amount>();
     }
 }

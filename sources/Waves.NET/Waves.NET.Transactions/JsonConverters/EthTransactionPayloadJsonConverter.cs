@@ -12,11 +12,11 @@ namespace Waves.NET.Transactions.JsonConverters
             if (reader.TokenType == JsonToken.StartObject)
             {
                 var jO = JObject.Load(reader);
-                var type = jO.Value<int>("type");
+                var type = Enum.Parse<EthTransactionPayloadType>(jO.Value<string>("type"), true);
 
-                switch ((EthTransactionPayloadType)type)
+                switch (type)
                 {
-                    case EthTransactionPayloadType.Invoke: payload = new EthTransactionInvokePayload(); break;
+                    case EthTransactionPayloadType.Invocation: payload = new EthTransactionInvokePayload(); break;
                     case EthTransactionPayloadType.Transfer: payload = new EthTransactionTransferPayload(); break;
                 }
 

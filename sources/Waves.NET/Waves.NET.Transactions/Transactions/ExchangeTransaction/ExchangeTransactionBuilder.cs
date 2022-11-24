@@ -1,6 +1,6 @@
 ﻿namespace Waves.NET.Transactions
 {
-    public class ExchangeTransactionBuilder : TransactionBuilder<ExchangeTransactionBuilder, ExchangeTransaction> //TODO! check actions over order
+    public class ExchangeTransactionBuilder : TransactionBuilder<ExchangeTransactionBuilder, ExchangeTransaction>
     {
         public ExchangeTransactionBuilder() : base(ExchangeTransaction.LatestVersion, ExchangeTransaction.MinFee, ExchangeTransaction.TYPE) { }
 
