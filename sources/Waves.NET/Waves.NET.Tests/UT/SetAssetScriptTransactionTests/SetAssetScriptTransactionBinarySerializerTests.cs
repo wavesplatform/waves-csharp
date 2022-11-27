@@ -2,15 +2,15 @@ using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
-    public class BurnTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
+    public class SetAssetScriptTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
     {
         [TestMethod]
-        public void BurnTransactionBinarySerializerSuccessTest()
+        public void SetAssetScriptTransactionBinarySerializerSuccessTest()
         {
-            var tr = BurnTransactionBuilder.Params(Base58s.Empty, 0).GetSignedWith(PrivateKey);
+            var tr = SetAssetScriptTransactionBuilder.Params(Base58s.Empty, "").GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -20,9 +20,9 @@ namespace Waves.NET.Tests
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void BurnTransactionBinarySerializerNotSupportedVersionTest()
+        public void SetAssetScriptTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = BurnTransactionBuilder.Params(Base58s.Empty, 0).SetVersion(BurnTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
+            var tr = SetAssetScriptTransactionBuilder.Params(Base58s.Empty, "").SetVersion(SetAssetScriptTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
     }

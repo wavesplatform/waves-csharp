@@ -20,7 +20,7 @@
         {
             return other is not null &&
                    base.Equals(other) &&
-                   EqualityComparer<ICollection<EntryData>>.Default.Equals(Data, other.Data);
+                   (Data is null && other.Data is null || Data.SequenceEqual(other.Data));
         }
 
         public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Data.CalcHashCode());

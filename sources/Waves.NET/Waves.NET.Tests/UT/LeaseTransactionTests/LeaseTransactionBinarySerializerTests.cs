@@ -2,15 +2,15 @@ using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
-    public class SponsorFeeTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
+    public class LeaseTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
     {
         [TestMethod]
-        public void SponsorFeeTransactionBinarySerializerSuccessTest()
+        public void LeaseTransactionBinarySerializerSuccessTest()
         {
-            var tr = SponsorFeeTransactionBuilder.Params(Base58s.Empty, 0).GetSignedWith(PrivateKey);
+            var tr = LeaseTransactionBuilder.Params(Alias.As("abcd"), 0).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -20,9 +20,9 @@ namespace Waves.NET.Tests
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void SponsorFeeTransactionBinarySerializerNotSupportedVersionTest()
+        public void LeaseTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = SponsorFeeTransactionBuilder.Params(Base58s.Empty, 0).SetVersion(SponsorFeeTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
+            var tr = LeaseTransactionBuilder.Params(Alias.As("abcd"), 0).SetVersion(LeaseTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
     }

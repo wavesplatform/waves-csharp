@@ -2,15 +2,15 @@ using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
-    public class InvokeScriptTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
+    public class CreateAliasTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
     {
         [TestMethod]
-        public void InvokeScriptTransactionBinarySerializerSuccessTest()
+        public void CreateAliasTransactionBinarySerializerSuccessTest()
         {
-            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new Call()).GetSignedWith(PrivateKey);
+            var tr = CreateAliasTransactionBuilder.Params(Alias.As("abcd")).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -20,10 +20,9 @@ namespace Waves.NET.Tests
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void InvokeScriptTransactionBinarySerializerNotSupportedVersionTest()
+        public void CreateAliasTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = InvokeScriptTransactionBuilder.Params(new Alias("abcd"), new Call())
-                .SetVersion(InvokeScriptTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
+            var tr = CreateAliasTransactionBuilder.Params(Alias.As("abcd")).SetVersion(CreateAliasTransaction.LatestVersion+1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
     }

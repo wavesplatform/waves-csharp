@@ -2,15 +2,15 @@ using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
-    public class UpdateAssetInfoTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
+    public class TransferTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase
     {
         [TestMethod]
-        public void UpdateAssetInfoTransactionBinarySerializerSuccessTest()
+        public void TransferTransactionBinarySerializerSuccessTest()
         {
-            var tr = UpdateAssetInfoTransactionBuilder.Params(Base58s.Empty, "", "").GetSignedWith(PrivateKey);
+            var tr = TransferTransactionBuilder.Params(Alias.As("abcd"), 0).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -20,10 +20,9 @@ namespace Waves.NET.Tests
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void UpdateAssetInfoTransactionBinarySerializerNotSupportedVersionTest()
+        public void TransferTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = UpdateAssetInfoTransactionBuilder.Params(Base58s.Empty, "", "")
-                .SetVersion(UpdateAssetInfoTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
+            var tr = TransferTransactionBuilder.Params(Alias.As("abcd"), 0).SetVersion(TransferTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
     }

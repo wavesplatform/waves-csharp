@@ -2,6 +2,7 @@ using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
+using IssueTransaction = Waves.NET.Transactions.IssueTransaction;
 
 namespace Waves.NET.Tests.Sections
 {
@@ -144,19 +145,37 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void GetNftTest()
         {
-            var alice = CreateAccountWithBalance(1000000000);
-            //TODO issue many NFTs
+            const int nftsCount = 5;
+            const string nftAssetName = "NFTasset";
 
-            try
+            var alice = CreateAccountWithBalance(IssueTransaction.MinFee * nftsCount);
+
+            for(var i = 1; i <= nftsCount; i++)
             {
-                var nfts = Node.GetNft(alice.Addr);
-                nfts = Node.GetNft(alice.Addr, 1);
-                nfts = Node.GetNft(alice.Addr, 1, "nft");
+                Node.WaitForTransaction(Node.Broadcast(
+                    IssueTransactionBuilder.Params(nftAssetName + i, 1, 0).SetReissuable(false).GetSignedWith(alice.Pk)).Id);
             }
-            catch(Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+
+            var nfts = Node.GetNft(alice.Addr);
+            Assert.IsNotNull(nfts);
+            Assert.AreEqual(nftsCount, nfts.Count);
+
+            for (var i = 1; i <= nftsCount; i++)
+                Assert.IsTrue(nfts.Any(x => x.AssetId is not null && x.Issuer == alice.Addr && x.Name == nftAssetName + i));
+
+            const int limit = 3;
+            var nftsWithLimit = Node.GetNft(alice.Addr, limit);
+            Assert.IsNotNull(nftsWithLimit);
+            Assert.AreEqual(limit, nftsWithLimit.Count);
+
+            var nftsWithLimit2 = Node.GetNft(alice.Addr, nftsCount + 1);
+            Assert.IsNotNull(nftsWithLimit2);
+            Assert.AreEqual(nftsCount, nftsWithLimit2.Count);
+
+            //TODO: using "after" paramenter method works with unexpected result. Bug?
+            //var after = nftsWithLimit.First().AssetId!;
+            //var nftsWithAfter = Node.GetNft(alice.Addr, 3, after);
+            //Assert.AreEqual(2, nftsWithAfter.Count);
         }
     }
 }

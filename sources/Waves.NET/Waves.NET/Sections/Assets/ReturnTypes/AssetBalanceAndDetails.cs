@@ -8,6 +8,6 @@
         public long? MinSponsoredAssetFee { get; set; }
         public long? SponsorBalance { get; set; }
         public long Quantity { get; set; }
-        public IssueTransaction IssueTransaction { get; set; } = null!;
+        public IssueTransactionBalanceDetails IssueTransaction { get; set; } = null!;
     }
 }

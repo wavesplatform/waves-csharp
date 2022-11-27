@@ -2,7 +2,7 @@ using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
     public class ReissueTransactionBinarySerializerTests : TransactionBinarySerializerTestsBase

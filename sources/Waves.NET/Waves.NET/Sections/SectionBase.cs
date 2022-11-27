@@ -35,8 +35,10 @@ namespace Waves.NET.Sections
                     return JsonUtils.Deserialize<TResult>(jsonString)!;
                 }
 
-                var apiError = JsonUtils.Deserialize<ApiError>(jsonString);
-                throw new NodeException(apiError!);
+                var (Succees, Result, _) = JsonUtils.TryDeserialize<ApiError>(jsonString);
+                throw Succees
+                    ? new NodeException(Result!)
+                    : new HttpException(response.StatusCode, response.ReasonPhrase!);
             }
         }
     }

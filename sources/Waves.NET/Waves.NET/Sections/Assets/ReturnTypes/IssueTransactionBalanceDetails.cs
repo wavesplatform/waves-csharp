@@ -1,6 +1,6 @@
 ﻿namespace Waves.NET.ReturnTypes
 {
-    public record IssueTransaction
+    public record IssueTransactionBalanceDetails
     {
         public string AssetId { get; set; } = null!;
         public string Name { get; set; } = null!;
