@@ -2,7 +2,7 @@
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     public class NodeTestBase
     {
@@ -14,7 +14,7 @@ namespace Waves.NET.Tests.Sections
 
         public NodeTestBase()
         {
-            Node = NodeClient.Create(Profile.Private);
+            Node = NET.Node.Create(Profile.Private);
             FaucetPrivateKey = PrivateKey.FromSeed(FaucetSeedPhrase);
             FaucetAddress = Address.FromPublicKey(Node.ChainId, FaucetPrivateKey.PublicKey);
         }

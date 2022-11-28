@@ -1,6 +1,6 @@
 using Waves.NET.Transactions;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class NodeClientClassTests : NodeTestBase
@@ -8,7 +8,7 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void NodeClientCreationTest()
         {
-            var node = NodeClient.Create(Profile.Private);
+            var node = NET.Node.Create(Profile.Private);
             Assert.IsNotNull(node);
             Assert.IsTrue(node is INode);
             Assert.IsTrue(node.ChainId > 0);
@@ -18,7 +18,7 @@ namespace Waves.NET.Tests.Sections
         [TestMethod]
         public void NodeClientCreationSectionedTest()
         {
-            var node = NodeClient.CreateSections(Profile.Private);
+            var node = NET.Node.CreateSections(Profile.Private);
             Assert.IsNotNull(node);
             Assert.IsTrue(node is INodeSections);
             Assert.IsTrue(node.ChainId > 0);
@@ -29,7 +29,7 @@ namespace Waves.NET.Tests.Sections
             Assert.IsNotNull(node.Blockchain);
             Assert.IsNotNull(node.Blocks);
             Assert.IsNotNull(node.Debug);
-            Assert.IsNotNull(node.Node);
+            Assert.IsNotNull(node.Node_);
             Assert.IsNotNull(node.Transactions);
             Assert.IsNotNull(node.Utils);
             Assert.IsNotNull(node.Leasing);

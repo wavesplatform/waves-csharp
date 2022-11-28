@@ -2,7 +2,7 @@ using System.Text;
 using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class UtilsNodeTests : NodeTestBase

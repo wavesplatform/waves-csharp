@@ -12,7 +12,7 @@ namespace Waves.NET
         IBlockchainSection Blockchain { get; }
         IBlocksSection Blocks { get; }
         IDebugSection Debug { get; }
-        INodeSection Node { get; }
+        INodeSection Node_ { get; }
         ITransactionsSection Transactions { get; }
         IUtilsSection Utils { get; }
         ILeasingSection Leasing { get; }

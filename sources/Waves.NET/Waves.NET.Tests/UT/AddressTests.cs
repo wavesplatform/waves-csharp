@@ -1,7 +1,7 @@
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Tests
+namespace Waves.NET.Tests.UT
 {
     [TestClass]
     public class AddressTests

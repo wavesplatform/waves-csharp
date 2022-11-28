@@ -1,7 +1,7 @@
 using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class BlocksNodeTests : NodeTestBase

@@ -8,7 +8,7 @@ using Waves.NET.Transactions.Info;
 
 namespace Waves.NET
 {
-    public sealed class NodeClient : INode, INodeSections
+    public sealed class Node : INode, INodeSections
     {
         private readonly HttpClient _httpClient;
 
@@ -20,22 +20,22 @@ namespace Waves.NET
         public IBlockchainSection Blockchain { get; init; }
         public IBlocksSection Blocks { get; init; }
         public IDebugSection Debug { get; init; }
-        public INodeSection Node { get; init; }
+        public INodeSection Node_ { get; init; }
         public ITransactionsSection Transactions { get; init; }
         public IUtilsSection Utils { get; init; }
         public ILeasingSection Leasing { get; init; }
 
         public static INode Create(string nodeUri)
         {
-            return new NodeClient(nodeUri);
+            return new Node(nodeUri);
         }
 
         public static INodeSections CreateSections(string nodeUri)
         {
-            return new NodeClient(nodeUri);
+            return new Node(nodeUri);
         }
 
-        public NodeClient(string nodeUri)
+        public Node(string nodeUri)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(nodeUri);
@@ -46,7 +46,7 @@ namespace Waves.NET
             Blockchain = new BlockchainSection(_httpClient);
             Blocks = new BlocksSection(_httpClient);
             Debug = new DebugSection(_httpClient);
-            Node = new NodeSection(_httpClient);
+            Node_ = new NodeSection(_httpClient);
             Transactions = new TransactionsSection(_httpClient);
             Utils = new UtilsSection(_httpClient);
             Leasing = new LeasingSection(_httpClient);
@@ -123,8 +123,8 @@ namespace Waves.NET
         #endregion
 
         #region Node
-        public NodeStatus GetNodeStatus() => Node.GetNodeStatus();
-        public string GetVersion() => Node.GetVersion();
+        public NodeStatus GetNodeStatus() => Node_.GetNodeStatus();
+        public string GetVersion() => Node_.GetVersion();
         #endregion
 
         #region Transactions

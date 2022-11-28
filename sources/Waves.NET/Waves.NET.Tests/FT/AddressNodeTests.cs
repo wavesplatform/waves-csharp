@@ -5,7 +5,7 @@ using Waves.NET.ReturnTypes;
 using Waves.NET.Transactions;
 using Waves.NET.Transactions.Common;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class AddressNodeTests : NodeTestBase

@@ -1,4 +1,4 @@
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class BlockchainNodeTest : NodeTestBase

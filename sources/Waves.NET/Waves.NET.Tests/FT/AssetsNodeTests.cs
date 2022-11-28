@@ -4,7 +4,7 @@ using Waves.NET.Transactions.Common;
 using Waves.NET.Transactions.Utils;
 using IssueTransaction = Waves.NET.Transactions.IssueTransaction;
 
-namespace Waves.NET.Tests.Sections
+namespace Waves.NET.Tests.FT
 {
     [TestClass]
     public class AssetsNodeTests : NodeTestBase
