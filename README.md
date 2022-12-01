@@ -441,9 +441,11 @@ var scriptMeta = node.GetScriptMeta(address);
 ### Examples of working with transactions
 
 #### IssueTransaction
-```csharp// Define the asset ID
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
 // Create a transaction
-IssueTransactionBuilder.Params(asset, quantity, decimals).SetScript(script).GetSignedWith(senderPrivateKey);
+IssueTransactionBuilder.Params(assetId, quantity, decimals).SetScript(script).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
