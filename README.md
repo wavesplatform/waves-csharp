@@ -62,7 +62,7 @@ var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
 Console.WriteLine(senderAddress);
 ```
 
-4. Run the app
+4. Run the app.
 You will be able to see an account address in the output like this:
 ```
 3N6Dbnr36oxZUcXXX7ifYbA6CSJf1ndg18s
@@ -117,7 +117,7 @@ var createAliasTxInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(crea
 Console.WriteLine(createAliasTxInfo.Transaction.Alias.ToFullString());
 ```
 
-7. Run the app
+7. Run the app.
 If everything was done correctly, you will see your new account alias similar to this:
 ```
 alias:T:alias1665584780791
