@@ -137,8 +137,9 @@ Prepare the Ride script you would like to attach to an asset:
 {-# SCRIPT_TYPE ASSET #-}
 
 func trueReturner () = {
-    return true
+    true
 }
+trueReturner()
 ```
 
 2.Afterward, it would be necessary to prepare a script in your native programming language that would:
