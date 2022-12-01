@@ -126,3 +126,630 @@ If everything was done correctly, you will see your new account alias similar to
 alias:T:alias1665584780791
 ```
 It will be an indication that the library is installed correctly and you can continue to use it this way.
+
+## Writing a smart asset script
+1. Prepare the Ride script you would like to attach to an asset:
+```
+{-# STDLIB_VERSION 6 #-}
+{-# CONTENT_TYPE EXPRESSION #-}
+{-# SCRIPT_TYPE ASSET #-}
+
+func trueReturner () = {
+    true
+}
+trueReturner()
+```
+
+2. Follow these steps:
+* Create an asset;
+* Attach a smart account script to it;
+* Send the transaction to the node.
+Here is how to make this:
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("your seed phrase");
+
+// Create an asset script
+var txScript =
+    "{-# STDLIB_VERSION 6 #-}\n" +
+    "{-# CONTENT_TYPE EXPRESSION #-}\n" +
+    "{-# SCRIPT_TYPE ASSET #-}\n" +
+    "func trueReturner() = {\n" +
+        "true\n" +
+    "}\n" +
+    "trueReturner()";
+
+// Transform the Ride script to a base64 string
+var script = node.CompileScript(txScript).Script;
+
+// Create an issue transaction
+var tx = IssueTransactionBuilder.Params(
+      "sampleasset",                    // asset name
+      1000,                             // asset quantity
+      2                                 // decimal places number
+    )
+    .SetScript(script)                  // set our compiled script
+    .SetReissuable(true)                // mark asset as reissuable
+    .SetDescription("description")      // set description string
+    .GetSignedWith(senderPrivateKey);   // sign transaction
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+```
+## Setting a smart account script
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+
+// Create a simple account script in Ride
+var txScript = "{-# STDLIB_VERSION 6 #-}\n" +
+   "{-# CONTENT_TYPE EXPRESSION #-}\n" +
+   "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
+   "let cooperPubKey = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6A8'\n" +
+   "let BTCId = base58'8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'\n" +
+   "match tx {\n" +
+      "case o: Order =>\n" +
+         "sigVerify(o.bodyBytes, o.proofs[0], cooperPubKey ) && \n" +
+         "(o.assetPair.priceAsset == BTCId || o.assetPair.amountAsset == BTCId)\n" +
+      "case _ => sigVerify(tx.bodyBytes, tx.proofs[0], cooperPubKey )\n" +
+   "}";
+
+// Compile the script to the Base64 format 
+var compiledScript = node.CompileScript(txScript).Script;
+
+// Create a set script transaction 
+var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
+```
+
+## Setting a dApp script
+
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+
+// Create a simple dApp script in Ride
+var txScript = "{-# STDLIB_VERSION 3 #-}\n" +
+    "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
+    "{-# CONTENT_TYPE DAPP #-}\n" +
+    "let answersCount = 20\n" +
+
+    "let answers =\n" +
+    "['It is certain.',\n" +
+    "'Yes - definitely.',\n" +
+    "'You may rely on it.',\n" +
+    "'As I see it, yes.',\n" +
+    "'My reply is no.', \n" +
+    "'My sources say no.',\n" +
+    "'Very doubtful.']\n" +
+
+    "func getAnswer (question,previousAnswer) = {\n" +
+        "let hash = sha256(toBytes((question + previousAnswer)))\n" +
+        "let index = toInt(hash)\n" +
+        "answers[(index % answersCount)]\n" +
+    "}\n" +
+
+    "func getPreviousAnswer (address) = match getString(this, (address + '_a')) {\n" +
+        "case a: String => a\n" +
+        "case _ => address\n" +
+    "}\n" +
+
+    "@Callable(i)\n" +
+    "func tellme (question) = {\n" +
+        "let callerAddress = toBase58String(i.caller.bytes)\n" +
+        "let answer = getAnswer(question, getPreviousAnswer(callerAddress))\n" +
+        "WriteSet([DataEntry((callerAddress + '_q'), question), DataEntry((callerAddress + '_a'), answer)])\n" +
+    "}";
+
+// Transform the Ride script to a base64 string
+var compiledScript = node.CompileScript(txScript).Script;
+
+// Create a set script transaction 
+var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
+```
+
+## More Examples
+
+### Working with accounts
+#### Private keys
+1. Seed phrase
+```csharp
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+```
+2. Random seed phrase
+
+2.1 Without nonce parameter
+```csharp
+// Generate a random seed phrase
+var seed = Crypto.GenerateRandomSeedPhrase();
+// Create the private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed(seed);
+```
+2.2 With nonce 2
+```csharp
+// Generate a random seed phrase
+var seed = Crypto.GenerateRandomSeedPhrase();
+// Create the private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed(seed, 2);
+```
+3. From seed bytes
+```csharp
+// Create a seed phrase bytes set
+byte[] seedBytes = { 21, 55, 87, 117, 8, 81, 77, 77, 99, 87, 23, 7, 116, 99, 20, 12, 4 };
+// Create the private key from the seed phrase bytes set
+var senderPrivateKey = PrivateKey.FromSeed(seedBytes);
+```
+4. From random generated seed bytes
+```csharp
+// Generate a random seed phrase bytes set
+byte[] randomSeedBytes = Crypto.GenerateRandomSeedBytes();
+// Create the private key from the random seed phrase bytes set
+var senderPrivateKey = PrivateKey.FromSeed(randomSeedBytes);
+```
+5. From bytes
+```csharp
+// Create a bytes set
+byte[] bytes = {56, 3, 37, 64, 2, 38, 78, 37, 98, 45, 23, 117, 14, 88, 20, 42, 9, 21, 55, 87, 117, 8, 81, 77, 77, 99, 87, 23, 7, 116, 99, 20};
+// Create the private key from seed bytes
+var senderPrivateKey = PrivateKey.As(bytes);
+```
+6. From encoded string
+```csharp
+// Create a Base58 encoded string
+var base58PhraseEncoded = "8hVeUrGJqb2yvecqmssSc7MP9SwKLQYycW7H1Zz3omwA";
+// Create the private key from the Base58 encoded string
+var senderPrivateKey = PrivateKey.As(base58PhraseEncoded);
+```
+
+#### Public keys
+To obtain a public key:
+```csharp
+// Create the public key from the private key
+var senderPublicKey = senderPrivateKey.PublicKey;
+```
+
+#### Address
+```csharp
+/* Get the account address from the public key
+Specify the same network as used with the node instance */
+var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
+```
+
+### Examples of usage node REST API implemented methods
+#### Assets
+##### GET /assets/{assetId}/distribution/{height}/limit/{limit}
+```csharp
+// Get asset balance distribution by account addresses
+var assetDistribution = node.GetAssetDistribution(assetId, height);
+var assetDistribution = node.GetAssetDistribution(assetId, height, limit);
+var assetDistribution = node.GetAssetDistribution(assetId, height, limit, afterAddress);
+```
+##### GET /assets/balance/{address}
+```csharp
+// Get the account balance of all assets (excluding WAVES)
+var assetBalances = node.GetAssetsBalance(address);
+```
+##### GET /assets/balance/{address}/{assetId}
+```csharp
+// Get the account balance of a given asset
+var assetBalance = node.GetAssetBalance(address, assetId);
+```
+##### GET /assets/details/{assetId}
+```csharp
+// Get detailed information about a given asset
+var assetDetails = node.GetAssetDetails(assetId);
+```
+##### GET /assets/nft/{address}/limit/{limit}
+```csharp
+// Get a list of non-fungible tokens at a given address.
+var assetDetailsList = node.GetNft(address);
+var assetDetailsList = node.GetNft(address, limit);
+var assetDetailsList = node.GetNft(address, limit, afterAssetId);
+```
+#### Addresses
+##### GET /addresses
+```csharp
+// Get a list of account addresses in the node wallet
+var addresses = node.GetAddresses()
+```
+##### GET /addresses/seq/{from}/{to}
+```csharp
+// Get a list of account addresses in the node wallet
+var addresses = node.GetAddresses(fromIndex, oIndex);
+```
+##### GET /addresses/balance/{address}
+```csharp
+// Get the regular balance in WAVES at a given address
+var addressBalance = node.GetBalance(address)
+```
+##### GET /addresses/balance/{address}/{confirmations}
+```csharp
+// Get the regular balance in WAVES at a given address
+var addressBalance = node.GetBalance(address, confirmations);
+```
+##### GET /addresses/balance/details/{address}
+```csharp
+// Get the available, regular, generating, and effective account balances
+var balanceDetails = node.GetBalanceDetails(address);
+```
+##### POST /addresses/balance
+```csharp
+// Create a list of addresses
+var addresses = new List<Address> {
+    new Address("<insert base58 address>"),
+    new Address("<insert base58 address>")
+};
+// Get regular balances for multiple addresses
+var addressBalances = node.GetBalances(addresses);
+```
+##### GET /addresses/data/{address}
+```csharp
+// Read account data entries by given address
+var dataEntries = node.GetData(address);
+```
+##### POST /addresses/data/{address}
+```csharp
+// Read account data entries by given keys
+var dataEntries = node.GetData(address, keysList);
+```
+##### GET /addresses/data/{address}/{key}
+```csharp
+// Read account data entries by given keys
+var dataEntries = node.GetData(address, key);
+```
+##### GET /addresses/scriptInfo/{address}
+```csharp
+// Get an account script or a dApp script information by a given address
+var scriptInfo = node.GetScriptInfo(address);
+```
+##### GET /addresses/scriptInfo/{address}/meta
+```csharp
+// Get an account script meta data
+var scriptMeta = node.GetScriptMeta(address);
+```
+
+### Examples of working with transactions
+
+#### IssueTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+// Create a transaction
+IssueTransactionBuilder.Params(assetId, quantity, decimals).SetScript(script).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
+```
+
+#### TransferTransaction
+```csharp
+// Define the recipient’s address
+Address recipientAddress = new Address("insert the address");
+
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Create a transaction
+TransferTransactionBuilder.Params(recipient, amount, assetId, feeAsset, attachment).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<TransferTransactionInfo>(tx.Id);
+```
+
+#### ReissueTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Create a transaction
+ReissueTransactionBuilder.Params(assetId, quantity, reissuable).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<ReissueTransactionInfo>(tx.Id);
+```
+
+#### BurnTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Create a transaction
+BurnTransactionBuilder.Params(assetId, amount).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<BurnTransactionInfo>(tx.Id);
+```
+
+#### ExchangeTransaction
+```csharp
+// Define the recipient public key
+var recipientPublicKey = PublicKey.As("insert the public key");
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Define the amount for the transaction
+var amount = Amount.As(250);
+
+// Define the price of the asset by its id
+var price = Amount.As(100, assetId);
+
+// Create matcher fee values
+var buyMatcherFee = 300_000;
+var sellMatcherFee = 350_000;
+
+var assetPair = new AssetPair { AmountAsset = assetId, PriceAsset = assetId };
+
+// Create orders; for example, let the sender be the matcher
+var buyOrder = new OrderBuilder(
+OrderType.Buy, // The order type can only be one of the two values: BUY or SELL
+amount, // amount
+price, // price
+senderPublicKey, // sender public key
+assetPair
+).GetSignedWith(recipientPrivateKey);
+
+var sellOrder = new OrderBuilder(
+OrderType.Sell, // order type
+amount, // amount
+price, // price
+senderPublicKey, // sender public key
+assetPair
+).GetSignedWith(senderPrivateKey);
+
+// Create a transaction
+ExchangeTransactionBuilder.Params(buyOrder, sellOrder, amount, price, buyMatcherFee, sellMatcherFee).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<ExchangeTransactionInfo>(tx.Id);
+```
+
+#### LeaseTransaction
+```csharp
+// Define the recipient’s address
+var recipientAddress = new Address("insert the address");
+
+// Create a transaction
+LeaseTransactionBuilder.Params(recipientAddress, amount).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<LeaseTransactionInfo>(tx.Id);
+```
+
+#### LeaseCancelTransaction
+```csharp
+// Define the lease transaction ID
+var leaseTxId = new Base58s("insert the lease transaction ID");
+
+// Create a transaction
+LeaseCancelTransactionBuilder.Params(leaseTxId).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<LeaseCancelTransactionInfo>(tx.Id);
+```
+
+#### CreateAliasTransaction
+```csharp
+// Create an alias using the current system time
+var alias = Alias.As("alice_" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+
+// Create a transaction
+CreateAliasTransactionBuilder.Params(alias).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(tx.Id);
+```
+
+#### MassTransferTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Define the recipient addresses
+var recipientAddress = new Address("insert the address");
+var recipientAddressTwo = new Address("insert the address");
+var recipientAddressThree = new Address("insert the address");
+
+// Create a list of recipients and their respective sums of transfer
+var transfers = new List<Transfer> {
+    Transfer.To(recipientAddress, 1000),
+    Transfer.To(recipientAddressTwo, 1000),
+    Transfer.To(recipientAddressThree, 1000)
+};
+
+// Create a transaction
+MassTransferTransactionBuilder.Params(transfers, assetId, attachment).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<MassTransferTransactionInfo>(tx.Id);
+```
+
+#### DataTransaction
+```csharp
+// Create a transaction
+DataTransactionBuilder.Params(new List<EntryData> {
+        DataEntry.AsBoolean("key1", true),
+        DataEntry.AsInteger("key2", 10),
+        DataEntry.AsString("key3", "str")}).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<DataTransactionInfo>(tx.Id);
+```
+
+#### SetScriptTransaction
+```csharp
+// Create a simple script and compile it to the Base64 format
+var txScript = "{-# STDLIB_VERSION 5 #-}\n" +
+"{-# CONTENT_TYPE DAPP #-}\n" +
+"{-# SCRIPT_TYPE ACCOUNT #-}\n" +
+"@Callable(inv)\n" +
+"func call(bv: ByteVector, b: Boolean, int: Int, str: String, list: List[Int]) = {\n" +
+" let asset = Issue(\"Asset\", \"\", 1, 0, true)\n" +
+" let assetId = asset.calculateAssetId()\n" +
+" let lease = Lease(inv.caller, 7)\n" +
+" let leaseId = lease.calculateLeaseId()\n" +
+" [\n" +
+" BinaryEntry(\"bin\", assetId),\n" +
+" BooleanEntry(\"bool\", true),\n" +
+" IntegerEntry(\"int\", 100000),\n" +
+" StringEntry(\"assetId\", assetId.toBase58String()),\n" +
+" StringEntry(\"leaseId\", leaseId.toBase58String()),\n" +
+" StringEntry(\"del\", \"\"),\n" +
+" DeleteEntry(\"del\"),\n" +
+" asset,\n" +
+" SponsorFee(assetId, 1),\n" +
+" Reissue(assetId, 4, false),\n" +
+" Burn(assetId, 3),\n" +
+" ScriptTransfer(inv.caller, 2, assetId),\n" +
+" lease,\n" +
+" LeaseCancel(lease.calculateLeaseId())\n" +
+" ]\n" +
+"}";
+var compiledScript = node.CompileScript(txScript).Script;
+
+// Create a transaction
+SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<SetScriptTransactionInfo>(tx.Id);
+```
+
+#### SponsorFeeTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Create a transaction
+SponsorFeeTransactionBuilder.Params(assetId, minSponsoredAssetFee).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<SponsorFeeTransactionInfo>(tx.Id);
+```
+
+#### SetAssetScriptTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+/* Transforming the ride script to a base64 string
+Make sure to insert your ride script between the brackets below */
+var script = node.CompileScript("INSERT YOUR DAPP SCRIPT HERE").Script;
+
+// Create a transaction
+SetAssetScriptTransactionBuilder.Params(assetId, script).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<SetAssetScriptTransactionInfo>(tx.Id);
+```
+
+#### InvokeScriptTransaction
+```csharp
+// Define the dApp address
+var dAppAddress = Address.As("insert the address");
+
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+var assetIdTwo = new Base58s("insert the asset ID");
+var assetIdThree = new Base58s("insert the asset ID");
+
+// Create a list of different payments
+var payments = new List<Amount> {
+    Amount.As(1005, assetId),
+    Amount.As(1005, assetIdTwo),
+    Amount.As(1005, assetIdThree)
+};
+
+var fArgs = new List<CallArg> { CallArg.AsString("str"), CallArg.AsBoolean(false) };
+
+// Create a transaction
+InvokeScriptTransactionBuilder.Params(dAppAddress, new Call { Function = "fname", payments, Args = fArgs }).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<InvokeScriptTransactionInfo>(tx.Id);
+```
+
+#### UpdateAssetInfoTransaction
+```csharp
+// Define the asset ID
+var assetId = new Base58s("insert the asset ID");
+
+// Create a transaction
+UpdateAssetInfoTransactionBuilder.Params(assetId, name, description).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+
+// Get information about the transaction from the node
+var txInfo = node.GetTransactionInfo<UpdateAssetInfoTransactionInfo>(tx.Id);
+```
