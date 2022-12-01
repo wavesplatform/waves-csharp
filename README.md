@@ -634,11 +634,13 @@ var txInfo = node.GetTransactionInfo<MassTransferTransactionInfo>(tx.Id);
 
 #### DataTransaction
 ```csharp
-// Create a transaction
-DataTransactionBuilder.Params(new List<EntryData> {
-        DataEntry.AsBoolean("key1", true),
-        DataEntry.AsInteger("key2", 10),
-        DataEntry.AsString("key3", "str")}).GetSignedWith(senderPrivateKey);
+// Create a data transaction
+var dataTx = DataTransactionBuilder.Params(new List<EntryData> { // A list of BinaryEntry, BooleanEntry, IntegerEntry, StringEntry or null
+		// `data.type` string with `data.key` "test key 1" with `data.value` equal to "test value"
+		DataEntry.AsString("test key 1", "test value"),
+		// `data.type` boolean with `data.key` "test key 2" with `data.value` equal to "true"
+		DataEntry.AsBoolean("test key 2", true)
+	}).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -745,10 +747,24 @@ var payments = new List<Amount> {
     Amount.As(1005, assetIdThree)
 };
 
-var fArgs = new List<CallArg> { CallArg.AsString("str"), CallArg.AsBoolean(false) };
+var call = new Call {
+    Function = "fname",
+    Args = new List<CallArg> {
+        // `call.args.type` binary with `call.args.value` equal to `senderAddress.bytes()`
+        CallArg.AsBinary(senderAddress.Bytes),
+        // `call.args.type` boolean with `call.args.value` equal to `true`
+        CallArg.AsBoolean(true),
+        // `call.args.type` integer with `call.args.value` equal to `100000`
+        CallArg.AsInteger(100000),
+        // `call.args.type` string with `call.args.value` equal to `string value`
+        CallArg.AsString("string value"),
+        // `call.args.type` list with `call.args.value` equal to `100000`
+        CallArg.AsList(new [] {CallArg.AsInteger(100000) })
+    }
+};
 
 // Create a transaction
-InvokeScriptTransactionBuilder.Params(dAppAddress, new Call { Function = "fname", payments, Args = fArgs }).GetSignedWith(senderPrivateKey);
+InvokeScriptTransactionBuilder.Params(dAppAddress, payments, call).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
