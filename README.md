@@ -219,3 +219,60 @@ var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWi
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
 ```
+
+## Setting a dApp script
+
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+
+// Create a simple dApp script in Ride
+var txScript = "{-# STDLIB_VERSION 3 #-}\n" +
+    "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
+    "{-# CONTENT_TYPE DAPP #-}\n" +
+    "let answersCount = 20\n" +
+
+    "let answers =\n" +
+    "['It is certain.',\n" +
+    "'Yes - definitely.',\n" +
+    "'You may rely on it.',\n" +
+    "'As I see it, yes.',\n" +
+    "'My reply is no.', \n" +
+    "'My sources say no.',\n" +
+    "'Very doubtful.']\n" +
+
+    "func getAnswer (question,previousAnswer) = {\n" +
+        "let hash = sha256(toBytes((question + previousAnswer)))\n" +
+        "let index = toInt(hash)\n" +
+        "answers[(index % answersCount)]\n" +
+    "}\n" +
+
+    "func getPreviousAnswer (address) = match getString(this, (address + '_a')) {\n" +
+        "case a: String => a\n" +
+        "case _ => address\n" +
+    "}\n" +
+
+    "@Callable(i)\n" +
+    "func tellme (question) = {\n" +
+        "let callerAddress = toBase58String(i.caller.bytes)\n" +
+        "let answer = getAnswer(question, getPreviousAnswer(callerAddress))\n" +
+        "WriteSet([DataEntry((callerAddress + '_q'), question), DataEntry((callerAddress + '_a'), answer)])\n" +
+    "}";
+
+// Transform the Ride script to a base64 string
+var compiledScript = node.CompileScript(txScript).Script;
+
+// Create a set script transaction 
+var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
+```
