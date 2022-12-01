@@ -276,3 +276,69 @@ var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWi
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
 ```
+
+## More Examples
+### Working with accounts
+#### Private keys
+1. Seed phrase
+```csharp
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+```
+2. Random seed phrase
+2.1 Without nonce parameter
+```csharp
+// Generate a random seed phrase
+var seed = Crypto.GenerateRandomSeedPhrase();
+// Create the private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed(seed);
+```
+2.2 With nonce = 2
+```csharp
+// Generate a random seed phrase
+var seed = Crypto.GenerateRandomSeedPhrase();
+// Create the private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed(seed, 2);
+```
+3. From seed bytes
+```csharp
+// Create a seed phrase bytes set
+byte[] seedBytes = { 21, 55, 87, 117, 8, 81, 77, 77, 99, 87, 23, 7, 116, 99, 20, 12, 4 };
+// Create the private key from the seed phrase bytes set
+var senderPrivateKey = PrivateKey.FromSeed(seedBytes);
+```
+4. From random generated seed bytes
+```csharp
+// Generate a random seed phrase bytes set
+byte[] randomSeedBytes = Crypto.GenerateRandomSeedBytes();
+// Create the private key from the random seed phrase bytes set
+var senderPrivateKey = PrivateKey.FromSeed(randomSeedBytes);
+```
+5. From bytes
+```csharp
+// Create a bytes set
+byte[] bytes = {56, 3, 37, 64, 2, 38, 78, 37, 98, 45, 23, 117, 14, 88, 20, 42, 9, 21, 55, 87, 117, 8, 81, 77, 77, 99, 87, 23, 7, 116, 99, 20};
+// Create the private key from seed bytes
+var senderPrivateKey = PrivateKey.As(bytes);
+```
+6. From encoded string
+```csharp
+// Create a Base58 encoded string
+var base58PhraseEncoded = "8hVeUrGJqb2yvecqmssSc7MP9SwKLQYycW7H1Zz3omwA";
+// Create the private key from the Base58 encoded string
+var senderPrivateKey = PrivateKey.As(base58PhraseEncoded);
+```
+
+#### Public keys
+To obtain a public key:
+```csharp
+// Create the public key from the private key
+var senderPublicKey = senderPrivateKey.PublicKey;
+```
+
+#### Address
+```csharp
+/* Get the account address from the public key
+Specify the same network as used with the node instance */
+var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
+```
