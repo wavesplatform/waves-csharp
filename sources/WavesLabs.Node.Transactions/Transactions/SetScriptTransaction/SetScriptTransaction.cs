@@ -1,4 +1,6 @@
-﻿namespace WavesLabs.Node.Transactions
+﻿using WavesLabs.Node.Transactions.Common;
+
+namespace WavesLabs.Node.Transactions
 {
     public class SetScriptTransaction : Transaction, ISetScriptTransaction, IEquatable<SetScriptTransaction?>
     {
@@ -6,7 +8,7 @@
         public const int LatestVersion = 2;
         public const int MinFee = 1000000;
 
-        public string Script { get; set; } = null!;
+        public Base64s Script { get; set; } = null!;
 
         public SetScriptTransaction() => Type = TYPE;
 

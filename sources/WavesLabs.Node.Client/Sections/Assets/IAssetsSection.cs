@@ -30,7 +30,7 @@ namespace WavesLabs.Node.Client.Sections
         /// <param name="address">Address base58 encoded</param>
         /// <param name="ids">Asset ID base58 encoded</param>
         /// <returns></returns>
-        public long GetAssetsBalance(string address, Base58s? assetId);
+        public long GetAssetBalance(string address, Base58s? assetId);
 
         /// <summary>
         /// Get detailed information about given asset

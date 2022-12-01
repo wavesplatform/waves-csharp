@@ -26,7 +26,7 @@ namespace WavesLabs.Node.Client.Sections
             return PublicRequest<AssetBalance>(HttpMethod.Post, $"balance/{address}", jsonBody);
         }
 
-        public long GetAssetsBalance(string address, Base58s? assetId)
+        public long GetAssetBalance(string address, Base58s? assetId)
         {
             return PublicRequest<dynamic>(HttpMethod.Get, $"balance/{address}/{assetId}").balance;
         }

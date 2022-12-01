@@ -10,8 +10,8 @@ namespace WavesLabs.Node.Tests.UT
         public void CreateAliasTransactionEqualsAndGetHashCodeTest()
         {
             var hs = new HashSet<CreateAliasTransaction>();
-            var tr1 = new CreateAliasTransaction { Proofs = new List<Base58s> { Base58s.As("abcd") } };
-            var tr2 = new CreateAliasTransaction { Proofs = new List<Base58s> { Base58s.As("abcd") } };
+            var tr1 = new CreateAliasTransaction { Alias = Alias.As("mmmm"), Proofs = new List<Base58s> { Base58s.As("abcd") } };
+            var tr2 = new CreateAliasTransaction { Alias = Alias.As("mmmm"), Proofs = new List<Base58s> { Base58s.As("abcd") } };
             //Equals
             Assert.AreEqual(tr1, tr2);
             Assert.AreEqual(tr1, tr1);

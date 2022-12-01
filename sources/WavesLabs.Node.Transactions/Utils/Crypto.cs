@@ -80,6 +80,8 @@ namespace WavesLabs.Node.Transactions.Utils
             return sb.ToString().TrimEnd();
         }
 
+        public static byte[] GenerateRandomSeedBytes(uint wordsCount = 15) => Encoding.UTF8.GetBytes(GenerateRandomSeedPhrase(wordsCount));
+
         public static byte[] Sign(PrivateKey privateKey, byte[] message) => Curve25519.getInstance(Curve25519.BEST).calculateSignature(privateKey, message);
 
         public static bool IsProofValid(byte[] publicKey, byte[] message, byte[] signature) =>

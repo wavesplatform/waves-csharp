@@ -67,7 +67,7 @@ namespace WavesLabs.Node.Tests.FT
             Node.WaitForTransaction(assetId2);
 
             var assetBalance = Node.GetAssetsBalance(alice.Addr);
-            var asset1Balance = Node.GetAssetsBalance(alice.Addr, assetId1);
+            var asset1Balance = Node.GetAssetBalance(alice.Addr, assetId1);
             Assert.IsNotNull(assetBalance);
             Assert.IsNotNull(assetBalance.Balances);
             Assert.AreEqual(2, assetBalance.Balances.Count);

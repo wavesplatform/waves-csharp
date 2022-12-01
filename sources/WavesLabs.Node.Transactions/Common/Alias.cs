@@ -51,8 +51,7 @@ namespace WavesLabs.Node.Transactions.Common
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as Alias is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return Equals(obj as Alias);
+            return ReferenceEquals(this, obj) || Equals(obj as Alias);
         }
 
         public bool Equals(Alias? alias) =>

@@ -1,7 +1,9 @@
-﻿namespace WavesLabs.Node.Transactions
+﻿using WavesLabs.Node.Transactions.Common;
+
+namespace WavesLabs.Node.Transactions
 {
     public interface ISetScriptTransaction : INonGenesisTransaction
     {
-        string Script { get; set; }
+        Base64s Script { get; set; }
     }
 }

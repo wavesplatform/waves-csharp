@@ -82,7 +82,7 @@ namespace WavesLabs.Node.Client
         public AssetDistribution GetAssetDistribution(Base58s assetId, int height, int limit = 1000, string? after = null) =>
             Assets.GetAssetDistribution(assetId, height, limit, after);
         public AssetBalance GetAssetsBalance(string address, ICollection<string>? ids = null) => Assets.GetAssetsBalance(address, ids);
-        public long GetAssetsBalance(string address, Base58s? assetId) => Assets.GetAssetsBalance(address, assetId);
+        public long GetAssetBalance(string address, Base58s? assetId) => Assets.GetAssetBalance(address, assetId);
         public AssetDetails GetAssetDetails(Base58s? assetId, bool full = false) => Assets.GetAssetDetails(assetId, full);
         public ICollection<AssetDetails> GetAssetDetails(ICollection<Base58s?> assetIds, bool full = false) => Assets.GetAssetDetails(assetIds, full);
         public ICollection<AssetDetails> GetNft(string address, int limit = 1000, string? after = null) => Assets.GetNft(address, limit, after);
