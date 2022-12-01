@@ -31,6 +31,7 @@ Console.WriteLine(seed);
 ```
 
 2. Run the app.
+
 In console window you will see the output of the generated seed phrase. There will be a similar set of words printed:
 
 ```
