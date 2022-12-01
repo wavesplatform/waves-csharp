@@ -122,4 +122,4 @@ If everything was done correctly, you will see your new account alias similar to
 ```
 alias:T:alias1665584780791
 ```
-It will be an indication that the library is installed correctly.
+It will be an indication that the library is installed correctly and you can continue to use it this way.
