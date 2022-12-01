@@ -443,7 +443,7 @@ var scriptMeta = node.GetScriptMeta(address);
 #### IssueTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 // Create a transaction
@@ -462,7 +462,7 @@ var txInfo = node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
 Address recipientAddress = new Address("insert the address");
 
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -479,7 +479,7 @@ var txInfo = node.GetTransactionInfo<TransferTransactionInfo>(tx.Id);
 #### ReissueTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -496,7 +496,7 @@ var txInfo = node.GetTransactionInfo<ReissueTransactionInfo>(tx.Id);
 #### BurnTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -515,7 +515,7 @@ var txInfo = node.GetTransactionInfo<BurnTransactionInfo>(tx.Id);
 // Define the recipient public key
 var recipientPublicKey = PublicKey.As("insert the public key");
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -606,7 +606,7 @@ var txInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(tx.Id);
 #### MassTransferTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -691,7 +691,7 @@ var txInfo = node.GetTransactionInfo<SetScriptTransactionInfo>(tx.Id);
 #### SponsorFeeTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -708,7 +708,7 @@ var txInfo = node.GetTransactionInfo<SponsorFeeTransactionInfo>(tx.Id);
 #### SetAssetScriptTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
@@ -732,7 +732,7 @@ var txInfo = node.GetTransactionInfo<SetAssetScriptTransactionInfo>(tx.Id);
 var dAppAddress = Address.As("insert the address");
 
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 var assetIdTwo = AssetId.As("insert the asset ID");
@@ -760,7 +760,7 @@ var txInfo = node.GetTransactionInfo<InvokeScriptTransactionInfo>(tx.Id);
 #### UpdateAssetInfoTransaction
 ```csharp
 /* Define the asset ID
-In case of transfer in WAVES, use the constant
+In case of transfer in WAVES, use
 var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
