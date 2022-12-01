@@ -1,4 +1,6 @@
-﻿namespace WavesLabs.Node.Transactions
+﻿using WavesLabs.Node.Transactions.Common;
+
+namespace WavesLabs.Node.Transactions
 {
     public class CreateAliasTransaction : Transaction, ICreateAliasTransaction, IEquatable<CreateAliasTransaction?>
     {
@@ -6,7 +8,7 @@
         public const int LatestVersion = 3;
         public const int MinFee = 100000;
 
-        public string Alias { get; set; } = null!;
+        public Alias Alias { get; set; } = null!;
 
         public CreateAliasTransaction() => Type = TYPE;
 

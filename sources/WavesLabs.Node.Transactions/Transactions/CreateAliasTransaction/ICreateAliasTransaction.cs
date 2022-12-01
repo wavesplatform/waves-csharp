@@ -1,7 +1,9 @@
-﻿namespace WavesLabs.Node.Transactions
+﻿using WavesLabs.Node.Transactions.Common;
+
+namespace WavesLabs.Node.Transactions
 {
     public interface ICreateAliasTransaction : INonGenesisTransaction
     {
-        string Alias { get; set; }
+        Alias Alias { get; set; }
     }
 }

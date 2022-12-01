@@ -18,10 +18,10 @@ namespace WavesLabs.Node.Transactions.Common
         public string Name { get; init; }
         public byte[] Bytes { get; init; }
 
-        public string ToStringWithPrefix() => $"{Prefix}{(char)Bytes[1]}:{Name}";
+        public string ToFullString() => $"{Prefix}{(char)Bytes[1]}:{Name}";
         public override string ToString() => $"{Name}";
 
-        public Alias(string alias) : this(WavesConfig.ChainId, alias) { }
+        public Alias(string name) : this(WavesConfig.ChainId, name) { }
 
         public Alias(byte chainId, string name)
         {
@@ -39,7 +39,7 @@ namespace WavesLabs.Node.Transactions.Common
         public static bool IsValidName(byte chainId, string alias) =>
             Regex.IsMatch(alias.Replace($"{Prefix}{(char)chainId}:", ""), $"^[{Alphabet}]{{{MinLength},{MaxLength}}}$");
 
-        public static Alias As(string alias) => new Alias(alias);
+        public static Alias As(string name) => new Alias(name);
         public static Alias As(byte chainId, string name) => new Alias(chainId, name);
 
         public static bool IsAlias(string alias) => Regex.Match(alias, $@"^{Prefix}\S:").Success && IsValidName(alias);
@@ -47,7 +47,7 @@ namespace WavesLabs.Node.Transactions.Common
         public static implicit operator string(Alias x) => x.ToString();
         public static explicit operator Alias(string x) => new(x);
 
-        public override int GetHashCode() => ToStringWithPrefix().GetHashCode();
+        public override int GetHashCode() => ToString().GetHashCode();
         public override bool Equals(object? obj)
         {
             if (obj is null || obj as Alias is null) return false;

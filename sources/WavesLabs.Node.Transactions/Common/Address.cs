@@ -5,6 +5,7 @@ namespace WavesLabs.Node.Transactions.Common
     public class Address : Base58s, IRecipient, IEquatable<Address?>
     {
         public const byte TYPE = 1;
+        public const byte AddressLength = 26;
 
         public byte Type => TYPE;
         public byte ChainId => bytes[1];
@@ -34,6 +35,16 @@ namespace WavesLabs.Node.Transactions.Common
 
         public bool Equals(Address? address) =>
             address is not null && (ReferenceEquals(this, address) || encoded.Equals(address.encoded, StringComparison.Ordinal));
+
+        public static bool IsAddress(string str)
+        {
+            try
+            {
+                var addr = As(str);
+                return addr.Bytes.Length == AddressLength && addr.Bytes[0] == TYPE && addr.Bytes[1] == WavesConfig.ChainId;
+            }
+            catch { return false; }
+        }
 
         public static bool operator ==(Address a, Address b) => a.Equals(b);
         public static bool operator !=(Address a, Address b) => !a.Equals(b);

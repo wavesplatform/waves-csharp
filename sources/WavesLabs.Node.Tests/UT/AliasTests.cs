@@ -26,7 +26,7 @@ namespace WavesLabs.Node.Tests.UT
             var alias = new Alias(ValidName);
 
             Assert.AreEqual(2, alias.Type);
-            Assert.AreEqual(expectedAliasString, alias.ToStringWithPrefix());
+            Assert.AreEqual(expectedAliasString, alias.ToFullString());
             Assert.AreEqual(ValidName, alias.ToString());
             Assert.AreEqual(ValidName, alias);
             Assert.IsTrue(expectedAliasBytes.SequenceEqual(alias.Bytes));

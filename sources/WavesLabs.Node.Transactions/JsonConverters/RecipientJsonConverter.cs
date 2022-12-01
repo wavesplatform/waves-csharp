@@ -11,9 +11,9 @@ namespace WavesLabs.Node.Transactions.JsonConverters
 
             var str = (string)reader.Value;
 
-            return Alias.IsAlias(str)
-                ? Alias.As(str)
-                : Address.As(str);
+            return Address.IsAddress(str)
+                ? Address.As(str)
+                : Alias.As(str);
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
