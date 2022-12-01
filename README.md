@@ -184,8 +184,7 @@ var tx = IssueTransactionBuilder.Params(
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
 ```
-
-##Setting a smart account script
+## Setting a smart account script
 ```csharp
 using WavesLabs.Node.Client;
 using WavesLabs.Node.Transactions.Common;
