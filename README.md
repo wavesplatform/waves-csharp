@@ -286,14 +286,16 @@ node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
 var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
 ```
 2. Random seed phrase
-2.1 Without nonce parameter
+
+    2.1 Without nonce parameter
 ```csharp
 // Generate a random seed phrase
 var seed = Crypto.GenerateRandomSeedPhrase();
 // Create the private key from the seed
 var senderPrivateKey = PrivateKey.FromSeed(seed);
 ```
-2.2 With nonce = 2
+    2.2 With nonce = 2
+
 ```csharp
 // Generate a random seed phrase
 var seed = Crypto.GenerateRandomSeedPhrase();
