@@ -19,7 +19,7 @@ TODO: place "install nuget package" command here
 ## Usage example
 We will initiate a create [alias transaction](https://dev.waves.tech/en/edu/lessons/learn-sdks-the-waves-signer-and-its-providers/work-with-accounts#create-alias-transaction):
 
-1. Open the Program.cs file created by default and replace its content with the code below:
+1) Open the Program.cs file created by default and replace its content with the code below:
 ```csharp
 using WavesLabs.Node.Transactions.Utils;
 
@@ -30,7 +30,7 @@ var seed = Crypto.GenerateRandomSeedPhrase();
 Console.WriteLine(seed);
 ```
 
-2. Run the app.
+2) Run the app.
 
 In console window you will see the output of the generated seed phrase. There will be a similar set of words printed:
 
@@ -39,7 +39,7 @@ chunk jump trash fringe success avoid undo fatal clown learn attack month eyebro
 ```
 Save the generated seed phrase.
 
-3. Replace the Program.cs file content with the code below.
+3) Replace the Program.cs file content with the code below.
 Assign the generated seed phrase to the senderPrivateKey variable's method PrivateKey.FromSeed(). The code will create a new account from the generated seed phrase:
 ```csharp
 using WavesLabs.Node.Client;
@@ -63,7 +63,7 @@ var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
 Console.WriteLine(senderAddress);
 ```
 
-4. Run the app.
+4) Run the app.
 
 You will be able to see an account address in the output like this:
 ```
@@ -71,14 +71,14 @@ You will be able to see an account address in the output like this:
 ```
 Copy the generated account address from the terminal.
 
-5. Top up the account balance.
+5) Top up the account balance.
 Performing a transaction on the Waves blockchain incurs a fee. It will be vital to top up the balance to operate with transactions. Depending on the chosen node instance network (MainNet, TestNet, or StageNet), there are different ways of making it. Using the account address from the previous step:
 
 For **Mainnet**: Transfer the WAVES tokens to the address.
 For **Testnet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
 For **Stagenet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
 
-6. Replace the Program.cs file content with the code below.
+6) Replace the Program.cs file content with the code below.
 ```csharp
 using WavesLabs.Node.Client;
 using WavesLabs.Node.Transactions.Common;
@@ -119,7 +119,7 @@ var createAliasTxInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(crea
 Console.WriteLine(createAliasTxInfo.Transaction.Alias.ToFullString());
 ```
 
-7. Run the app.
+7) Run the app.
 
 If everything was done correctly, you will see your new account alias similar to this:
 ```
