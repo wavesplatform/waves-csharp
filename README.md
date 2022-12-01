@@ -126,3 +126,63 @@ If everything was done correctly, you will see your new account alias similar to
 alias:T:alias1665584780791
 ```
 It will be an indication that the library is installed correctly and you can continue to use it this way.
+
+## Writing a smart asset script
+1. There are two main steps to installing a smart asset script:
+
+Prepare the Ride script you would like to attach to an asset:
+```
+{-# STDLIB_VERSION 6 #-}
+{-# CONTENT_TYPE EXPRESSION #-}
+{-# SCRIPT_TYPE ASSET #-}
+
+func trueReturner () = {
+    return true
+}
+```
+
+2.Afterward, it would be necessary to prepare a script in your native programming language that would:
+
+* Create an asset;
+* Attach a smart account script to it;
+* Send the transaction to the node.
+Here is how to make this:
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("your seed phrase");
+
+// Create an asset script
+var txScript =
+    "{-# STDLIB_VERSION 6 #-}\n" +
+    "{-# CONTENT_TYPE EXPRESSION #-}\n" +
+    "{-# SCRIPT_TYPE ASSET #-}\n" +
+    "func trueReturner() = {\n" +
+        "true\n" +
+    "}\n" +
+    "trueReturner()";
+
+// Transform the Ride script to a base64 string
+var script = node.CompileScript(txScript).Script;
+
+// Create an issue transaction
+var tx = IssueTransactionBuilder.Params(
+      "sampleasset",                    // asset name
+      1000,                             // asset quantity
+      2                                 // decimal places number
+    )
+    .SetScript(script)                  // set our compiled script
+    .SetReissuable(true)                // mark asset as reissuable
+    .SetDescription("description")      // set description string
+    .GetSignedWith(senderPrivateKey);   // sign transaction
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(tx).Id);
+```
