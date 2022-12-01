@@ -4,13 +4,13 @@ A .NET library for interacting with the Waves blockchain.
 Supports node interaction, offline transaction signing and creating addresses and keys.
 
 ## Using in your project
-Use the codes below to add WavesLabs.Node.Client as a dependency for your project.
+Use the codes below to add *WavesLabs.Node.Client* as a dependency for your project.
 
 ##### Requirements:
 - [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet) or above
 
 ##### Create a project:
-Using Visual Studio or Visual Studio Code create a new console app.
+Using *Visual Studio* or *Visual Studio Code* create a new console app.
 
 ##### Install NuGet package:
 ```
@@ -19,7 +19,7 @@ TODO: place "install nuget package" command here
 ## Usage example
 We will initiate a create [alias transaction](https://dev.waves.tech/en/edu/lessons/learn-sdks-the-waves-signer-and-its-providers/work-with-accounts#create-alias-transaction):
 
-1) Open the Program.cs file created by default and replace its content with the code below:
+1) Open the *Program.cs* file created by default and replace its content with the code below:
 ```csharp
 using WavesLabs.Node.Transactions.Utils;
 
@@ -39,7 +39,7 @@ chunk jump trash fringe success avoid undo fatal clown learn attack month eyebro
 ```
 Save the generated seed phrase.
 
-3) Replace the Program.cs file content with the code below.
+3) Replace the *Program.cs* file content with the code below.
 Assign the generated seed phrase to the senderPrivateKey variable's method PrivateKey.FromSeed(). The code will create a new account from the generated seed phrase:
 ```csharp
 using WavesLabs.Node.Client;
@@ -78,7 +78,7 @@ Performing a transaction on the Waves blockchain incurs a fee. It will be vital 
 * For **Testnet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
 * For **Stagenet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
 
-6) Replace the Program.cs file content with the code below.
+6) Replace the *Program.cs* file content with the code below.
 ```csharp
 using WavesLabs.Node.Client;
 using WavesLabs.Node.Transactions.Common;
