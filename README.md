@@ -1,42 +1,128 @@
-# Waves.NET
+# WavesLabs.Node.Client
 A .NET library for interacting with the Waves blockchain.
 
 Supports node interaction, offline transaction signing and creating addresses and keys.
 
 ## Using in your project
-Use the codes below to add WavesJ as a dependency for your project.
+Use the codes below to add *WavesLabs.Node.Client* as a dependency for your project.
 
 ##### Requirements:
-- .NET 6 or above
+- [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet) or above
 
-##### NuGet package:
+##### Create a project:
+Using *Visual Studio* or *Visual Studio Code* create a new console app.
+
+##### Install NuGet package:
 ```
 TODO: place "install nuget package" command here
 ```
-### Getting started
-Create an account from a private key from random seed phrase:
+## Usage example
+We will initiate a create [alias transaction](https://dev.waves.tech/en/edu/lessons/learn-sdks-the-waves-signer-and-its-providers/work-with-accounts#create-alias-transaction):
+
+1) Open the *Program.cs* file created by default and replace its content with the code below:
 ```csharp
-var privateKey = PrivateKey.FromSeed(Crypto.GenerateRandomSeedPhrase());
-var publicKey = PublicKey.From(privateKey);
-var address = Address.FromPublicKey(ChainIds.TestNet, publicKey);
+using WavesLabs.Node.Transactions.Utils;
+
+// Generate a random seed phrase
+var seed = Crypto.GenerateRandomSeedPhrase();
+
+// Print the generated seed
+Console.WriteLine(seed);
 ```
 
-Create a Node and learn a few things about blockchain:
+2) Run the app.
+
+In console window you will see the output of the generated seed phrase. There will be a similar set of words printed:
+
+```
+chunk jump trash fringe success avoid undo fatal clown learn attack month eyebrow sock repair
+```
+Save the generated seed phrase.
+
+3) Replace the *Program.cs* file content with the code below.
+Assign the generated seed phrase to the senderPrivateKey variable's method PrivateKey.FromSeed(). The code will create a new account from the generated seed phrase:
 ```csharp
-var node = NodeClient.Create(Profile.TestNet);
-Console.WriteLine("Current height is " + node.GetHeight());
-Console.WriteLine("My balance is " + node.GetBalance(address));
-Console.WriteLine("With 100 confirmations: " + node.GetBalance(address, 100));
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+
+var node = new Node(Profile.TestNet);
+
+// Create a private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed("insert the generated seed phrase here");
+/* It could look like this: 
+var senderPrivateKey = PrivateKey.FromSeed("chunk jump trash fringe success avoid undo fatal clown learn attack month eyebrow sock repair");*/
+
+// Create the public key from the private key
+var senderPublicKey = senderPrivateKey.PublicKey;
+
+// Get the account address from the public key in the same network as with the node instance
+var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
+
+// Print the generated address
+Console.WriteLine(senderAddress);
 ```
 
-Send some money to a buddy:
+4) Run the app.
+
+You will be able to see an account address in the output like this:
+```
+3N6Dbnr36oxZUcXXX7ifYbA6CSJf1ndg18s
+```
+Copy the generated account address from the terminal.
+
+5) Top up the account balance.
+Performing a transaction on the Waves blockchain incurs a fee. It will be vital to top up the balance to operate with transactions. Depending on the chosen node instance network (MainNet, TestNet, or StageNet), there are different ways of making it. Using the account address from the previous step:
+
+* For **Mainnet**: Transfer the WAVES tokens to the address.
+* For **Testnet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
+* For **Stagenet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
+
+6) Replace the *Program.cs* file content with the code below.
 ```csharp
-var buddy = new Address("3N9gDFq8tKFhBDBTQxR3zqvtpXjw5wW3syA");
-node.Broadcast(TransferTransactionBuilder.Params(buddy, 100000000).GetSignedWith(privateKey));
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Client.Transactions;
+
+//node instance creation in the given network
+var node = new Node(Profile.TestNet);
+
+// Create a private key from the seed
+var senderPrivateKey = PrivateKey.FromSeed("insert the generated phrase here");
+/* It could look like this: 
+var senderPrivateKey = PrivateKey.FromSeed(
+    "chunk jump trash fringe success avoid undo fatal clown learn attack month eyebrow sock repair"
+);*/
+
+// Create the public key from the private key
+var senderPublicKey = senderPrivateKey.PublicKey;
+
+// Get the account address from the public key in the same network as with the node instance
+var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
+
+// Create an alias using the current system time
+var alias = Alias.As("alias" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+
+// Create an alias transaction
+var createAliasTx = CreateAliasTransactionBuilder
+    .Params(alias) // alias
+    .GetSignedWith(senderPrivateKey); // sign transaction with your private key
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(createAliasTx).Id);
+
+// Get information about the transaction from the node
+var createAliasTxInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(createAliasTx.Id);
+
+// Print the alias full representation
+Console.WriteLine(createAliasTxInfo.Transaction.Alias.ToFullString());
 ```
 
-Set a script on an account. Be careful with the script you pass here, as it may lock the account forever!
-```csharp
-var script = node.CompileScript("{-# CONTENT_TYPE EXPRESSION #-} sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)").Script;
-node.Broadcast(SetScriptTransactionBuilder.Params(script).GetSignedWith(privateKey));
+7) Run the app.
+
+If everything was done correctly, you will see your new account alias similar to this:
 ```
+alias:T:alias1665584780791
+```
+It will be an indication that the library is installed correctly and you can continue to use it this way.
