@@ -16,7 +16,7 @@ Using Visual Studio or Visual Studio Code create a new console app.
 ```
 TODO: place "install nuget package" command here
 ```
-### Usage example
+## Usage example
 We will initiate a create [alias transaction](https://dev.waves.tech/en/edu/lessons/learn-sdks-the-waves-signer-and-its-providers/work-with-accounts#create-alias-transaction):
 
 1. Open the Program.cs file created by default and replace its content with the code below:
@@ -116,3 +116,10 @@ var createAliasTxInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(crea
 // Print the alias full representation
 Console.WriteLine(createAliasTxInfo.Transaction.Alias.ToFullString());
 ```
+
+7. Run the app
+If everything was done correctly, you will see your new account alias similar to this:
+```
+alias:T:alias1665584780791
+```
+It will be an indication that the library is installed correctly.
