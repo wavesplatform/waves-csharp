@@ -442,8 +442,10 @@ var scriptMeta = node.GetScriptMeta(address);
 
 #### IssueTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 // Create a transaction
 IssueTransactionBuilder.Params(assetId, quantity, decimals).SetScript(script).GetSignedWith(senderPrivateKey);
 
@@ -459,8 +461,10 @@ var txInfo = node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
 // Define the recipient’s address
 Address recipientAddress = new Address("insert the address");
 
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
 TransferTransactionBuilder.Params(recipient, amount, assetId, feeAsset, attachment).GetSignedWith(senderPrivateKey);
@@ -474,8 +478,10 @@ var txInfo = node.GetTransactionInfo<TransferTransactionInfo>(tx.Id);
 
 #### ReissueTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
 ReissueTransactionBuilder.Params(assetId, quantity, reissuable).GetSignedWith(senderPrivateKey);
@@ -489,8 +495,10 @@ var txInfo = node.GetTransactionInfo<ReissueTransactionInfo>(tx.Id);
 
 #### BurnTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
 BurnTransactionBuilder.Params(assetId, amount).GetSignedWith(senderPrivateKey);
@@ -506,8 +514,10 @@ var txInfo = node.GetTransactionInfo<BurnTransactionInfo>(tx.Id);
 ```csharp
 // Define the recipient public key
 var recipientPublicKey = PublicKey.As("insert the public key");
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Define the amount for the transaction
 var amount = Amount.As(250);
@@ -595,8 +605,10 @@ var txInfo = node.GetTransactionInfo<CreateAliasTransactionInfo>(tx.Id);
 
 #### MassTransferTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Define the recipient addresses
 var recipientAddress = new Address("insert the address");
@@ -678,8 +690,10 @@ var txInfo = node.GetTransactionInfo<SetScriptTransactionInfo>(tx.Id);
 
 #### SponsorFeeTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
 SponsorFeeTransactionBuilder.Params(assetId, minSponsoredAssetFee).GetSignedWith(senderPrivateKey);
@@ -693,8 +707,10 @@ var txInfo = node.GetTransactionInfo<SponsorFeeTransactionInfo>(tx.Id);
 
 #### SetAssetScriptTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 /* Transforming the ride script to a base64 string
 Make sure to insert your ride script between the brackets below */
@@ -715,10 +731,12 @@ var txInfo = node.GetTransactionInfo<SetAssetScriptTransactionInfo>(tx.Id);
 // Define the dApp address
 var dAppAddress = Address.As("insert the address");
 
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
-var assetIdTwo = new Base58s("insert the asset ID");
-var assetIdThree = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
+var assetIdTwo = AssetId.As("insert the asset ID");
+var assetIdThree = AssetId.As("insert the asset ID");
 
 // Create a list of different payments
 var payments = new List<Amount> {
@@ -741,8 +759,10 @@ var txInfo = node.GetTransactionInfo<InvokeScriptTransactionInfo>(tx.Id);
 
 #### UpdateAssetInfoTransaction
 ```csharp
-// Define the asset ID
-var assetId = new Base58s("insert the asset ID");
+/* Define the asset ID
+In case of transfer in WAVES, use
+var assetId = AssetId.Waves */
+var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
 UpdateAssetInfoTransactionBuilder.Params(assetId, name, description).GetSignedWith(senderPrivateKey);
