@@ -1,10 +1,10 @@
-# Waves.NET
+# WavesLabs.Node.Client
 A .NET library for interacting with the Waves blockchain.
 
 Supports node interaction, offline transaction signing and creating addresses and keys.
 
 ## Using in your project
-Use the codes below to add WavesJ as a dependency for your project.
+Use the codes below to add WavesLabs.Node.Client as a dependency for your project.
 
 ##### Requirements:
 - .NET 6 or above
