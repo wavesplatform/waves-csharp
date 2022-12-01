@@ -397,7 +397,7 @@ namespace WavesLabs.Node.Tests.FT
                     {
                         Function = "call",
                         Args = new[] {
-                            CallArg.AsByteArray(Base64s.From(alice.Addr.Bytes)),
+                            CallArg.AsBinary(Base64s.From(alice.Addr.Bytes)),
                             CallArg.AsBoolean(true),
                             CallArg.AsInteger(100500L),
                             CallArg.AsString(alice.Addr.ToString()),

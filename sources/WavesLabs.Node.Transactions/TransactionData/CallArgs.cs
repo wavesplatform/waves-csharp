@@ -7,7 +7,7 @@ namespace WavesLabs.Node.Transactions
         public CallArgType Type { get; init; }
         public object Value { get; init; } = null!;
 
-        public static CallArg AsByteArray(Base64s value) => new CallArg { Type = CallArgType.ByteArray, Value = value };
+        public static CallArg AsBinary(Base64s value) => new CallArg { Type = CallArgType.ByteArray, Value = value };
         public static CallArg AsBoolean(bool value) => new CallArg { Type = CallArgType.Boolean, Value = value };
         public static CallArg AsInteger(long value) => new CallArg { Type = CallArgType.Integer, Value = value };
         public static CallArg AsString(string value) => new CallArg { Type = CallArgType.String, Value = value };
