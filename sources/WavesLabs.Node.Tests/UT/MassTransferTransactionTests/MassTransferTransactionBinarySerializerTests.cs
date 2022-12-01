@@ -10,7 +10,7 @@ namespace WavesLabs.Node.Tests.UT
         [TestMethod]
         public void MassTransferTransactionBinarySerializerSuccessTest()
         {
-            var tr = MassTransferTransactionBuilder.Params(new List<Transfer>(), Base58s.Empty, Base58s.Empty).GetSignedWith(PrivateKey);
+            var tr = MassTransferTransactionBuilder.Params(new List<Transfer>(), AssetId.Waves, Base58s.Empty).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -22,7 +22,7 @@ namespace WavesLabs.Node.Tests.UT
         [ExpectedException(typeof(NotSupportedException))]
         public void MassTransferTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = MassTransferTransactionBuilder.Params(new List<Transfer>(), Base58s.Empty, Base58s.Empty)
+            var tr = MassTransferTransactionBuilder.Params(new List<Transfer>(), AssetId.Waves, Base58s.Empty)
                 .SetVersion(MassTransferTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }

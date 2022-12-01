@@ -8,7 +8,7 @@ namespace WavesLabs.Node.Transactions
         public const int LatestVersion = 2;
         public const int MinFee = 100000000;
 
-        public Base58s? AssetId { get; set; } = null!;
+        public AssetId? AssetId { get; set; } = null!;
         public string Script { get; set; } = null!;
 
         public SetAssetScriptTransaction() => Type = TYPE;

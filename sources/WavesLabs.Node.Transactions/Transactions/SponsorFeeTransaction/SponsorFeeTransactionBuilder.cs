@@ -6,13 +6,13 @@ namespace WavesLabs.Node.Transactions
     {
         public SponsorFeeTransactionBuilder() : base(SponsorFeeTransaction.LatestVersion, SponsorFeeTransaction.MinFee, SponsorFeeTransaction.TYPE) { }
 
-        public SponsorFeeTransactionBuilder(Base58s assetId, long minSponsoredAssetFee) : this()
+        public SponsorFeeTransactionBuilder(AssetId assetId, long minSponsoredAssetFee) : this()
         {
             Transaction.AssetId = assetId;
             Transaction.MinSponsoredAssetFee = minSponsoredAssetFee;
         }
 
-        public static SponsorFeeTransactionBuilder Params(Base58s assetId, long minSponsoredAssetFee)
+        public static SponsorFeeTransactionBuilder Params(AssetId assetId, long minSponsoredAssetFee)
         {
             return new SponsorFeeTransactionBuilder(assetId, minSponsoredAssetFee);
         }

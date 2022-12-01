@@ -33,7 +33,7 @@ namespace WavesLabs.Node.Transactions.Common
         public static string Encode(byte[] bytes) => SimpleBase.Base58.Bitcoin.Encode(bytes);
         public static byte[] Decode(string encoded) => SimpleBase.Base58.Bitcoin.Decode(RemovePrefix(encoded)).ToArray();
 
-        private static string RemovePrefix(string encoded) => (encoded ?? "").Replace(Prefix, "");
+        protected static string RemovePrefix(string encoded) => (encoded ?? "").Replace(Prefix, "");
 
         public override bool Equals(object? obj)
         {

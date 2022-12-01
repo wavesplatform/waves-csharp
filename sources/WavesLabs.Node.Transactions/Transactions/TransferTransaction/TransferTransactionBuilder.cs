@@ -6,7 +6,7 @@ namespace WavesLabs.Node.Transactions
     {
         public TransferTransactionBuilder() : base(TransferTransaction.LatestVersion, TransferTransaction.MinFee, TransferTransaction.TYPE) { }
 
-        public TransferTransactionBuilder(IRecipient recipient, long amount, Base58s? assetId = null, Base58s? feeAsset = null, string? attachment = null) : this()
+        public TransferTransactionBuilder(IRecipient recipient, long amount, AssetId? assetId = null, AssetId? feeAsset = null, string? attachment = null) : this()
         {
             Transaction.Recipient = recipient;
             Transaction.Amount = amount;
@@ -15,7 +15,7 @@ namespace WavesLabs.Node.Transactions
             Transaction.FeeAsset = feeAsset;
         }
 
-        public static TransferTransactionBuilder Params(IRecipient recipient, long amount, Base58s? assetId = null, Base58s? feeAsset = null, string? attachment = null)
+        public static TransferTransactionBuilder Params(IRecipient recipient, long amount, AssetId? assetId = null, AssetId? feeAsset = null, string? attachment = null)
         {
             return new TransferTransactionBuilder(recipient, amount, assetId, feeAsset, attachment);
         }

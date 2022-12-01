@@ -10,7 +10,7 @@ namespace WavesLabs.Node.Tests.UT
         [TestMethod]
         public void UpdateAssetInfoTransactionBinarySerializerSuccessTest()
         {
-            var tr = UpdateAssetInfoTransactionBuilder.Params(Base58s.Empty, "", "").GetSignedWith(PrivateKey);
+            var tr = UpdateAssetInfoTransactionBuilder.Params(AssetId.Waves, "", "").GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -22,7 +22,7 @@ namespace WavesLabs.Node.Tests.UT
         [ExpectedException(typeof(NotSupportedException))]
         public void UpdateAssetInfoTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = UpdateAssetInfoTransactionBuilder.Params(Base58s.Empty, "", "")
+            var tr = UpdateAssetInfoTransactionBuilder.Params(AssetId.Waves, "", "")
                 .SetVersion(UpdateAssetInfoTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }

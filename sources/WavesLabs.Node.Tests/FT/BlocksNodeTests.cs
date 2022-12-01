@@ -82,7 +82,6 @@ namespace WavesLabs.Node.Tests.FT
         [TestMethod]
         public void BlockTransactionsTest()
         {
-
             var alice = CreateAccountWithBalance(1000000000);
             var bob = CreateAccountWithBalance(1000000000);
 

@@ -4,7 +4,7 @@ namespace WavesLabs.Node.Transactions
 {
     public interface IMassTransferTransaction : INonGenesisTransaction
     {
-        Base58s? AssetId { get; set; }
+        AssetId? AssetId { get; set; }
         Base58s Attachment { get; set; }
         int TransferCount { get; set; }
         long TotalAmount { get; set; }

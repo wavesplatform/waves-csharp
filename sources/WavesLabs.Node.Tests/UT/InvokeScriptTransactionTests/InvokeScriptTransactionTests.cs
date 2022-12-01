@@ -10,8 +10,8 @@ namespace WavesLabs.Node.Tests.UT
         public void InvokeScriptTransactionEqualsAndGetHashCodeTest()
         {
             var hs = new HashSet<InvokeScriptTransaction>();
-            var tr1 = new InvokeScriptTransaction { Payment = new List<Amount> { Amount.As(10, Base58s.As("abc")) } };
-            var tr2 = new InvokeScriptTransaction { Payment = new List<Amount> { Amount.As(10, Base58s.As("abc")) } };
+            var tr1 = new InvokeScriptTransaction { Payment = new List<Amount> { Amount.As(10, AssetId.As("abc")) } };
+            var tr2 = new InvokeScriptTransaction { Payment = new List<Amount> { Amount.As(10, AssetId.As("abc")) } };
             //Equals
             Assert.AreEqual(tr1, tr2);
             Assert.AreEqual(tr1, tr1);
@@ -25,7 +25,7 @@ namespace WavesLabs.Node.Tests.UT
 
 
             //Not equals
-            tr2.Payment.Add(Amount.As(5, Base58s.As("xyz")));
+            tr2.Payment.Add(Amount.As(5, AssetId.As("xyz")));
             Assert.AreNotEqual(tr1, tr2);
             Assert.IsFalse(tr1 == tr2);
             Assert.IsTrue(tr1 != tr2);

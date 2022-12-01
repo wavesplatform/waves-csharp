@@ -79,12 +79,12 @@ namespace WavesLabs.Node.Client
         #endregion
 
         #region Assets
-        public AssetDistribution GetAssetDistribution(Base58s assetId, int height, int limit = 1000, string? after = null) =>
+        public AssetDistribution GetAssetDistribution(AssetId assetId, int height, int limit = 1000, string? after = null) =>
             Assets.GetAssetDistribution(assetId, height, limit, after);
         public AssetBalance GetAssetsBalance(string address, ICollection<string>? ids = null) => Assets.GetAssetsBalance(address, ids);
-        public long GetAssetBalance(string address, Base58s? assetId) => Assets.GetAssetBalance(address, assetId);
-        public AssetDetails GetAssetDetails(Base58s? assetId, bool full = false) => Assets.GetAssetDetails(assetId, full);
-        public ICollection<AssetDetails> GetAssetDetails(ICollection<Base58s?> assetIds, bool full = false) => Assets.GetAssetDetails(assetIds, full);
+        public long GetAssetBalance(string address, AssetId? assetId) => Assets.GetAssetBalance(address, assetId);
+        public AssetDetails GetAssetDetails(AssetId? assetId, bool full = false) => Assets.GetAssetDetails(assetId, full);
+        public ICollection<AssetDetails> GetAssetDetails(ICollection<AssetId?> assetIds, bool full = false) => Assets.GetAssetDetails(assetIds, full);
         public ICollection<AssetDetails> GetNft(string address, int limit = 1000, string? after = null) => Assets.GetNft(address, limit, after);
         #endregion
 

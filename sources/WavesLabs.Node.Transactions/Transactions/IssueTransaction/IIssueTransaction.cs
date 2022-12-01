@@ -4,7 +4,7 @@ namespace WavesLabs.Node.Transactions
 {
     public interface IIssueTransaction : INonGenesisTransaction
     {
-        Base58s? AssetId { get; set; }
+        AssetId? AssetId { get; set; }
         string Name { get; set; }
         long Amount { get; set; }
         long Quantity { get; set; }

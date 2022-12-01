@@ -23,18 +23,17 @@ namespace WavesLabs.Node.Tests.FT
 
             var tx = Node.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).SetScript(compileScript.Script).GetSignedWith(alice.Pk));
             var assetId1 = tx.AssetId;
-            Node.WaitForTransaction(assetId1);
+            var tx1Info = Node.WaitForTransaction(assetId1);
 
             var assetId2 = Node.Broadcast(IssueTransactionBuilder.Params("Asset 2", 10000000, 2).GetSignedWith(alice.Pk)).AssetId;
             Node.WaitForTransaction(assetId2);
 
-            var height = Node.GetHeight();
             var expectedAsset1Details = new AssetDetails {
                 AssetId = assetId1,
                 Issuer = alice.Addr,
                 Decimals = 2,
                 IssuerPublicKey = alice.Pk.PublicKey,
-                IssueHeight = height,
+                IssueHeight = tx1Info.Height,
                 Name = "Asset 1",
                 IssueTimestamp = tx.Timestamp,
                 Description = "",
@@ -87,7 +86,10 @@ namespace WavesLabs.Node.Tests.FT
             var alice = CreateAccountWithBalance(1000000000);
             int recipientsNumber = 190;
             var assetId = Node.Broadcast(
-                IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2).GetSignedWith(alice.Pk)).AssetId;
+                IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2)
+                .SetReissuable(true)
+                .SetDescription("desc")
+                .GetSignedWith(alice.Pk)).AssetId;
 
             Node.WaitForTransaction(assetId);
 

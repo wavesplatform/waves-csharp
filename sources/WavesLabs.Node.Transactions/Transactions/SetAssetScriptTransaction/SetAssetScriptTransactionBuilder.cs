@@ -6,13 +6,13 @@ namespace WavesLabs.Node.Transactions
     {
         public SetAssetScriptTransactionBuilder() : base(SetAssetScriptTransaction.LatestVersion, SetAssetScriptTransaction.MinFee, SetAssetScriptTransaction.TYPE) { }
 
-        public SetAssetScriptTransactionBuilder(Base58s assetId, string script) : this()
+        public SetAssetScriptTransactionBuilder(AssetId assetId, string script) : this()
         {
             Transaction.AssetId = assetId;
             Transaction.Script = script;
         }
 
-        public static SetAssetScriptTransactionBuilder Params(Base58s assetId, string script)
+        public static SetAssetScriptTransactionBuilder Params(AssetId assetId, string script)
         {
             return new SetAssetScriptTransactionBuilder(assetId, script);
         }

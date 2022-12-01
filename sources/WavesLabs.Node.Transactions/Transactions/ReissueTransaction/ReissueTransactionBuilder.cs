@@ -6,14 +6,14 @@ namespace WavesLabs.Node.Transactions
     {
         public ReissueTransactionBuilder() : base(ReissueTransaction.LatestVersion, ReissueTransaction.MinFee, ReissueTransaction.TYPE) { }
 
-        public ReissueTransactionBuilder(Base58s assetId, long quantity, bool reissuable = true) : this()
+        public ReissueTransactionBuilder(AssetId assetId, long quantity, bool reissuable = true) : this()
         {
             Transaction.AssetId = assetId;
             Transaction.Quantity = quantity;
             Transaction.Reissuable = reissuable;
         }
 
-        public static ReissueTransactionBuilder Params(Base58s assetId, long quantity, bool reissuable = true)
+        public static ReissueTransactionBuilder Params(AssetId assetId, long quantity, bool reissuable = true)
         {
             return new ReissueTransactionBuilder(assetId, quantity, reissuable);
         }

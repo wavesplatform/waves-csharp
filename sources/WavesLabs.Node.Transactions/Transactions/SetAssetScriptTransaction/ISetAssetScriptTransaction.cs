@@ -4,7 +4,7 @@ namespace WavesLabs.Node.Transactions
 {
     public interface ISetAssetScriptTransaction : INonGenesisTransaction
     {
-        Base58s? AssetId { get; set; }
+        AssetId? AssetId { get; set; }
         string Script { get; set; }
     }
 }

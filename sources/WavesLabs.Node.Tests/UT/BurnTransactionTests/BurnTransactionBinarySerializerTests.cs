@@ -10,7 +10,7 @@ namespace WavesLabs.Node.Tests.UT
         [TestMethod]
         public void BurnTransactionBinarySerializerSuccessTest()
         {
-            var tr = BurnTransactionBuilder.Params(Base58s.Empty, 0).GetSignedWith(PrivateKey);
+            var tr = BurnTransactionBuilder.Params(AssetId.Waves, 0).GetSignedWith(PrivateKey);
             var trBytes = Factory.GetFor(tr).Serialize(tr);
             Assert.IsNotNull(trBytes);
             Assert.IsNotNull(tr.Proofs);
@@ -22,7 +22,7 @@ namespace WavesLabs.Node.Tests.UT
         [ExpectedException(typeof(NotSupportedException))]
         public void BurnTransactionBinarySerializerNotSupportedVersionTest()
         {
-            var tr = BurnTransactionBuilder.Params(Base58s.Empty, 0).SetVersion(BurnTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
+            var tr = BurnTransactionBuilder.Params(AssetId.Waves, 0).SetVersion(BurnTransaction.LatestVersion + 1).GetSignedWith(PrivateKey);
             Factory.GetFor(tr).Serialize(tr);
         }
     }

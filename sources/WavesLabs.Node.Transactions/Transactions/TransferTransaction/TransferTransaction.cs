@@ -9,8 +9,8 @@ namespace WavesLabs.Node.Transactions
         public const int MinFee = 100000;
 
         public IRecipient Recipient { get; set; } = null!;
-        public Base58s? AssetId { get; set; }
-        public Base58s? FeeAsset { get; set; }
+        public AssetId? AssetId { get; set; }
+        public AssetId? FeeAsset { get; set; }
         public long Amount { get; set; }
         public string Attachment { get; set; } = null!;
 

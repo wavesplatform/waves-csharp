@@ -14,7 +14,7 @@ namespace WavesLabs.Node.Client.Sections
         /// <param name="limit">Number of addresses to be returned</param>
         /// <param name="after">Address to paginate after</param>
         /// <returns></returns>
-        public AssetDistribution GetAssetDistribution(Base58s assetId, int height, int limit = 1000, string? after = null);
+        public AssetDistribution GetAssetDistribution(AssetId assetId, int height, int limit = 1000, string? after = null);
 
         /// <summary>
         /// Get account balances in specified assets (excluding WAVES) at a given address
@@ -30,7 +30,7 @@ namespace WavesLabs.Node.Client.Sections
         /// <param name="address">Address base58 encoded</param>
         /// <param name="ids">Asset ID base58 encoded</param>
         /// <returns></returns>
-        public long GetAssetBalance(string address, Base58s? assetId);
+        public long GetAssetBalance(string address, AssetId? assetId);
 
         /// <summary>
         /// Get detailed information about given asset
@@ -38,7 +38,7 @@ namespace WavesLabs.Node.Client.Sections
         /// <param name="id">Asset ID base58 encoded</param>
         /// <param name="full">If true, the response contains scriptDetails for scripted assets. False by default</param>
         /// <returns></returns>
-        public AssetDetails GetAssetDetails(Base58s? assetId, bool full = false);
+        public AssetDetails GetAssetDetails(AssetId? assetId, bool full = false);
 
         /// <summary>
         /// Get detailed information about given assets
@@ -46,7 +46,7 @@ namespace WavesLabs.Node.Client.Sections
         /// <param name="ids">Asset IDs base58 encoded</param>
         /// <param name="full">If true, the response contains scriptDetails for scripted assets. False by default</param>
         /// <returns></returns>
-        public ICollection<AssetDetails> GetAssetDetails(ICollection<Base58s?> assetIds, bool full = false);
+        public ICollection<AssetDetails> GetAssetDetails(ICollection<AssetId?> assetIds, bool full = false);
 
         /// <summary>
         /// Get a list of <see href="https://docs.waves.tech/en/blockchain/token/non-fungible-token">non-fungible tokens</see> at a given address. Max for 1000 tokens.

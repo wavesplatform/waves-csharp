@@ -4,7 +4,7 @@ namespace WavesLabs.Node.Client.ReturnTypes
 {
     public class AssetDetails : IEquatable<AssetDetails?>
     {
-        public Base58s? AssetId { get; set; } = null!;
+        public AssetId? AssetId { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int Decimals { get; set; }

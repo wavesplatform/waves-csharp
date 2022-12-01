@@ -9,7 +9,7 @@ namespace WavesLabs.Node.Transactions
         public const int MinFee = 100000000;
         public const int NftMinFee = 100000;
 
-        public Base58s? AssetId { get; set; } = null!;
+        public AssetId? AssetId { get; set; } = null!;
         public long Amount { get; set; }
         public string Name { get; set; } = "";
         public long Quantity { get; set; }

@@ -8,7 +8,7 @@ namespace WavesLabs.Node.Client.Sections
     {
         public AssetsSection(HttpClient httpClient) : base(httpClient, "assets") { }
 
-        public AssetDistribution GetAssetDistribution(Base58s assetId, int height, int limit = 1000, string? after = null)
+        public AssetDistribution GetAssetDistribution(AssetId assetId, int height, int limit = 1000, string? after = null)
         {
             var url = $"{assetId}/distribution/{height}/limit/{limit}";
 
@@ -26,17 +26,17 @@ namespace WavesLabs.Node.Client.Sections
             return PublicRequest<AssetBalance>(HttpMethod.Post, $"balance/{address}", jsonBody);
         }
 
-        public long GetAssetBalance(string address, Base58s? assetId)
+        public long GetAssetBalance(string address, AssetId? assetId)
         {
             return PublicRequest<dynamic>(HttpMethod.Get, $"balance/{address}/{assetId}").balance;
         }
 
-        public AssetDetails GetAssetDetails(Base58s? assetId, bool full = false)
+        public AssetDetails GetAssetDetails(AssetId? assetId, bool full = false)
         {
             return PublicRequest<AssetDetails>(HttpMethod.Get, $"details/{assetId}?full={full}");
         }
 
-        public ICollection<AssetDetails> GetAssetDetails(ICollection<Base58s?> assetIds, bool full = false)
+        public ICollection<AssetDetails> GetAssetDetails(ICollection<AssetId?> assetIds, bool full = false)
         {
             var jsonBody = JsonUtils.Serialize(new { ids = assetIds });
             return PublicRequest<ICollection<AssetDetails>>(HttpMethod.Post, $"details?full={full}", jsonBody);
