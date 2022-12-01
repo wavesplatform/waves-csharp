@@ -74,9 +74,9 @@ Copy the generated account address from the terminal.
 5) Top up the account balance.
 Performing a transaction on the Waves blockchain incurs a fee. It will be vital to top up the balance to operate with transactions. Depending on the chosen node instance network (MainNet, TestNet, or StageNet), there are different ways of making it. Using the account address from the previous step:
 
-For **Mainnet**: Transfer the WAVES tokens to the address.
-For **Testnet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
-For **Stagenet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
+* For **Mainnet**: Transfer the WAVES tokens to the address.
+* For **Testnet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
+* For **Stagenet**: Use [Faucet](https://testnet.wavesexplorer.com/faucet) to top up your balance for free.
 
 6) Replace the Program.cs file content with the code below.
 ```csharp
