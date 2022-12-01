@@ -128,9 +128,7 @@ alias:T:alias1665584780791
 It will be an indication that the library is installed correctly and you can continue to use it this way.
 
 ## Writing a smart asset script
-1. There are two main steps to installing a smart asset script:
-
-Prepare the Ride script you would like to attach to an asset:
+1. Prepare the Ride script you would like to attach to an asset:
 ```
 {-# STDLIB_VERSION 6 #-}
 {-# CONTENT_TYPE EXPRESSION #-}
@@ -142,8 +140,7 @@ func trueReturner () = {
 trueReturner()
 ```
 
-2.Afterward, it would be necessary to prepare a script in your native programming language that would:
-
+2. Follow these steps:
 * Create an asset;
 * Attach a smart account script to it;
 * Send the transaction to the node.
