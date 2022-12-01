@@ -184,3 +184,39 @@ var tx = IssueTransactionBuilder.Params(
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
 ```
+
+##Setting a smart account script
+```csharp
+using WavesLabs.Node.Client;
+using WavesLabs.Node.Transactions.Common;
+using WavesLabs.Node.Transactions;
+using WavesLabs.Node.Transactions.Utils;
+
+// Node instance creation in the given network (TESTNET, MAINNET, STAGENET)
+var node = new Node(Profile.TestNet);
+
+// Create a private key from a seed
+var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
+
+// Create a simple account script in Ride
+var txScript = "{-# STDLIB_VERSION 6 #-}\n" +
+   "{-# CONTENT_TYPE EXPRESSION #-}\n" +
+   "{-# SCRIPT_TYPE ACCOUNT #-}\n" +
+   "let cooperPubKey = base58'BVqYXrapgJP9atQccdBPAgJPwHDKkh6A8'\n" +
+   "let BTCId = base58'8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'\n" +
+   "match tx {\n" +
+      "case o: Order =>\n" +
+         "sigVerify(o.bodyBytes, o.proofs[0], cooperPubKey ) && \n" +
+         "(o.assetPair.priceAsset == BTCId || o.assetPair.amountAsset == BTCId)\n" +
+      "case _ => sigVerify(tx.bodyBytes, tx.proofs[0], cooperPubKey )\n" +
+   "}";
+
+// Compile the script to the Base64 format 
+var compiledScript = node.CompileScript(txScript).Script;
+
+// Create a set script transaction 
+var setScriptTx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+
+// Broadcast the transaction to a node and wait for it to be included in the blockchain
+node.WaitForTransaction(node.Broadcast(setScriptTx).Id);
+```
