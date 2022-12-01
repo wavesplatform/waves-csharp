@@ -287,15 +287,14 @@ var senderPrivateKey = PrivateKey.FromSeed("seed phrase");
 ```
 2. Random seed phrase
 
-    2.1 Without nonce parameter
+2.1 Without nonce parameter
 ```csharp
 // Generate a random seed phrase
 var seed = Crypto.GenerateRandomSeedPhrase();
 // Create the private key from the seed
 var senderPrivateKey = PrivateKey.FromSeed(seed);
 ```
-    2.2 With nonce = 2
-
+2.2 With nonce 2
 ```csharp
 // Generate a random seed phrase
 var seed = Crypto.GenerateRandomSeedPhrase();
@@ -343,4 +342,96 @@ var senderPublicKey = senderPrivateKey.PublicKey;
 /* Get the account address from the public key
 Specify the same network as used with the node instance */
 var senderAddress = Address.FromPublicKey(ChainIds.TestNet, senderPublicKey);
+```
+### Examples of usage node REST API implemented methods
+#### Assets
+##### GET /assets/{assetId}/distribution/{height}/limit/{limit}
+```csharp
+// Get asset balance distribution by account addresses
+var assetDistribution = node.GetAssetDistribution(assetId, height);
+var assetDistribution = node.GetAssetDistribution(assetId, height, limit);
+var assetDistribution = node.GetAssetDistribution(assetId, height, limit, afterAddress);
+```
+##### GET /assets/balance/{address}
+```csharp
+// Get the account balance of all assets (excluding WAVES)
+var assetBalances = node.GetAssetsBalance(address);
+```
+##### GET /assets/balance/{address}/{assetId}
+```csharp
+// Get the account balance of a given asset
+var assetBalance = node.GetAssetBalance(address, assetId);
+```
+##### GET /assets/details/{assetId}
+```csharp
+// Get detailed information about a given asset
+var assetDetails = node.GetAssetDetails(assetId);
+```
+##### GET /assets/nft/{address}/limit/{limit}
+```csharp
+// Get a list of non-fungible tokens at a given address.
+var assetDetailsList = node.GetNft(address);
+var assetDetailsList = node.GetNft(address, limit);
+var assetDetailsList = node.GetNft(address, limit, afterAssetId);
+```
+#### Addresses
+##### GET /addresses
+```csharp
+// Get a list of account addresses in the node wallet
+var addresses = node.GetAddresses()
+```
+##### GET /addresses/seq/{from}/{to}
+```csharp
+// Get a list of account addresses in the node wallet
+var addresses = node.GetAddresses(fromIndex, oIndex);
+```
+##### GET /addresses/balance/{address}
+```csharp
+// Get the regular balance in WAVES at a given address
+var addressBalance = node.GetBalance(address)
+```
+##### GET /addresses/balance/{address}/{confirmations}
+```csharp
+// Get the regular balance in WAVES at a given address
+var addressBalance = node.GetBalance(address, confirmations);
+```
+##### GET /addresses/balance/details/{address}
+```csharp
+// Get the available, regular, generating, and effective account balances
+var balanceDetails = node.GetBalanceDetails(address);
+```
+##### POST /addresses/balance
+```csharp
+// Create a list of addresses
+var addresses = new List<Address> {
+    new Address("<insert base58 address>"),
+    new Address("<insert base58 address>")
+};
+// Get regular balances for multiple addresses
+var addressBalances = node.GetBalances(addresses);
+```
+##### GET /addresses/data/{address}
+```csharp
+// Read account data entries by given address
+var dataEntries = node.GetData(address);
+```
+##### POST /addresses/data/{address}
+```csharp
+// Read account data entries by given keys
+var dataEntries = node.GetData(address, keysList);
+```
+##### GET /addresses/data/{address}/{key}
+```csharp
+// Read account data entries by given keys
+var dataEntries = node.GetData(address, key);
+```
+##### GET /addresses/scriptInfo/{address}
+```csharp
+// Get an account script or a dApp script information by a given address
+var scriptInfo = node.GetScriptInfo(address);
+```
+##### GET /addresses/scriptInfo/{address}/meta
+```csharp
+// Get an account script meta data
+var scriptMeta = node.GetScriptMeta(address);
 ```
