@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavesLabs.Node.Tests", "Wav
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavesLabs.Node.Transactions", "WavesLabs.Node.Transactions\WavesLabs.Node.Transactions.csproj", "{3934A991-BB57-4ED2-8CDD-5FB632661476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavesLabs.Node.Client.Example", "WavesLabs.Node.Client.Example\WavesLabs.Node.Client.Example.csproj", "{1C1327F2-5185-4F6F-A0C2-33D511F23081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavesLabs.Node.Client.Example", "WavesLabs.Node.Client.Example\WavesLabs.Node.Client.Example.csproj", "{1C1327F2-5185-4F6F-A0C2-33D511F23081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

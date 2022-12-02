@@ -4,11 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Company>Waves Labs</Company>
+    <Description>A .NET library with classes for working with the Waves blockchain.</Description>
+    <RepositoryUrl>https://github.com/wavesplatform/waves-csharp</RepositoryUrl>
+    <PackageTags>waves node blockchain</PackageTags>
+    <Authors>Waves Labs</Authors>
+    <Version>1.0.1</Version>
+    <PackageIcon>waves.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="JsonConverters\StringJsonConverter.cs~RF12bc516c.TMP" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="curve25519-dotnet" Version="0.5.0" />
@@ -18,6 +21,10 @@
     <PackageReference Include="SimpleBase" Version="3.1.0" />
     <PackageReference Include="dlech.Chaos.NaCl" Version="0.1.0" />
     <PackageReference Include="Nethereum.Util" Version="4.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="waves.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
 </Project>

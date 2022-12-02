@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Company>Waves Labs</Company>
+    <RepositoryUrl>https://github.com/wavesplatform/waves-csharp</RepositoryUrl>
+    <PackageTags>waves node blockchain</PackageTags>
+    <Description>A .NET client for interacting with the Waves blockchain.</Description>
+    <Authors>Waves Labs</Authors>
+    <PackageIcon>waves.png</PackageIcon>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WavesLabs.Node.Transactions\WavesLabs.Node.Transactions.csproj" />
+    <ProjectReference Include="..\WavesLabs.Node.Transactions\WavesLabs.Node.Transactions.csproj">
+      <Private></Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="waves.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
 </Project>
