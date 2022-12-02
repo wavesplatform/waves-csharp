@@ -15,11 +15,11 @@ Using *Visual Studio* or *Visual Studio Code* create a new console app.
 ### Install NuGet package:
 #### Package manager
 ```
-PM> NuGet\Install-Package WavesLabs.Node.Client -Version 1.0.0
+PM> NuGet\Install-Package WavesLabs.Node.Client
 ```
 #### .NET CLI
 ```
-> dotnet add package WavesLabs.Node.Client --version 1.0.0
+> dotnet add package WavesLabs.Node.Client
 ```
 
 More options [here](https://www.nuget.org/packages/WavesLabs.Node.Client).
