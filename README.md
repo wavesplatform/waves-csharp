@@ -12,10 +12,16 @@ Use the codes below to add *WavesLabs.Node.Client* as a dependency for your proj
 ##### Create a project:
 Using *Visual Studio* or *Visual Studio Code* create a new console app.
 
-##### Install NuGet package:
+##### Install [NuGet package](https://www.nuget.org/packages/WavesLabs.Node.Client):
 ```
-TODO: place "install nuget package" command here
+**Package manager**: NuGet\Install-Package WavesLabs.Node.Client -Version 1.0.0
 ```
+or
+```
+.NET CLI: dotnet add package WavesLabs.Node.Client --version 1.0.0
+```
+More options [here](https://www.nuget.org/packages/WavesLabs.Node.Client).
+
 ## Usage example
 We will initiate a create [alias transaction](https://dev.waves.tech/en/edu/lessons/learn-sdks-the-waves-signer-and-its-providers/work-with-accounts#create-alias-transaction):
 
