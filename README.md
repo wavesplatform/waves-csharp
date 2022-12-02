@@ -6,18 +6,18 @@ Supports node interaction, offline transaction signing and creating addresses an
 ## Using in your project
 Use the codes below to add *WavesLabs.Node.Client* as a dependency for your project.
 
-##### Requirements:
+#### Requirements:
 - [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet) or above
 
-##### Create a project:
+#### Create a project:
 Using *Visual Studio* or *Visual Studio Code* create a new console app.
 
-##### Install [NuGet package](https://www.nuget.org/packages/WavesLabs.Node.Client):
-###### Package manager
+#### Install NuGet package:
+##### Package manager
 ```
 NuGet\Install-Package WavesLabs.Node.Client -Version 1.0.0
 ```
-###### .NET CLI
+##### .NET CLI
 ```
 dotnet add package WavesLabs.Node.Client --version 1.0.0
 ```
