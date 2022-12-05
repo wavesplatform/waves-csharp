@@ -478,7 +478,8 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-TransferTransactionBuilder.Params(recipient, amount, assetId, feeAsset, attachment).GetSignedWith(senderPrivateKey);
+var tx = TransferTransactionBuilder.Params(recipient, amount, assetId, feeAsset, attachment)
+    .GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -495,7 +496,7 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-ReissueTransactionBuilder.Params(assetId, quantity, reissuable).GetSignedWith(senderPrivateKey);
+var tx = ReissueTransactionBuilder.Params(assetId, quantity, reissuable).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -512,7 +513,7 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-BurnTransactionBuilder.Params(assetId, amount).GetSignedWith(senderPrivateKey);
+var tx = BurnTransactionBuilder.Params(assetId, amount).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -560,7 +561,8 @@ assetPair
 ).GetSignedWith(senderPrivateKey);
 
 // Create a transaction
-ExchangeTransactionBuilder.Params(buyOrder, sellOrder, amount, price, buyMatcherFee, sellMatcherFee).GetSignedWith(senderPrivateKey);
+var tx = ExchangeTransactionBuilder.Params(buyOrder, sellOrder, amount, price, buyMatcherFee, sellMatcherFee)
+    .GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -575,7 +577,7 @@ var txInfo = node.GetTransactionInfo<ExchangeTransactionInfo>(tx.Id);
 var recipientAddress = new Address("insert the address");
 
 // Create a transaction
-LeaseTransactionBuilder.Params(recipientAddress, amount).GetSignedWith(senderPrivateKey);
+var tx = LeaseTransactionBuilder.Params(recipientAddress, amount).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -590,7 +592,7 @@ var txInfo = node.GetTransactionInfo<LeaseTransactionInfo>(tx.Id);
 var leaseTxId = new Base58s("insert the lease transaction ID");
 
 // Create a transaction
-LeaseCancelTransactionBuilder.Params(leaseTxId).GetSignedWith(senderPrivateKey);
+var tx = LeaseCancelTransactionBuilder.Params(leaseTxId).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -605,7 +607,7 @@ var txInfo = node.GetTransactionInfo<LeaseCancelTransactionInfo>(tx.Id);
 var alias = Alias.As("alice_" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 
 // Create a transaction
-CreateAliasTransactionBuilder.Params(alias).GetSignedWith(senderPrivateKey);
+var tx = CreateAliasTransactionBuilder.Params(alias).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -634,7 +636,7 @@ var transfers = new List<Transfer> {
 };
 
 // Create a transaction
-MassTransferTransactionBuilder.Params(transfers, assetId, attachment).GetSignedWith(senderPrivateKey);
+var tx = MassTransferTransactionBuilder.Params(transfers, assetId, attachment).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -692,7 +694,7 @@ var txScript = "{-# STDLIB_VERSION 5 #-}\n" +
 var compiledScript = node.CompileScript(txScript).Script;
 
 // Create a transaction
-SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
+var tx = SetScriptTransactionBuilder.Params(compiledScript).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -709,7 +711,7 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-SponsorFeeTransactionBuilder.Params(assetId, minSponsoredAssetFee).GetSignedWith(senderPrivateKey);
+var tx = SponsorFeeTransactionBuilder.Params(assetId, minSponsoredAssetFee).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -730,7 +732,7 @@ Make sure to insert your ride script between the brackets below */
 var script = node.CompileScript("INSERT YOUR DAPP SCRIPT HERE").Script;
 
 // Create a transaction
-SetAssetScriptTransactionBuilder.Params(assetId, script).GetSignedWith(senderPrivateKey);
+var tx = SetAssetScriptTransactionBuilder.Params(assetId, script).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -775,7 +777,7 @@ var call = new Call {
 };
 
 // Create a transaction
-InvokeScriptTransactionBuilder.Params(dAppAddress, payments, call).GetSignedWith(senderPrivateKey);
+var tx = InvokeScriptTransactionBuilder.Params(dAppAddress, payments, call).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
@@ -792,7 +794,7 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-UpdateAssetInfoTransactionBuilder.Params(assetId, name, description).GetSignedWith(senderPrivateKey);
+var tx = UpdateAssetInfoTransactionBuilder.Params(assetId, name, description).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
 node.WaitForTransaction(node.Broadcast(tx).Id);
