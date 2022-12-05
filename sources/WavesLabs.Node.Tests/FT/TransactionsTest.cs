@@ -14,7 +14,7 @@ namespace WavesLabs.Node.Tests.FT
 
             var script = Node.CompileScript("{-# SCRIPT_TYPE ASSET #-} true").Script;
             var assetId = Node.WaitForTransaction<IssueTransactionInfo>(Node.Broadcast(
-                    IssueTransactionBuilder.Params("Asset", 1000, 2).SetScript(script).GetSignedWith(alice.Pk)).Id).Transaction.AssetId;
+                    IssueTransactionBuilder.Params("Asset", 1000, 2, "", true, script).GetSignedWith(alice.Pk)).Id).Transaction.AssetId;
 
             var tx = SetAssetScriptTransactionBuilder.Params(assetId!, script!).GetSignedWith(alice.Pk);
             Node.WaitForTransaction(Node.Broadcast(tx).Id);

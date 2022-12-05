@@ -21,7 +21,7 @@ namespace WavesLabs.Node.Tests.FT
 
             var compileScript = Node.CompileScript(script);
 
-            var tx = Node.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2).SetScript(compileScript.Script).GetSignedWith(alice.Pk));
+            var tx = Node.Broadcast(IssueTransactionBuilder.Params("Asset 1", 10000000, 2, "", true, compileScript.Script).GetSignedWith(alice.Pk));
             var assetId1 = tx.AssetId;
             var tx1Info = Node.WaitForTransaction(assetId1);
 
@@ -86,9 +86,7 @@ namespace WavesLabs.Node.Tests.FT
             var alice = CreateAccountWithBalance(1000000000);
             int recipientsNumber = 190;
             var assetId = Node.Broadcast(
-                IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2)
-                .SetReissuable(true)
-                .SetDescription("desc")
+                IssueTransactionBuilder.Params("Asset", Enumerable.Range(1, recipientsNumber).Sum(), 2, "desc", true)
                 .GetSignedWith(alice.Pk)).AssetId;
 
             Node.WaitForTransaction(assetId);
@@ -156,7 +154,7 @@ namespace WavesLabs.Node.Tests.FT
             for(var i = 1; i <= nftsCount; i++)
             {
                 Node.WaitForTransaction(Node.Broadcast(
-                    IssueTransactionBuilder.Params(nftAssetName + i, 1, 0).SetReissuable(false).GetSignedWith(alice.Pk)).Id);
+                    IssueTransactionBuilder.Params(nftAssetName + i, 1, 0, "", false).GetSignedWith(alice.Pk)).Id);
             }
 
             var nfts = Node.GetNft(alice.Addr);
