@@ -464,7 +464,7 @@ var tx = IssueTransactionBuilder.Params(
 Node.WaitForTransaction(Node.Broadcast(tx).Id);
 
 // Get information about the transaction from the node
-IssueTransactionInfo txInfo = Node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
+var txInfo = Node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
 ```
 
 #### TransferTransaction
