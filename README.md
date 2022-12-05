@@ -450,18 +450,21 @@ var scriptMeta = node.GetScriptMeta(address);
 
 #### IssueTransaction
 ```csharp
-/* Define the asset ID
-In case of transfer in WAVES, use
-var assetId = AssetId.Waves */
-var assetId = AssetId.As("insert the asset ID");
-// Create a transaction
-IssueTransactionBuilder.Params(assetId, quantity, decimals).SetScript(script).GetSignedWith(senderPrivateKey);
+// Create an issue transaction
+var tx = IssueTransactionBuilder.Params(
+  "sampleasset", // name
+  1000, // quantity
+  2, // decimals
+  "description of the asset", // description
+  false, // reissuable
+  null // base64 compiled script or null
+).GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
-node.WaitForTransaction(node.Broadcast(tx).Id);
+Node.WaitForTransaction(Node.Broadcast(tx).Id);
 
 // Get information about the transaction from the node
-var txInfo = node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
+IssueTransactionInfo txInfo = Node.GetTransactionInfo<IssueTransactionInfo>(tx.Id);
 ```
 
 #### TransferTransaction
