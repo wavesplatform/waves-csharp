@@ -10,7 +10,7 @@
     <Description>A .NET client for interacting with the Waves blockchain.</Description>
     <Authors>Waves Labs</Authors>
     <PackageIcon>waves.png</PackageIcon>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
