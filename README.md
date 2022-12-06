@@ -478,7 +478,7 @@ var assetId = AssetId.Waves */
 var assetId = AssetId.As("insert the asset ID");
 
 // Create a transaction
-var tx = TransferTransactionBuilder.Params(recipient, amount, assetId, feeAsset, attachment)
+var tx = TransferTransactionBuilder.Params(recipient, amount, assetId, attachment)
     .GetSignedWith(senderPrivateKey);
 
 // Broadcast the transaction to a node and wait for it to be included in the blockchain
