@@ -21,7 +21,7 @@ namespace WavesLabs.Node.Transactions
             proto.Transfer.Amount = new AmountProto
             {
                 Amount_ = tx.Amount,
-                AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFromUtf8(tx.AssetId)
+                AssetId = tx.AssetId is null ? ByteString.Empty : ByteString.CopyFrom(tx.AssetId)
             };
 
             proto.Transfer.Attachment = tx.Attachment is null ? ByteString.Empty : ByteString.CopyFromUtf8(tx.Attachment);
