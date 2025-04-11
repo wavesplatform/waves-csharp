@@ -9,12 +9,16 @@
     <RepositoryUrl>https://github.com/wavesplatform/waves-csharp</RepositoryUrl>
     <PackageTags>waves node blockchain</PackageTags>
     <Authors>Waves Labs</Authors>
-    <Version>1.0.2</Version>
     <PackageIcon>waves.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="curve25519-dotnet" Version="0.5.0" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Google.Protobuf" Version="3.21.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NSec.Cryptography" Version="22.4.0" />
